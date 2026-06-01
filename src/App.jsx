@@ -10,6 +10,7 @@ function App() {
   </Routes>
   </BrowserRoute>
   )
+  
 }
 
 export default App
