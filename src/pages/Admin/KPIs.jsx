@@ -1,4 +1,5 @@
 import Nav from '../../components/Nav'
+import '../../css/AdminCSS/KPIs.css'
 
 function KPIs (){
     return(
@@ -84,7 +85,7 @@ function KPIs (){
                         </thead>
                         <tbody id="tabla-kpi-activos">
                             <tr className="row-loading">
-                                <td colspan="5">Esperando datos del servidor...</td>
+                                <td colSpan="5">Esperando datos del servidor...</td>
                             </tr>
                         </tbody>
                     </table>

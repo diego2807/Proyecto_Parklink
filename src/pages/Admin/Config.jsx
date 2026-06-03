@@ -1,4 +1,5 @@
 import Nav from '../../components/Nav'
+import '../../css/AdminCSS/Config.css'
 
 function Config (){
     return(

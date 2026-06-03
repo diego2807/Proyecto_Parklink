@@ -1,37 +1,39 @@
+import { Link } from "react-router-dom";
+
 function Nav() {
     return(
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <span class="logo-icon">P</span>
-                <span class="logo-text">ParkLink</span>
+        <aside className="sidebar">
+            <div className="sidebar-header">
+                <span className="logo-icon">P</span>
+                <span className="logo-text">ParkLink</span>
             </div>
             
-            <nav class="sidebar-nav">
-                <div class="nav-group">
-                    <span class="nav-heading">Módulo Dashboard</span>
-                    <a href="../vistas/kpis.html" class="nav-link">1. Tablero KPIs</a>
-                    <a href="../vistas/tendencias.html" class="nav-link">2. Gráficos Tendencias</a>
-                    <a href="../vistas/celdas.html" class="nav-link">3. Celdas Especiales</a>
+            <nav className="sidebar-nav">
+                <div className="nav-group">
+                    <span className="nav-heading">Módulo Dashboard</span>
+                    <Link to="/" className="nav-link">1. Tablero KPIs</Link>
+                    <Link to="/Tendencias" className="nav-link">2. Gráficos Tendencias</Link>
+                    <Link to="/Celdas" className="nav-link">3. Celdas Especiales</Link>
                 </div>
                 
-                <div class="nav-group">
-                    <span class="nav-heading">Operaciones e Historial</span>
-                    <a href="../vistas/log.html" class="nav-link">4. Log de Eventos</a>
-                    <a href="../vistas/exportador.html" class="nav-link">5. Exportador</a>
-                    <a href="../vistas/vehiculos.html" class="nav-link active">7. Registro Vehículos</a>
+                <div className="nav-group">
+                    <span className="nav-heading">Operaciones e Historial</span>
+                    <Link to="/Log" className="nav-link">4. Log de Eventos</Link>
+                    <Link to="/Exportador" className="nav-link">5. Exportador</Link>
+                    <Link to="/Vehiculos" className="nav-link active">7. Registro Vehículos</Link>
                 </div>
 
-                <div class="nav-group">
-                    <span class="nav-heading">Configuración</span>
-                    <a href="../vistas/config.html" class="nav-link">10. Parametrización</a>
+                <div className="nav-group">
+                    <span className="nav-heading">Configuración</span>
+                    <Link to="/Config" className="nav-link">10. Parametrización</Link>
                 </div>
             </nav>
 
-            <div class="sidebar-footer">
-                <div class="user-avatar">DP</div>
-                <div class="user-info">
-                    <p class="user-name">Diego Plazas</p>
-                    <span class="user-role">Administrador</span>
+            <div className="sidebar-footer">
+                <div className="user-avatar">DP</div>
+                <div className="user-info">
+                    <p className="user-name">Diego Plazas</p>
+                    <span className="user-role">Administrador</span>
                 </div>
             </div>
         </aside>

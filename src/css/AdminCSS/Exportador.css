@@ -1,6 +1,20 @@
-/* ==========================================================================
-   1. VARIABLES GLOBALES (Paleta Corporativa Minimalista)
-   ========================================================================== */
+.main-content {
+  /* ESTO ES LO CRÍTICO: Obliga al contenedor a posicionarse a la derecha */
+  position: absolute;
+  top: 0;
+  left: 260px; /* Reemplaza '260px' por el ancho exacto que tenga tu menú lateral */
+  
+  /* Control de tamaños */
+  width: calc(100vw - 260px); /* El ancho total de la pantalla menos el menú */
+  min-height: 100vh;
+  padding: 40px;
+  box-sizing: border-box;
+  background-color: #f8fafc;
+  
+  /* Evita que se mueva de su lugar */
+  margin: 0; 
+  display: block;
+}
 :root {
     --bg-main: #f8fafc;
     /* Gris pizarra muy claro para el fondo */

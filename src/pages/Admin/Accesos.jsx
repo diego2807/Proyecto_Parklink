@@ -1,5 +1,5 @@
 import Nav from '../../components/Nav'
-import '../../css/Accesos'
+import '../../css/AdminCSS/Accesos.css'
 
 function Accesos (){
     return(

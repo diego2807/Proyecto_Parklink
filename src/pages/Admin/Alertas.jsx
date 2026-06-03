@@ -1,4 +1,5 @@
 import Nav from '../../components/Nav'
+import '../../css/AdminCSS/Alertas.css'
 
 function Alertas (){
     return(

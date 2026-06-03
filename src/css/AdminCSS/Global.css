@@ -1,84 +1,86 @@
 /* ==========================================================================
-   1. VARIABLES GLOBALES (Paleta Corporativa)
+   PARKLINK - RESET GENERAL Y LAYOUT MAESTRO (INMUTABLE)
    ========================================================================== */
-:root {
-    --bg-main: #f8fafc;
-    --navy-dark: #0f172a;
-    --royal-blue: #1d4ed8;
-    --sky-light: #38bdf8;
-    --card-white: #ffffff;
-    --text-main: #334155;
-    --slate-muted: #64748b;
-    --border-light: #e2e8f0;
-}
 
-/* ==========================================================================
-   2. RESET Y ESTILOS BASE
-   ========================================================================== */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background-color: var(--bg-main);
-    color: var(--text-main);
-    line-height: 1.5;
+body, html, #root {
+  width: 100%;
+  height: 100vh;
+  background-color: #f8fafc;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  overflow: hidden; /* Evita scrolls dobles en la pantalla principal */
 }
 
-/* ==========================================================================
-   3. ESTRUCTURA GLOBAL (LAYOUT)
-   ========================================================================== */
-.layout-container {
-    display: flex;
-    min-height: 100vh;
+/* El contenedor padre que acopla el Nav y el contenido horizontalmente */
+.app-container {
+  display: flex !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  overflow: hidden;
 }
 
+/* El Menú Lateral (Forzado para que no empuje ni se encoja) */
+nav, 
+.sidebar, 
+aside {
+  width: 260px !important;
+  min-width: 260px !important;
+  max-width: 260px !important;
+  height: 100vh !important;
+  background-color: #0b132b !important; /* Tu azul oscuro original */
+  overflow-y: auto;
+  flex-shrink: 0 !important;
+}
+
+/* El Panel de Contenido Principal (Se traga el espacio en blanco restante) */
 .main-content {
-    flex-grow: 1;
-    padding: 2.5rem;
-    overflow-y: auto;
-    max-width: 1400px;
-    margin: 0 auto;
-    width: 100%;
+  flex-grow: 1 !important;
+  height: 100vh !important;
+  overflow-y: auto !important; /* El scroll vertical solo ocurre aquí */
+  padding: 40px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 32px !important;
+  background-color: #f8fafc !important;
+  
+  /* Desactivamos de raíz las posiciones fijas del HTML viejo */
+  position: relative !important;
+  left: 0 !important;
+  margin: 0 !important;
+  width: auto !important;
 }
 
 /* ==========================================================================
-   4. SIDEBAR GLOBAL (Navegación)
+   COMPACTACIÓN DE GRILLAS Y TABLAS (Para llenar el monitor de borde a borde)
    ========================================================================== */
-.sidebar {
-    width: 260px;
-    background-color: var(--navy-dark);
-    color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    flex-shrink: 0;
+
+/* Aplica para la sección de tus tarjetas de KPIs o formularios */
+.gate-grid, 
+.cards-grid, 
+.dashboard-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important; 
+  gap: 24px !important;
+  width: 100% !important;
+  max-width: 100% !important;
 }
 
-/* ... Aquí irían todos los estilos de .sidebar, .sidebar-header, .nav-link, .user-avatar, etc. ... */
-
-/* ==========================================================================
-   5. COMPONENTES COMUNES (UI elements)
-   ========================================================================== */
-.content-header {
-    margin-bottom: 2.5rem;
+/* Contenedor y Tabla de vehículos activos para que usen el 100% del ancho */
+.table-container {
+  width: 100% !important;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  overflow-x: auto; /* Scroll horizontal interno solo si la pantalla es muy chica */
 }
 
-.page-badge {
-    display: inline-block;
-    background-color: rgba(100, 116, 139, 0.08);
-    color: var(--slate-muted);
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
-}
-
-.config-card {
-    background-color: var(--card-white);
-    border: 1px solid var(--border-light);
-    border-radius: 12px;
-    padding: 2rem;
+.data-table {
+  width: 100% !important;
+  border-collapse: collapse;
 }
