@@ -1,0 +1,552 @@
+/* ==========================================================================
+   ESTILOS GENERALES Y CONFIGURACIÓN (Para vistas de Autenticación e Inicio)
+   ========================================================================== */
+:root {
+  --navy:      #0B1629;
+  --navy2:     #132240;
+  --blue:      #1A6FE8;
+  --surface:   #FFFFFF;
+  --bg:        #F0F4FA;
+  --border:    #DDE3EF;
+  --txt:       #1A2540;
+  --muted:     #6B7A99;
+  --green:     #10C98A;
+  --red:       #F04438;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg);
+  color: var(--txt);
+}
+
+/* ==========================================================================
+   ESTRUCTURA DE PANTALLA DIVIDIDA (Login, Registro, Recuperación)
+   ========================================================================== */
+.auth-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+.auth-aside {
+  flex: 1;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px;
+}
+
+.auth-aside .brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.auth-hero-text h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.auth-hero-text p {
+  color: #94A3B8;
+  font-size: 1.1rem;
+  max-width: 480px;
+  line-height: 1.6;
+}
+
+.auth-footer-text {
+  color: #64748B;
+  font-size: 0.85rem;
+}
+
+.auth-main {
+  width: 550px;
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  box-shadow: -10px 0 25px rgba(0,0,0,0.03);
+}
+
+@media (max-width: 992px) {
+  .auth-aside { display: none; }
+  .auth-main { width: 100%; }
+}
+
+/* Formularios de Autenticación */
+.auth-box {
+  width: 100%;
+  max-width: 400px;
+}
+
+.auth-box h2 {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+  color: var(--navy);
+}
+
+.auth-box .subtitle {
+  color: var(--muted);
+  margin-bottom: 32px;
+  font-size: 0.95rem;
+}
+
+.fg {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fg label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper input, .input-wrapper select {
+  width: 100%;
+  padding: 12px 40px 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.input-wrapper input:focus, .input-wrapper select:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(26, 111, 232, 0.15);
+}
+
+.input-wrapper svg {
+  position: absolute;
+  right: 14px;
+  width: 20px;
+  height: 20px;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.btn-eye {
+  position: absolute;
+  right: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.warning-txt {
+  color: var(--red);
+  font-size: 0.8rem;
+  display: none;
+  margin-top: 2px;
+}
+
+.forgot-link {
+  display: block;
+  text-align: right;
+  font-size: 0.85rem;
+  color: var(--blue);
+  text-decoration: none;
+  margin-bottom: 24px;
+  font-weight: 500;
+}
+
+.btn-block {
+  width: 100%;
+  padding: 14px;
+  background: var(--blue);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-block:hover { background: #1456B8; }
+
+.auth-bottom {
+  text-align: center;
+  margin-top: 32px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.auth-bottom a {
+  color: var(--blue);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Medidor de contraseña */
+.strength-meter {
+  display: flex;
+  gap: 4px;
+  margin-top: 6px;
+}
+.strength-seg {
+  flex: 1;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  transition: background 0.2s;
+}
+.strength-seg.weak { background: var(--red); }
+.strength-seg.medium { background: #FFB300; }
+.strength-seg.strong { background: var(--green); }
+
+
+/* ==========================================================================
+   ESTILOS DEL DASHBOARD INTERNO (Inicio.html)
+   ========================================================================== */
+.dash-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  background: var(--navy);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s;
+}
+
+.sidebar-header {
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.btn-close-sidebar {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 20px 0;
+  margin: 0;
+  flex: 1;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  color: #94A3B8;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+
+.sidebar-item.active .sidebar-link, .sidebar-link:hover {
+  color: white;
+  background: rgba(255,255,255,0.05);
+  border-left: 4px solid var(--blue);
+}
+
+.sidebar-footer {
+  padding: 24px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.btn-logout {
+  width: 100%;
+  padding: 10px;
+  background: rgba(240, 68, 56, 0.1);
+  color: var(--red);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Main Content Area */
+.dash-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+.topbar {
+  background: var(--surface);
+  height: 70px;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+
+.btn-toggle-sidebar {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--navy);
+  display: none;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  background: #E0EBFB;
+  color: var(--blue);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.user-info .name { font-weight: 600; font-size: 0.9rem; color: var(--navy); }
+.user-info .role { font-size: 0.75rem; color: var(--muted); }
+
+.dash-content { padding: 32px; }
+.dash-header h2 { margin: 0 0 6px 0; color: var(--navy); font-size: 1.6rem; }
+.dash-header p { margin: 0 0 32px 0; color: var(--muted); font-size: 0.95rem; }
+
+/* Grid de Métricas */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.metric-card {
+  background: var(--surface);
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.metric-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+.metric-icon.blue { background: #E0EBFB; color: var(--blue); }
+.metric-icon.green { background: #DEF7EC; color: var(--green); font-weight: bold; }
+.metric-icon.orange { background: #FCE8E6; color: var(--red); font-weight: bold; }
+
+.metric-data .num { font-size: 1.8rem; font-weight: 700; color: var(--navy); line-height: 1.2; }
+.metric-data .lbl { font-size: 0.85rem; color: var(--muted); margin-top: 4px; }
+
+/* Secciones divididas de la sección baja */
+.dash-grid-two {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .dash-grid-two { grid-template-columns: 1fr; }
+  .btn-toggle-sidebar { display: block; }
+}
+
+.panel-card {
+  background: var(--surface);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.panel-card-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.panel-card-header h3 { margin: 0; font-size: 1.1rem; color: var(--navy); }
+.panel-card-body { padding: 24px; }
+
+.btn-dual-wrap {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.btn-action-in, .btn-action-out {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-action-in { background: #E6F4EA; color: #137333; }
+.btn-action-in:hover { background: #D2E9D6; }
+.btn-action-out { background: #FCE8E6; color: #C5221F; }
+.btn-action-out:hover { background: #FAD2CF; }
+
+/* Tabla Moderna */
+.table-responsive { overflow-x: auto; }
+.modern-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+.modern-table th { background: #F8FAFC; padding: 14px 24px; color: var(--muted); font-weight: 600; border-bottom: 1px solid var(--border); }
+.modern-table td { padding: 16px 24px; border-bottom: 1px solid var(--border); color: #475569; }
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.badge.in { background: #E6F4EA; color: #137333; }
+.badge.out { background: #FCE8E6; color: #C5221F; }
+
+/* Notificación Flotante (Toast) */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: -400px;
+  background: var(--navy);
+  color: white;
+  padding: 16px 24px;
+  border-radius: 8px;
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 9999;
+}
+.toast.show { right: 24px; }
+.toast.success { border-left: 4px solid var(--green); }
+.toast.error { border-left: 4px solid var(--red); }
+
+
+/* ==========================================================================
+   MAPA DE BAHÍAS - CONTROL ESTRUCTURAL (PARKLINK)
+   ========================================================================== */
+
+/* Utilidades Flexbox y Layout emulando Bootstrap para orden estructural */
+.d-flex { display: flex !important; }
+.flex-row { flex-direction: row !important; }
+.flex-column { flex-direction: column !important; }
+.justify-content-between { justify-content: space-between !important; }
+.justify-content-center { justify-content: center !important; }
+.align-items-center { align-items: center !important; }
+.align-items-end { align-items: end !important; }
+.flex-wrap { flex-wrap: wrap !important; }
+.w-100 { width: 100% !important; }
+
+/* Espaciados Adaptativos (Gaps) */
+.gap-1 { gap: 4px !important; }
+.gap-2 { gap: 8px !important; }
+.gap-3 { gap: 16px !important; }
+.gap-4 { gap: 24px !important; }
+.gap-5 { gap: 48px !important; }
+
+/* Paddings y Margins */
+.p-1 { padding: 4px !important; }
+.p-2 { padding: 8px !important; }
+.p-3 { padding: 16px !important; }
+.px-3 { padding-left: 12px !important; padding-right: 12px !important; }
+.px-5 { padding-left: 48px !important; padding-right: 48px !important; }
+.py-1 { padding-top: 4px !important; padding-bottom: 4px !important; }
+.py-2 { padding-top: 8px !important; padding-bottom: 8px !important; }
+.mt-3 { margin-top: 16px !important; }
+.mt-5 { margin-top: 48px !important; }
+.mb-0 { margin-bottom: 0 !important; }
+
+/* Bordes y Sombras Modernas */
+.rounded { border-radius: 4px !important; }
+.rounded-top { border-radius: 8px 8px 0 0 !important; }
+.rounded-bottom { border-radius: 0 0 8px 8px !important; }
+.border { border: 1px solid #e2e8f0 !important; }
+.border-bottom { border-bottom: 1px solid #e2e8f0 !important; }
+.border-secondary { border-color: #64748b !important; }
+.border-opacity-20 { border-color: rgba(100, 116, 139, 0.2) !important; }
+.border-danger { border-color: #ef4444 !important; }
+.border-info { border-color: #0ea5e9 !important; }
+.shadow-sm { box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05) !important; }
+.shadow-lg { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3) !important; }
+
+/* Paleta de Colores Semánticos del Mapa */
+.bg-white { background-color: #ffffff !important; }
+.bg-dark { background-color: #0f172a !important; } /* Slate 900 de fondo técnico */
+.bg-secondary { background-color: #64748b !important; }
+.bg-opacity-10 { background-color: rgba(14, 165, 233, 0.1) !important; }
+.bg-danger { background-color: #ef4444 !important; }
+.bg-opacity-25 { background-color: rgba(239, 68, 68, 0.25) !important; }
+.bg-info { background-color: #0ea5e9 !important; }
+
+/* Tipografías y Estados de Texto */
+.text-muted { color: #64748b !important; }
+.text-secondary { color: #94a3b8 !important; }
+.text-info { color: #38bdf8 !important; }
+.text-danger { color: #f87171 !important; }
+.text-white-50 { color: rgba(255,255,255,0.5) !important; }
+.fw-bold { font-weight: 700 !important; }
+.small { font-size: 0.75rem !important; }
+.text-center { text-align: center !important; }
+
+/* Selectores Alternadores de Sótano (Botones de Nivel) */
+.btn-group { display: inline-flex; border-radius: 6px; overflow: hidden; border: 1px solid #cbd5e1; }
+.btn-level { padding: 6px 12px; background: white; border: none; font-size: 0.75rem; font-weight: 600; cursor: pointer; color: #334155; transition: all 0.2s; }
+.btn-level.active { background: #1e293b; color: white; }
+.btn-level:not(.active):hover { background: #f1f5f9; }
+
+/* Barra de Control de Filtros Temáticos */
+.filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.filter-chip { padding: 6px 12px; background: #E2E8F0; border-radius: 20px; font-size: 0.85rem; cursor: pointer; font-weight: 500; transition: background 0.2s, color 0.2s; }
+.filter-chip.active { background: #1E3A8A; color: white; } /* Azul elegante corporativo */
+
+/* Celdas Individuales del Plano Arquitectónico */
+.puesto-celda {
+  box-shadow: inset 0 -3px 0 rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.1s ease-in-out, opacity 0.2s ease;
+}
+.puesto-celda:hover { transform: scale(1.08); z-index: 10; }
