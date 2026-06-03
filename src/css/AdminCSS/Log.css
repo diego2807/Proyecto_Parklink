@@ -1,0 +1,382 @@
+/* ==========================================================================
+   1. VARIABLES GLOBALES (Paleta Corporativa Minimalista)
+   ========================================================================== */
+:root {
+    --bg-main: #f8fafc;
+    /* Gris pizarra muy claro para el fondo */
+    --navy-dark: #0f172a;
+    /* Azul oscuro profundo para la barra lateral */
+    --royal-blue: #1d4ed8;
+    /* Azul rey para acentos primarios */
+    --sky-light: #38bdf8;
+    /* Celeste para elementos activos */
+    --card-white: #ffffff;
+    /* Blanco puro para los contenedores */
+    --text-main: #334155;
+    /* Gris oscuro para texto principal */
+    --slate-muted: #64748b;
+    /* Gris medio para textos secundarios */
+    --border-light: #e2e8f0;
+    /* Gris claro para separadores y bordes */
+
+    /* Estados de Criticidad para Auditoría */
+    --severity-info-bg: #e0f2fe;
+    --severity-info-text: #0369a1;
+
+    --severity-warn-bg: #fef9c3;
+    --severity-warn-text: #a16207;
+
+    --severity-crit-bg: #fee2e2;
+    --severity-crit-text: #b91c1c;
+}
+
+/* ==========================================================================
+   2. RESETS Y CONFIGURACIÓN BASE
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.5;
+}
+
+.layout-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ==========================================================================
+   3. BARRA LATERAL DE NAVEGACIÓN (SIDEBAR NATIVO)
+   ========================================================================== */
+.sidebar {
+    width: 260px;
+    background-color: var(--navy-dark);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-header {
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-icon {
+    background-color: var(--sky-light);
+    color: var(--navy-dark);
+    font-weight: 800;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-size: 1.1rem;
+}
+
+.logo-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.sidebar-nav {
+    flex-grow: 1;
+    padding: 1.5rem 0;
+}
+
+.nav-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.75rem;
+}
+
+.nav-heading {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--slate-muted);
+    letter-spacing: 0.05em;
+    padding: 0 2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.nav-link {
+    color: #94a3b8;
+    text-decoration: none;
+    padding: 0.65rem 2rem;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+    border-left: 4px solid transparent;
+}
+
+.nav-link:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.nav-link.active {
+    color: #ffffff;
+    background-color: rgba(56, 189, 248, 0.08);
+    border-left-color: var(--sky-light);
+    font-weight: 600;
+}
+
+.sidebar-footer {
+    padding: 1.25rem 1.5rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.user-avatar {
+    width: 38px;
+    height: 38px;
+    background-color: var(--sky-light);
+    color: var(--navy-dark);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.user-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.user-role {
+    font-size: 0.75rem;
+    color: var(--sky-light);
+    display: block;
+}
+
+/* ==========================================================================
+   4. CONTENIDO PRINCIPAL (MAIN WORKSPACE)
+   ========================================================================== */
+.main-content {
+    flex-grow: 1;
+    padding: 2.5rem;
+    overflow-y: auto;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.content-header {
+    margin-bottom: 2.5rem;
+}
+
+.page-badge {
+    display: inline-block;
+    background-color: rgba(29, 78, 216, 0.06);
+    color: var(--royal-blue);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+/* Ajuste específico para denotar seguridad */
+.page-badge.text-alert {
+    background-color: rgba(185, 28, 28, 0.06);
+    color: var(--severity-crit-text);
+}
+
+.content-header h1 {
+    font-size: 1.75rem;
+    color: var(--navy-dark);
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.page-description {
+    color: var(--slate-muted);
+    font-size: 0.95rem;
+}
+
+/* ==========================================================================
+   5. BARRA DE FILTROS (DISEÑO FLEXIBLE)
+   ========================================================================== */
+.filter-box {
+    background-color: var(--card-white);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.filter-form {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    /* Soporte responsive si la pantalla se reduce */
+}
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex-grow: 1;
+}
+
+/* Fijamos un tamaño máximo para el selector de criticidad */
+.input-field:last-child {
+    max-width: 300px;
+}
+
+.field-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--slate-muted);
+}
+
+.field-input,
+.field-select {
+    padding: 0.65rem 0.75rem;
+    font-size: 0.92rem;
+    color: var(--text-main);
+    background-color: #ffffff;
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.2s ease;
+    width: 100%;
+}
+
+.field-input:focus,
+.field-select:focus {
+    border-color: var(--royal-blue);
+}
+
+/* ==========================================================================
+   6. TABLA DE LOGS DE AUDITORÍA
+   ========================================================================== */
+.log-section {
+    background-color: var(--card-white);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.log-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.log-table th {
+    background-color: #f8fafc;
+    color: var(--slate-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.03em;
+    padding: 0.85rem 1rem;
+    border-bottom: 2px solid var(--border-light);
+}
+
+.log-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-main);
+    vertical-align: middle;
+}
+
+/* Forzar tipografía monoespaciada para marcas de tiempo y placas */
+.log-table td:first-child,
+.log-table td:last-child {
+    font-family: monospace;
+    font-size: 0.95rem;
+}
+
+.log-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Etiquetas de Severidad (Badges Nativa) */
+.badge-severity {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.badge-severity.info {
+    background-color: var(--severity-info-bg);
+    color: var(--severity-info-text);
+}
+
+.badge-severity.advertencia {
+    background-color: var(--severity-warn-bg);
+    color: var(--severity-warn-text);
+}
+
+.badge-severity.critico {
+    background-color: var(--severity-crit-bg);
+    color: var(--severity-crit-text);
+}
+
+/* Fila de carga */
+.row-loading {
+    text-align: center;
+    color: var(--slate-muted);
+    font-style: italic;
+}
+
+/* ==========================================================================
+   7. RESPONSIVIDAD (MEDIA QUERIES)
+   ========================================================================== */
+@media (max-width: 992px) {
+    .layout-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-nav,
+    .sidebar-footer {
+        display: none;
+    }
+
+    .main-content {
+        padding: 1.5rem;
+    }
+
+    .input-field:last-child {
+        max-width: 100%;
+        /* El selector ocupa todo el ancho en móviles */
+    }
+}

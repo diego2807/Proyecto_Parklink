@@ -1,0 +1,497 @@
+/* ==========================================================================
+   1. VARIABLES GLOBALES (Paleta Corporativa Minimalista)
+   ========================================================================== */
+:root {
+    --bg-main: #f8fafc;
+    /* Gris pizarra muy claro para el fondo */
+    --navy-dark: #0f172a;
+    /* Azul oscuro profundo para la barra lateral */
+    --royal-blue: #1d4ed8;
+    /* Azul rey para acentos primarios */
+    --sky-light: #38bdf8;
+    /* Celeste para elementos activos */
+    --card-white: #ffffff;
+    /* Blanco puro para los contenedores */
+    --text-main: #334155;
+    /* Gris oscuro para texto principal */
+    --slate-muted: #64748b;
+    /* Gris medio para textos secundarios */
+    --border-light: #e2e8f0;
+    /* Gris claro para separadores y bordes */
+
+    /* Estados Operativos de Acceso */
+    --gate-in-bg: #f0fdf4;
+    /* Fondo verde sutil para ingresos */
+    --gate-in-border: #bbf7d0;
+    --gate-in-text: #166534;
+
+    --gate-out-bg: #f0f9ff;
+    /* Fondo azul sutil para salidas */
+    --gate-out-border: #bae6fd;
+    --gate-out-text: #075985;
+}
+
+/* ==========================================================================
+   2. RESETS Y CONFIGURACIÓN BASE
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.5;
+}
+
+.layout-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ==========================================================================
+   3. BARRA LATERAL DE NAVEGACIÓN (SIDEBAR NATIVO)
+   ========================================================================== */
+.sidebar {
+    width: 260px;
+    background-color: var(--navy-dark);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-header {
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-icon {
+    background-color: var(--sky-light);
+    color: var(--navy-dark);
+    font-weight: 800;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-size: 1.1rem;
+}
+
+.logo-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.sidebar-nav {
+    flex-grow: 1;
+    padding: 1.5rem 0;
+}
+
+.nav-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.75rem;
+}
+
+.nav-heading {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--slate-muted);
+    letter-spacing: 0.05em;
+    padding: 0 2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.nav-link {
+    color: #94a3b8;
+    text-decoration: none;
+    padding: 0.65rem 2rem;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+    border-left: 4px solid transparent;
+}
+
+.nav-link:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.nav-link.active {
+    color: #ffffff;
+    background-color: rgba(56, 189, 248, 0.08);
+    border-left-color: var(--sky-light);
+    font-weight: 600;
+}
+
+.sidebar-footer {
+    padding: 1.25rem 1.5rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.user-avatar {
+    width: 38px;
+    height: 38px;
+    background-color: var(--sky-light);
+    color: var(--navy-dark);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.user-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.user-role {
+    font-size: 0.75rem;
+    color: var(--sky-light);
+    display: block;
+}
+
+/* ==========================================================================
+   4. CONTENIDO PRINCIPAL (MAIN WORKSPACE)
+   ========================================================================== */
+.main-content {
+    flex-grow: 1;
+    padding: 2.5rem;
+    overflow-y: auto;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.content-header {
+    margin-bottom: 2.5rem;
+}
+
+.page-badge.badge-gate {
+    display: inline-block;
+    background-color: rgba(15, 23, 42, 0.06);
+    color: var(--navy-dark);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.content-header h1 {
+    font-size: 1.75rem;
+    color: var(--navy-dark);
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.page-description {
+    color: var(--slate-muted);
+    font-size: 0.95rem;
+}
+
+/* ==========================================================================
+   5. DISTRIBUCIÓN EN MATRIZ OPERATIVA (GATE GRID)
+   ========================================================================== */
+.gate-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.gate-card {
+    background-color: var(--card-white);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 2rem;
+}
+
+.gate-card h2 {
+    font-size: 1.15rem;
+    color: var(--navy-dark);
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.section-desc {
+    color: var(--slate-muted);
+    font-size: 0.85rem;
+    margin-bottom: 1.75rem;
+}
+
+/* ==========================================================================
+   6. CONMUTADORES DE SELECCIÓN DE MOVIMIENTO (RADIO BOTONES)
+   ========================================================================== */
+.gate-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.movement-selection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.movement-label {
+    cursor: pointer;
+    width: 100%;
+}
+
+.movement-label input[type="radio"] {
+    display: none;
+    /* Se remueve la estética de radio por defecto */
+}
+
+.movement-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0.85rem;
+    border: 2px solid var(--border-light);
+    border-radius: 8px;
+    background-color: #ffffff;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.movement-box strong {
+    font-size: 0.85rem;
+    color: var(--slate-muted);
+}
+
+.movement-box .mvt-icon {
+    font-size: 1.2rem;
+    filter: grayscale(100%);
+    opacity: 0.6;
+}
+
+/* Comportamientos interactivos individuales cuando están seleccionados */
+.movement-label input[type="radio"]:checked+.box-in {
+    border-color: #22c55e;
+    background-color: var(--gate-in-bg);
+}
+
+.movement-label input[type="radio"]:checked+.box-in strong {
+    color: var(--gate-in-text);
+}
+
+.movement-label input[type="radio"]:checked+.box-out {
+    border-color: var(--royal-blue);
+    background-color: var(--gate-out-bg);
+}
+
+.movement-label input[type="radio"]:checked+.box-out strong {
+    color: var(--gate-out-text);
+}
+
+.movement-label input[type="radio"]:checked+.movement-box .mvt-icon {
+    filter: none;
+    opacity: 1;
+}
+
+/* ==========================================================================
+   7. ENTRADAS DE TEXTO Y SELECCIÓN DE CELDAS
+   ========================================================================== */
+.input-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.field-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.field-input,
+.field-select {
+    padding: 0.65rem 0.75rem;
+    font-size: 0.92rem;
+    color: var(--text-main);
+    background-color: #ffffff;
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.2s ease;
+    width: 100%;
+}
+
+#inputPlacaAcceso {
+    text-transform: uppercase;
+    font-family: monospace;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+}
+
+.field-input:focus,
+.field-select:focus {
+    border-color: var(--royal-blue);
+}
+
+/* Bloque Informativo de Validación en Tiempo Real */
+.validation-status {
+    padding: 0.85rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    border: 1px dashed var(--border-light);
+}
+
+.validation-status.status-pending {
+    background-color: #fafafa;
+    color: var(--slate-muted);
+}
+
+.validation-status.status-found {
+    background-color: var(--gate-in-bg);
+    border-color: var(--gate-in-border);
+    color: var(--gate-in-text);
+}
+
+.status-title {
+    font-weight: 600;
+}
+
+.btn-gate-submit {
+    background-color: var(--navy-dark);
+    color: #ffffff;
+    border: none;
+    padding: 0.85rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-top: 0.5rem;
+}
+
+.btn-gate-submit:hover {
+    background-color: #1e293b;
+}
+
+/* ==========================================================================
+   8. LÍNEA DE TIEMPO INTERNA DE PORTERÍA (ACTIVITY TIMELINE)
+   ========================================================================== */
+.activity-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    position: relative;
+    padding-left: 1rem;
+    border-left: 2px solid var(--border-light);
+}
+
+.timeline-item {
+    position: relative;
+    padding-bottom: 0.25rem;
+}
+
+/* Viñeta de estado en el nodo de la línea de tiempo */
+.timeline-item::before {
+    content: "";
+    position: absolute;
+    left: calc(-1rem - 6px);
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--slate-muted);
+}
+
+.timeline-item.in::before {
+    background-color: #22c55e;
+}
+
+.timeline-item.out::before {
+    background-color: var(--royal-blue);
+}
+
+.timeline-item.loading::before {
+    background-color: var(--border-light);
+}
+
+.tl-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.25rem;
+}
+
+.tl-plate {
+    font-family: monospace;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--navy-dark);
+}
+
+.tl-time {
+    font-size: 0.75rem;
+    color: var(--slate-muted);
+}
+
+.tl-details {
+    font-size: 0.85rem;
+    color: var(--text-main);
+}
+
+/* ==========================================================================
+   9. RESPONSIVIDAD (MEDIA QUERIES)
+   ========================================================================== */
+@media (max-width: 1100px) {
+    .gate-grid {
+        grid-template-columns: 1fr;
+        /* Colapsa a diseño vertical de una columna */
+    }
+}
+
+@media (max-width: 992px) {
+    .layout-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-nav,
+    .sidebar-footer {
+        display: none;
+    }
+
+    .main-content {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .movement-selection {
+        grid-template-columns: 1fr;
+        /* Apila botones de ingreso/salida en pantallas muy pequeñas */
+    }
+}

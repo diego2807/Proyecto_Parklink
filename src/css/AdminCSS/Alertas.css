@@ -1,0 +1,423 @@
+/* ==========================================================================
+   1. VARIABLES GLOBALES (Paleta Corporativa Minimalista)
+   ========================================================================== */
+:root {
+    --bg-main: #f8fafc;
+    /* Gris pizarra muy claro para el fondo */
+    --navy-dark: #0f172a;
+    /* Azul oscuro profundo para la barra lateral */
+    --royal-blue: #1d4ed8;
+    /* Azul rey para acentos primarios */
+    --sky-light: #38bdf8;
+    /* Celeste para elementos activos */
+    --card-white: #ffffff;
+    /* Blanco puro para los contenedores */
+    --text-main: #334155;
+    /* Gris oscuro para texto principal */
+    --slate-muted: #64748b;
+    /* Gris medio para textos secundarios */
+    --border-light: #e2e8f0;
+    /* Gris claro para separadores y bordes */
+
+    /* Colores de Severidad de Alertas */
+    --high-bg: #fef2f2;
+    /* Rojo sutil */
+    --high-border: #fca5a5;
+    --high-text: #991b1b;
+
+    --medium-bg: #fffbeb;
+    /* Amarillo/Ámbar sutil */
+    --medium-border: #fde047;
+    --medium-text: #92400e;
+
+    --info-bg: #f0f9ff;
+    /* Azul sutil */
+    --info-border: #bae6fd;
+    --info-text: #075985;
+}
+
+/* ==========================================================================
+   2. RESETS Y CONFIGURACIÓN BASE
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.5;
+}
+
+.layout-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ==========================================================================
+   3. BARRA LATERAL DE NAVEGACIÓN (SIDEBAR NATIVO)
+   ========================================================================== */
+.sidebar {
+    width: 260px;
+    background-color: var(--navy-dark);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-header {
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-icon {
+    background-color: var(--sky-light);
+    color: var(--navy-dark);
+    font-weight: 800;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-size: 1.1rem;
+}
+
+.logo-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.sidebar-nav {
+    flex-grow: 1;
+    padding: 1.5rem 0;
+}
+
+.nav-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.75rem;
+}
+
+.nav-heading {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--slate-muted);
+    letter-spacing: 0.05em;
+    padding: 0 2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.nav-link {
+    color: #94a3b8;
+    text-decoration: none;
+    padding: 0.65rem 2rem;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+    border-left: 4px solid transparent;
+}
+
+.nav-link:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.nav-link.active {
+    color: #ffffff;
+    background-color: rgba(56, 189, 248, 0.08);
+    border-left-color: var(--sky-light);
+    font-weight: 600;
+}
+
+.sidebar-footer {
+    padding: 1.25rem 1.5rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.user-avatar {
+    width: 38px;
+    height: 38px;
+    background-color: var(--sky-light);
+    color: var(--navy-dark);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.user-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.user-role {
+    font-size: 0.75rem;
+    color: var(--sky-light);
+    display: block;
+}
+
+/* ==========================================================================
+   4. CONTENIDO PRINCIPAL (MAIN WORKSPACE)
+   ========================================================================== */
+.main-content {
+    flex-grow: 1;
+    padding: 2.5rem;
+    overflow-y: auto;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.content-header {
+    margin-bottom: 2.5rem;
+}
+
+.page-badge.badge-alert {
+    display: inline-block;
+    background-color: rgba(239, 68, 68, 0.06);
+    color: #dc2626;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.content-header h1 {
+    font-size: 1.75rem;
+    color: var(--navy-dark);
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.page-description {
+    color: var(--slate-muted);
+    font-size: 0.95rem;
+}
+
+/* ==========================================================================
+   5. DISTRIBUCIÓN EN MATRIZ DE DE ALERTAS (ALERTS GRID)
+   ========================================================================== */
+.alerts-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.alerts-card {
+    background-color: var(--card-white);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 2rem;
+}
+
+.alerts-card h2 {
+    font-size: 1.15rem;
+    color: var(--navy-dark);
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.section-desc {
+    color: var(--slate-muted);
+    font-size: 0.85rem;
+    margin-bottom: 1.75rem;
+}
+
+/* ==========================================================================
+   6. CONTENEDOR Y ELEMENTOS DEL FEED DE ALERTAS (COLUMNA IZQUIERDA)
+   ========================================================================== */
+.alerts-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.alert-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1.25rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+    align-items: flex-start;
+}
+
+.alert-status-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+.alert-details {
+    flex-grow: 1;
+}
+
+.alert-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.35rem;
+}
+
+.alert-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.alert-time {
+    font-size: 0.75rem;
+    color: var(--slate-muted);
+}
+
+.alert-message {
+    font-size: 0.88rem;
+    line-height: 1.4;
+}
+
+/* Variaciones Estilizadas según la Prioridad de la Alerta */
+.alert-item.priority-high {
+    background-color: var(--high-bg);
+    border-color: var(--high-border);
+}
+
+.alert-item.priority-high .alert-tag,
+.alert-item.priority-high .alert-message strong {
+    color: var(--high-text);
+}
+
+.alert-item.priority-medium {
+    background-color: var(--medium-bg);
+    border-color: var(--medium-border);
+}
+
+.alert-item.priority-medium .alert-tag,
+.alert-item.priority-medium .alert-message strong {
+    color: var(--medium-text);
+}
+
+/* Estado de carga interna */
+.alert-loading-placeholder {
+    text-align: center;
+    padding: 2rem;
+    color: var(--slate-muted);
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   7. FORMULARIO DE EMISIÓN DE COMUNICADOS (COLUMNA DERECHA)
+   ========================================================================== */
+.alerts-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.field-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.field-input,
+.field-select,
+.field-textarea {
+    padding: 0.65rem 0.75rem;
+    font-size: 0.92rem;
+    color: var(--text-main);
+    background-color: #ffffff;
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.2s ease;
+    width: 100%;
+}
+
+/* Área de texto específica para comunicados extensos */
+.field-textarea {
+    font-family: inherit;
+    resize: vertical;
+    /* Permite estirar solo hacia abajo */
+    min-height: 100px;
+}
+
+.field-input:focus,
+.field-select:focus,
+.field-textarea:focus {
+    border-color: var(--royal-blue);
+}
+
+.btn-alerts-submit {
+    background-color: var(--navy-dark);
+    color: #ffffff;
+    border: none;
+    padding: 0.85rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-top: 0.5rem;
+}
+
+.btn-alerts-submit:hover {
+    background-color: #1e293b;
+}
+
+/* ==========================================================================
+   8. RESPONSIVIDAD (MEDIA QUERIES)
+   ========================================================================== */
+@media (max-width: 1100px) {
+    .alerts-grid {
+        grid-template-columns: 1fr;
+        /* Pasa a diseño vertical en pantallas medianas */
+    }
+}
+
+@media (max-width: 992px) {
+    .layout-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-nav,
+    .sidebar-footer {
+        display: none;
+    }
+
+    .main-content {
+        padding: 1.5rem;
+    }
+}

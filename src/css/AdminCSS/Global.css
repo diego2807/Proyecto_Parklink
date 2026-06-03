@@ -1,0 +1,84 @@
+/* ==========================================================================
+   1. VARIABLES GLOBALES (Paleta Corporativa)
+   ========================================================================== */
+:root {
+    --bg-main: #f8fafc;
+    --navy-dark: #0f172a;
+    --royal-blue: #1d4ed8;
+    --sky-light: #38bdf8;
+    --card-white: #ffffff;
+    --text-main: #334155;
+    --slate-muted: #64748b;
+    --border-light: #e2e8f0;
+}
+
+/* ==========================================================================
+   2. RESET Y ESTILOS BASE
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   3. ESTRUCTURA GLOBAL (LAYOUT)
+   ========================================================================== */
+.layout-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 2.5rem;
+    overflow-y: auto;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* ==========================================================================
+   4. SIDEBAR GLOBAL (Navegación)
+   ========================================================================== */
+.sidebar {
+    width: 260px;
+    background-color: var(--navy-dark);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+/* ... Aquí irían todos los estilos de .sidebar, .sidebar-header, .nav-link, .user-avatar, etc. ... */
+
+/* ==========================================================================
+   5. COMPONENTES COMUNES (UI elements)
+   ========================================================================== */
+.content-header {
+    margin-bottom: 2.5rem;
+}
+
+.page-badge {
+    display: inline-block;
+    background-color: rgba(100, 116, 139, 0.08);
+    color: var(--slate-muted);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.config-card {
+    background-color: var(--card-white);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 2rem;
+}
