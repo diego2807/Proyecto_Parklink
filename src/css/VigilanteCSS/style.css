@@ -1,6 +1,3 @@
-/* ==========================================================================
-   ESTILOS GENERALES Y CONFIGURACIÓN (Para vistas de Autenticación e Inicio)
-   ========================================================================== */
 :root {
   --navy:      #0B1629;
   --navy2:     #132240;
@@ -216,20 +213,25 @@ body {
 
 
 /* ==========================================================================
-   ESTILOS DEL DASHBOARD INTERNO (Inicio.html)
+   ESTILOS CONTROLADORES DEL LAYOUT (CORE ESTRUCTURAL UNIFICADO)
    ========================================================================== */
 .dash-layout {
-  display: flex;
+  display: flex !important;
+  width: 100% !important;
   min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* Sidebar */
+/* Sidebar Estable */
 .sidebar {
-  width: 260px;
+  width: 260px !important;
   background: var(--navy);
   color: white;
   display: flex;
   flex-direction: column;
+  flex-shrink: 0 !important; /* Fuerza a que nunca se deforme ni aplaste el menú */
   transition: all 0.3s;
 }
 
@@ -290,12 +292,16 @@ body {
   font-weight: 600;
 }
 
-/* Main Content Area */
+/* Main Content Area Adaptativa y Fluida */
 .dash-main {
-  flex: 1;
+  flex-grow: 1 !important;
+  width: calc(100% - 260px) !important; /* Ajuste preciso al pixel restante */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   background: var(--bg);
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .topbar {
@@ -306,6 +312,8 @@ body {
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--border);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .btn-toggle-sidebar {
@@ -339,7 +347,12 @@ body {
 .user-info .name { font-weight: 600; font-size: 0.9rem; color: var(--navy); }
 .user-info .role { font-size: 0.75rem; color: var(--muted); }
 
-.dash-content { padding: 32px; }
+.dash-content { 
+  padding: 32px; 
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .dash-header h2 { margin: 0 0 6px 0; color: var(--navy); font-size: 1.6rem; }
 .dash-header p { margin: 0 0 32px 0; color: var(--muted); font-size: 0.95rem; }
 
@@ -349,6 +362,7 @@ body {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 24px;
   margin-bottom: 32px;
+  width: 100%;
 }
 
 .metric-card {
@@ -359,6 +373,7 @@ body {
   display: flex;
   align-items: center;
   gap: 20px;
+  box-sizing: border-box;
 }
 
 .metric-icon {
@@ -383,11 +398,15 @@ body {
   grid-template-columns: 1fr 1.3fr;
   gap: 24px;
   align-items: start;
+  width: 100%;
 }
 
 @media (max-width: 1024px) {
   .dash-grid-two { grid-template-columns: 1fr; }
   .btn-toggle-sidebar { display: block; }
+  .sidebar { position: fixed; left: -260px; height: 100vh; z-index: 1000; }
+  .sidebar.open { left: 0; }
+  .dash-main { width: 100% !important; }
 }
 
 .panel-card {
@@ -395,6 +414,8 @@ body {
   border-radius: 12px;
   border: 1px solid var(--border);
   overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .panel-card-header {
@@ -403,7 +424,7 @@ body {
 }
 
 .panel-card-header h3 { margin: 0; font-size: 1.1rem; color: var(--navy); }
-.panel-card-body { padding: 24px; }
+.panel-card-body { padding: 24px; box-sizing: border-box; }
 
 .btn-dual-wrap {
   display: flex;
@@ -426,7 +447,7 @@ body {
 .btn-action-out:hover { background: #FAD2CF; }
 
 /* Tabla Moderna */
-.table-responsive { overflow-x: auto; }
+.table-responsive { overflow-x: auto; width: 100%; }
 .modern-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
 .modern-table th { background: #F8FAFC; padding: 14px 24px; color: var(--muted); font-weight: 600; border-bottom: 1px solid var(--border); }
 .modern-table td { padding: 16px 24px; border-bottom: 1px solid var(--border); color: #475569; }
@@ -509,7 +530,7 @@ body {
 
 /* Paleta de Colores Semánticos del Mapa */
 .bg-white { background-color: #ffffff !important; }
-.bg-dark { background-color: #0f172a !important; } /* Slate 900 de fondo técnico */
+.bg-dark { background-color: #0f172a !important; } 
 .bg-secondary { background-color: #64748b !important; }
 .bg-opacity-10 { background-color: rgba(14, 165, 233, 0.1) !important; }
 .bg-danger { background-color: #ef4444 !important; }
@@ -535,7 +556,7 @@ body {
 /* Barra de Control de Filtros Temáticos */
 .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
 .filter-chip { padding: 6px 12px; background: #E2E8F0; border-radius: 20px; font-size: 0.85rem; cursor: pointer; font-weight: 500; transition: background 0.2s, color 0.2s; }
-.filter-chip.active { background: #1E3A8A; color: white; } /* Azul elegante corporativo */
+.filter-chip.active { background: #1E3A8A; color: white; } 
 
 /* Celdas Individuales del Plano Arquitectónico */
 .puesto-celda {

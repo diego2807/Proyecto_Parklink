@@ -1,86 +1,50 @@
 /* ==========================================================================
-   PARKLINK - RESET GENERAL Y LAYOUT MAESTRO (INMUTABLE)
+   CORRECCIÓN COMPATIBILIDAD DE LAYOUT RESPONSIVO (TODOS LOS ROLES)
    ========================================================================== */
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body, html, #root {
+/* 1. Forzar que la raíz ocupe todo el espacio real del navegador sin desbordarse */
+html, body, #root {
   width: 100%;
   height: 100vh;
-  background-color: #f8fafc;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-  overflow: hidden; /* Evita scrolls dobles en la pantalla principal */
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Evita el scroll horizontal molesto */
 }
 
-/* El contenedor padre que acopla el Nav y el contenido horizontalmente */
-.app-container {
+/* 2. El contenedor que junta el Sidebar + El Contenido de la Vista */
+/* Si tus otros roles usan un contenedor padre, asegúrate de que use flex */
+.app-container, .main-layout, #root > div {
   display: flex !important;
-  width: 100vw !important;
-  height: 100vh !important;
+  width: 100%;
+  height: 100vh;
   overflow: hidden;
 }
 
-/* El Menú Lateral (Forzado para que no empuje ni se encoja) */
-nav, 
-.sidebar, 
-aside {
-  width: 260px !important;
-  min-width: 260px !important;
-  max-width: 260px !important;
-  height: 100vh !important;
-  background-color: #0b132b !important; /* Tu azul oscuro original */
-  overflow-y: auto;
-  flex-shrink: 0 !important;
+/* 3. Asegurar que el Sidebar mantenga su tamaño exacto y no colapse */
+.sidebar, aside, [className*="sidebar"] {
+  flex-shrink: 0; /* Evita que el contenido derecho lo aplaste */
+  z-index: 10;    /* Mantiene el menú sobre el fondo pero sin tapar el contenido */
 }
 
-/* El Panel de Contenido Principal (Se traga el espacio en blanco restante) */
-.main-content {
-  flex-grow: 1 !important;
-  height: 100vh !important;
-  overflow-y: auto !important; /* El scroll vertical solo ocurre aquí */
-  padding: 40px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 32px !important;
-  background-color: #f8fafc !important;
-  
-  /* Desactivamos de raíz las posiciones fijas del HTML viejo */
-  position: relative !important;
-  left: 0 !important;
-  margin: 0 !important;
-  width: auto !important;
+/* 4. CORRECCIÓN CRÍTICA: El contenedor del contenido derecho */
+/* Revisa qué clase tiene tu panel derecho (donde está "Central", las tarjetas, etc.) */
+.content-page, .main-content, .dashboard-container, main {
+  flex-grow: 1;      /* Toma TODO el espacio restante a la derecha del sidebar */
+  width: calc(100% - 260px); /* Ajuste preventivo asumiendo un sidebar de ~260px */
+  height: 100vh;
+  overflow-y: auto;  /* Si el contenido es largo, solo esta zona tendrá scroll hacia abajo */
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-/* ==========================================================================
-   COMPACTACIÓN DE GRILLAS Y TABLAS (Para llenar el monitor de borde a borde)
-   ========================================================================== */
-
-/* Aplica para la sección de tus tarjetas de KPIs o formularios */
-.gate-grid, 
-.cards-grid, 
-.dashboard-grid {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important; 
-  gap: 24px !important;
-  width: 100% !important;
+/* 5. Asegurar que las tarjetas y componentes internos sean elásticos */
+.panel-card, .card, .grid-container {
   max-width: 100% !important;
+  box-sizing: border-box;
 }
 
-/* Contenedor y Tabla de vehículos activos para que usen el 100% del ancho */
-.table-container {
-  width: 100% !important;
-  background: #ffffff;
-  border-radius: 12px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-  overflow-x: auto; /* Scroll horizontal interno solo si la pantalla es muy chica */
-}
-
-.data-table {
-  width: 100% !important;
-  border-collapse: collapse;
+/* 6. Evitar que los inputs o selects se salgan de sus contenedores */
+input, select, textarea {
+  max-width: 100% !important;
+  box-sizing: border-box; /* Incluye el padding en el cálculo del ancho */
 }

@@ -1,4 +1,4 @@
-import Nav from '../../components/Nav'
+import Nav from '../../components/AdminNav/Nav'
 import '../../css/AdminCSS/Config.css'
 
 function Config (){

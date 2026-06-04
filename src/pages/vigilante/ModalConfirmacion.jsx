@@ -1,28 +1,125 @@
+import '../../css/VigilanteCSS/style.css'
+import { Link } from "react-router-dom";
+
 function ModalConfirmacion (){
     return(
-        <main class="dash-content">
-        <div class="dash-header">
-          <h2>Gestión de Celdas Individuales</h2>
-          <p>Asigna bahías vacías o procesa la salida de unidades calculando tiempos automáticos.</p>
+      
+        <div className="dash-layout">
+
+   
+
+    <aside className="sidebar" id="sidebar">
+
+      <div className="sidebar-logo">
+
+        <div className="logo-mark" style={{ padding: '24px', color: 'white', fontWeight: '700', fontSize: '1.25rem' }}>
+
+          🅿️ Parklink<span style={{ fontSize: '0.75rem', color: '#94A3B8' }}>Redeban Cloud</span>
+
         </div>
-        <div class="form-split-grid">
-          <article class="panel-card">
-            <div class="panel-card-header" style="background: #F8FAFC;">
+
+      </div>
+
+   
+
+      <ul className="sidebar-menu" id="sidebarMenu">
+        <li className="sidebar-item active"><a href="Inicio.html" className="sidebar-link">Inicio</a></li>
+        <li className="sidebar-item"><Link to="/src/pages/vigilante/FiltroMapa.jsx" className="sidebar-link">Filtros Mapa</Link></li>
+        <li className="sidebar-item"><Link to="/src/pages/vigilante/ListaVehiculosActivo.jsx" className="sidebar-link">Lista Vehículos</Link></li>
+        <li className="sidebar-item"><Link to="/src/pages/vigilante/ModalConfirmacion.jsx" className="sidebar-link">Modales</Link></li>
+        <li className="sidebar-item"><Link to="/src/pages/vigilante/RegistroNovedades.jsx" className="sidebar-link">Registro Novedades</Link></li>
+      </ul>
+
+
+
+      <div className="sidebar-footer" style={{ padding: '24px' }}>
+
+        <a href="Login.html" className="btn-logout" style={{ textDecoration: 'none', textAlign: 'center', display: 'block' }}>Cerrar Sesión</a>
+
+      </div>
+
+    </aside>
+
+ 
+
+    <div className="dash-main">
+
+     
+
+      <div className="topbar">
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '.8rem' }}>
+
+          <button className="hamburger" onClick="document.getElementById('sidebar').classNameList.toggle('open')">☰</button>
+
+          <div className="topbar-left">
+
+            <div className="topbar-title" style={{ fontWeight: 700, fontSize: '1.2rem' }}>Asignación Operativa</div>
+
+            <div className="topbar-subtitle" style={{ color: 'var(--muted)', fontSize: '0.85rem' }}>Bienvenida, Sara — Control de ingresos y liberaciones</div>
+          </div>
+
+        </div>
+
+        <div className="topbar-right">
+
+          <span className="topbar-badge">🟢 En turno</span>
+
+        </div>
+
+      </div>
+
+   
+
+      <main className="dash-content">
+
+        <div className="dash-header">
+
+          <h2>Gestión de Celdas Individuales</h2>
+
+          <p>Asigna bahías vacías o procesa la salida de unidades calculando tiempos automáticos.</p>
+
+        </div>
+
+
+
+        <div className="form-split-grid">
+
+         
+
+          <article className="panel-card">
+
+            <div className="panel-card-header" style={{ background: '#F8FAFC' }}>
+
               <h3 style="color: #137333;">✅ Check-in de Vehículo</h3>
+
             </div>
-            <div class="panel-card-body">
+
+            <div className="panel-card-body">
+
               <form onsubmit="event.preventDefault();">
-                <div class="fg">
-                  <label for="ci-placa">Placa del Vehículo</label>
-                  <div class="input-wrapper">
-                    <input type="text" id="ci-placa" placeholder="ABC-123" required style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()"/>
+
+               
+
+                <div className="fg">
+
+                  <label htmlFor="ci-placa">Placa del Vehículo</label>
+
+                  <div className="input-wrapper">
+
+                   <input type="text" id="ci-placa" placeholder="ABC-123" required style={{ textTransform: 'uppercase' }} onInput={(e) => { e.target.value = e.target.value.toUpperCase(); }}/>
+
                   </div>
+
                 </div>
-                <div class="fg">
 
-                  <label for="ci-celda">Celda Asignada</label>
 
-                  <div class="input-wrapper">
+
+                <div className="fg">
+
+                  <label htmlFor="ci-celda">Celda Asignada</label>
+
+                  <div className="input-wrapper">
 
                     <select id="ci-celda" required>
 
@@ -37,11 +134,14 @@ function ModalConfirmacion (){
                   </div>
 
                 </div>
-                <div class="fg">
 
-                  <label for="ci-tipo">Tipo de Usuario</label>
 
-                  <div class="input-wrapper">
+
+                <div className="fg">
+
+                  <label htmlFor="ci-tipo">Tipo de Usuario</label>
+
+                  <div className="input-wrapper">
 
                     <select id="ci-tipo" required>
 
@@ -60,46 +160,66 @@ function ModalConfirmacion (){
                   </div>
 
                 </div>
-                <div class="fg">
 
-                  <label for="ci-obs">Observaciones (opcional)</label>
 
-                  <div class="input-wrapper">
+
+                <div className="fg">
+
+                  <label htmlFor="ci-obs">Observaciones (opcional)</label>
+
+                  <div className="input-wrapper">
 
                     <input type="text" id="ci-obs" placeholder="Estado del vehículo, observaciones..."/>
 
                   </div>
 
                 </div>
-                <button type="button" class="btn-block" style="background: var(--green); margin-top: 10px;" onclick="processAction('check-in')">Registrar Ingreso</button>
+
+
+
+                <button type="button" className="btn-block">Registrar Ingreso</button>
 
               </form>
 
             </div>
 
           </article>
-          <article class="panel-card">
-            <div class="panel-card-header" style="background: #F8FAFC;">
-              <h3 style="color: #C5221F;">⏏ Check-out de Vehículo</h3>
+
+
+
+          <article className="panel-card">
+
+            <div className="panel-card-header" style={{ background: '#F8FAFC' }}>
+
+              <h3 style={{ color: '#C5221F' }}>⏏ Check-out de Vehículo</h3>
+
             </div>
-            <div class="panel-card-body">
+
+            <div className="panel-card-body">
+
               <form onsubmit="event.preventDefault();">
-                <div class="fg">
+
+               
+
+                <div className="fg">
 
                   <label for="co-placa">Placa del Vehículo</label>
 
-                  <div class="input-wrapper">
+                  <div className="input-wrapper">
 
-                    <input type="text" id="co-placa" placeholder="ABC-123" required style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()"/>
+                    <input type="text" id="co-placa" placeholder="ABC-123"/>
 
                   </div>
 
                 </div>
-                <div class="fg">
+
+
+
+                <div className="fg">
 
                   <label for="co-celda">Celda a Liberar</label>
 
-                  <div class="input-wrapper">
+                  <div className="input-wrapper">
 
                     <select id="co-celda" required>
 
@@ -118,31 +238,49 @@ function ModalConfirmacion (){
                   </div>
 
                 </div>
-                <div class="fg">
+
+
+
+                <div className="fg">
 
                   <label for="co-obs">Observaciones de Salida</label>
 
-                  <div class="input-wrapper">
+                  <div className="input-wrapper">
 
                     <input type="text" id="co-obs" placeholder="Estado del vehículo al retirar..."/>
 
                   </div>
 
                 </div>
-                <div class="info-box-time">
+
+
+
+                <div className="info-box-time">
 
                   <strong>⏱ Tiempo de estadía:</strong> calculado automáticamente por el sistema al confirmar la salida.
 
                 </div>
-                <button type="button" class="btn-block" style="background: var(--red);" onclick="processAction('check-out')">Confirmar Salida</button>
+
+
+
+                <button type="button" className="btn-block">Confirmar Salida</button>
 
               </form>
 
             </div>
 
           </article>
+
+
+
         </div>
 
       </main>
+
+    </div>
+
+  </div>
     )
 }
+
+export default ModalConfirmacion

@@ -10,12 +10,18 @@ import Tendencias from './pages/Admin/Tendencias'
 import Vehiculos from './pages/Admin/Vehiculos'
 import FiltroMapa from './pages/vigilante/FiltroMapa'
 import Inicio from './pages/vigilante/Inicio'
-import ListaVehiculosActivos from './pages/vigilante/ListaVehiculosActivo'
+import ListaVehiculosActivo from './pages/vigilante/ListaVehiculosActivo'
 import ModalConfirmacion from './pages/vigilante/ModalConfirmacion'
 import RecuperacionToken from './pages/vigilante/RecuperacionToken'
 import RegistroNovedades from './pages/vigilante/RegistroNovedades'
 import Login from './pages/global_sistema/Login'
 import Registro from './pages/global_sistema/Registro'
+import Ayuda from './pages/user/Ayuda'
+import Historial from './pages/user/Historial'
+import Notificaciones from './pages/user/Notificaciones'
+import PanelControl from './pages/user/PanelControl'
+import Semaforo from './pages/user/Semaforo'
+import VehiculosU from './pages/user/VehiculosU'
 
 function App() {
   return (
@@ -25,17 +31,25 @@ function App() {
         <Route path='/Registro' element={<Registro />}/>
         <Route path='/FiltroMapa' element={<FiltroMapa />}/>
         <Route path='/Inicio' element={<Inicio />}/>
-        <Route path='ListaVehiculosActivo' element={<ListaVehiculosActivos />}/>
-        <Route path='ModalConfirmacion' element={<ModalConfirmacion />}/>
-        <Route path='RecuperacionToken' element={<RegistroNovedades />}/>
+        <Route path='/ListaVehiculosActivo' element={<ListaVehiculosActivo />}/>
+        <Route path='/ModalConfirmacion' element={<ModalConfirmacion />}/>
+        <Route path='/RecuperacionToken' element={<RecuperacionToken />} />
+        <Route path='/RegistroNovedades' element={<RegistroNovedades />}/>
         <Route path='/Accesos' element={<Accesos />} />
         <Route path='/Alertas' element={<Alertas />} />
         <Route path='/Celdas' element={<Celdas/>}/>
         <Route path='/Config' element={<Config />} />
         <Route path='/Exportador' element={<Exportador />} />
+        <Route path='/KPIs' element={<KPIs />} />
         <Route path='/Log' element={<Log />} />
         <Route path='/Tendencias' element={<Tendencias />} />
         <Route path='/Vehiculos' element={<Vehiculos />} />
+        <Route path='/Ayuda' element={<Ayuda />} />
+        <Route path='/Historial' element={<Historial />} />
+        <Route path='/Notificaciones' element={<Notificaciones />} />
+        <Route path='/PanelControl' element={<PanelControl />} />
+        <Route path='/Semaforo' element={<Semaforo />} />
+        <Route path='/VehiculosU' element={<VehiculosU />} />
       </Routes>
     </BrowserRouter>
   );
