@@ -29,7 +29,7 @@ function RegistroNovedades (){
     <div className="dash-main">
       
       <div className="topbar">
-        <div style="display:flex; align-items:center; gap:.8rem;">
+        <div style={{display:'flex'}}>
           <button className="hamburger" onClick="document.getElementById('sidebar').classNameList.toggle('open')">☰</button>
           <div className="topbar-left">
             <div className="topbar-title" style={{ fontWeight: 700, fontSize: '1.2rem' }}>Libro de Novedades</div>

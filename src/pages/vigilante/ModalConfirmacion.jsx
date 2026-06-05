@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function ModalConfirmacion (){
     return(
       
-        <div className="dash-layout">
+  <div className="dash-layout">
 
    
 
@@ -46,11 +46,11 @@ function ModalConfirmacion (){
 
      
 
-      <div className="topbar">
+        <div className="topbar">
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '.8rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '.8rem' }}>
 
-          <button className="hamburger" onClick="document.getElementById('sidebar').classNameList.toggle('open')">☰</button>
+          <button className="hamburger" onClick={() => document.getElementById('sidebar').classList.toggle('open')}>☰</button>
 
           <div className="topbar-left">
 
@@ -91,7 +91,7 @@ function ModalConfirmacion (){
 
             <div className="panel-card-header" style={{ background: '#F8FAFC' }}>
 
-              <h3 style="color: #137333;">✅ Check-in de Vehículo</h3>
+              <h3 style={{color: '#137333'}}>✅ Check-in de Vehículo</h3>
 
             </div>
 
@@ -217,7 +217,7 @@ function ModalConfirmacion (){
 
                 <div className="fg">
 
-                  <label for="co-celda">Celda a Liberar</label>
+                  <label htmlFor="co-celda">Celda a Liberar</label>
 
                   <div className="input-wrapper">
 
@@ -243,7 +243,7 @@ function ModalConfirmacion (){
 
                 <div className="fg">
 
-                  <label for="co-obs">Observaciones de Salida</label>
+                  <label htmlFor="co-obs">Observaciones de Salida</label>
 
                   <div className="input-wrapper">
 

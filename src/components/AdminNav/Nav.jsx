@@ -11,7 +11,7 @@ function Nav() {
             <nav className="sidebar-nav">
                 <div className="nav-group">
                     <span className="nav-heading">Módulo Dashboard</span>
-                    <Link to="/" className="nav-link">1. Tablero KPIs</Link>
+                    <Link to="/KPIs" className="nav-link">1. Tablero KPIs</Link>
                     <Link to="/Tendencias" className="nav-link">2. Gráficos Tendencias</Link>
                     <Link to="/Celdas" className="nav-link">3. Celdas Especiales</Link>
                 </div>

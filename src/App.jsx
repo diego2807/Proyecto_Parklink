@@ -59,15 +59,16 @@ function App() {
         <Route path='/PanelControl' element={<PanelControl />} />
         <Route path='/Semaforo' element={<Semaforo />} />
         <Route path='/VehiculosU' element={<VehiculosU />} />
-        <Route path="/apertura-turno" element={<AperturaTurno />} />
-        <Route path="/cierre-turno" element={<CierreTurno />} />
-        <Route path="/formulario-entrada" element={<FormularioEntrada />} />
-        <Route path="/formulario-salida" element={<FormularioSalida />} />
-        <Route path="/formulario-visitantes" element={<FormularioVisitantes />} />
-        <Route path="/mapa-grafico" element={<MapaGrafico />} />
+        <Route path="/AperturaTurno" element={<AperturaTurno />} />
+        <Route path="/CierreTurno" element={<CierreTurno />} />
+        <Route path="/FormularioEntrada" element={<FormularioEntrada />} />
+        <Route path="/FormularioSalida" element={<FormularioSalida />} />
+        <Route path="/FormularioVisitantes" element={<FormularioVisitantes />} />
+        <Route path="/MapaGrafico" element={<MapaGrafico />} />
         <Route path="/novedades" element={<Novedades />} />
-        <Route path="/historialturno" element={<HistorialTurno />} />
-        <Route path="/consola-transferencia" element={<ConsolaTransferencia />} />
+        <Route path="/HistorialTurno" element={<HistorialTurno />} />
+        <Route path="/ConsolaTransferencia" element={<ConsolaTransferencia />} />
+        <Route path="/RegistroNovedades" element={<RegistroNovedades />} />
       </Routes>
     </BrowserRouter>
   );
