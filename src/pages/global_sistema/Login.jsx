@@ -15,8 +15,8 @@ function Login (){
 
     <main className="auth-main">
       <div className="auth-box">
-        <h2>¡Bienvenido de nuevo!</h2>
-        <p className="subtitle">Ingresa tus credenciales para acceder al panel administrativo.</p>
+        <h2>¡Bienvenido!</h2>
+        <p className="subtitle">Ingresa tus credenciales para acceder.</p>
         
         <form id="loginForm">
           <div className="fg">
