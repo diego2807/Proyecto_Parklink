@@ -2,7 +2,7 @@ import Footer from "../../components/VigilanteNav/VigilanteFooter"
 import Menu from "../../components/VigilanteNav/Menu";
 import "../../css/VigilanteCSS/novedades.css"
 
-function RegistroNovedades() {
+function Novedades() {
     return (
         <>
         <Menu />
@@ -67,5 +67,5 @@ function RegistroNovedades() {
     )
 }
 
-export default RegistroNovedades;
+export default Novedades;
         

@@ -22,15 +22,15 @@ import Notificaciones from './pages/user/Notificaciones'
 import PanelControl from './pages/user/PanelControl'
 import Semaforo from './pages/user/Semaforo'
 import VehiculosU from './pages/user/VehiculosU'
-import AperturaTurno from './pages/aperturaTurno'
-import CierreTurno from './pages/cierreTurno'
-import FormularioEntrada from './pages/formularioEntrada'
-import FormularioSalida from './pages/formularioSalida'
-import FormularioVisitantes from './pages/FormularioVisitantes'
-import MapaGrafico from './pages/mapaGrafico'
-import Novedades from './pages/registroNovedades'
-import HistorialTurno from './pages/historialTurno'
-import ConsolaTransferencia from './pages/consolaTransferencia'
+import AperturaTurno from './pages/vigilante/AperturaTurno'
+import CierreTurno from './pages/vigilante/CierreTurno'
+import FormularioEntrada from './pages/vigilante/FormularioEntrada'
+import FormularioSalida from './pages/vigilante/FormularioSalida'
+import FormularioVisitantes from './pages/vigilante/FormularioVisitantes'
+import MapaGrafico from './pages/vigilante/MapaGrafico'
+import Novedades from './pages/vigilante/Novedades'
+import HistorialTurno from './pages/vigilante/HistorialTurno'
+import ConsolaTransferencia from './pages/vigilante/ConsolaTransferencia'
 
 function App() {
   return (
@@ -59,15 +59,15 @@ function App() {
         <Route path='/PanelControl' element={<PanelControl />} />
         <Route path='/Semaforo' element={<Semaforo />} />
         <Route path='/VehiculosU' element={<VehiculosU />} />
-          <Route path="/apertura-turno" element={<AperturaTurno />} />
-          <Route path="/cierre-turno" element={<CierreTurno />} />
-          <Route path="/formulario-entrada" element={<FormularioEntrada />} />
-          <Route path="/formulario-salida" element={<FormularioSalida />} />
-          <Route path="/formulario-visitantes" element={<FormularioVisitantes />} />
-          <Route path="/mapa-grafico" element={<MapaGrafico />} />
-          <Route path="/novedades" element={<Novedades />} />
-          <Route path="/historialturno" element={<HistorialTurno />} />
-          <Route path="/consola-transferencia" element={<ConsolaTransferencia />} />
+        <Route path="/apertura-turno" element={<AperturaTurno />} />
+        <Route path="/cierre-turno" element={<CierreTurno />} />
+        <Route path="/formulario-entrada" element={<FormularioEntrada />} />
+        <Route path="/formulario-salida" element={<FormularioSalida />} />
+        <Route path="/formulario-visitantes" element={<FormularioVisitantes />} />
+        <Route path="/mapa-grafico" element={<MapaGrafico />} />
+        <Route path="/novedades" element={<Novedades />} />
+        <Route path="/historialturno" element={<HistorialTurno />} />
+        <Route path="/consola-transferencia" element={<ConsolaTransferencia />} />
       </Routes>
     </BrowserRouter>
   );

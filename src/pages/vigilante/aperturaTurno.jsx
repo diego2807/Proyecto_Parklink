@@ -3,7 +3,7 @@ import Menu from "../../components/VigilanteNav/Menu";
 import "../../css/VigilanteCSS/apertura.css"
 
 function AperturaTurno () {
-    return (        
+    return (
         <>
         <Menu />
         <main className="main-content">

@@ -2,7 +2,7 @@ import Footer from "../../components/VigilanteNav/VigilanteFooter"
 import Menu from "../../components/VigilanteNav/Menu";
 import "../../css/VigilanteCSS/index.css"
 
-function Inicio() {
+function Principal() {
     return (
         <>
         <Menu />
@@ -57,4 +57,4 @@ function Inicio() {
     )
 }
 
-export default Inicio;
+export default Principal;

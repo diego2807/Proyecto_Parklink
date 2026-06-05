@@ -2,7 +2,7 @@ import Footer from "../../components/VigilanteNav/VigilanteFooter"
 import Menu from "../../components/VigilanteNav/Menu";
 import "../../css/VigilanteCSS/salida.css"
 
-function formularioSalida() {
+function FormularioSalida() {
     return (
         <>
         <Menu />
@@ -72,4 +72,4 @@ function formularioSalida() {
     )
 }
 
-export default formularioSalida;
+export default FormularioSalida;
