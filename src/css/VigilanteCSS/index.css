@@ -1,0 +1,46 @@
+.bienvenida{
+    margin-bottom:30px;
+}
+
+.bienvenida h2{
+    color:#0f172a;
+    margin-bottom:10px;
+}
+
+.bienvenida p{
+    color:#64748b;
+}
+
+.turno,
+.guia{
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    margin-bottom:20px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.turno h3,
+.guia h3{
+    color:#0f172a;
+    margin-bottom:15px;
+}
+
+.item-guia{
+    margin-bottom:20px;
+    padding-bottom:15px;
+    border-bottom:1px solid #e5e7eb;
+}
+
+.recordatorio{
+    margin-top:20px;
+    background:#ecfdf5;
+    border-left:4px solid #10b981;
+    padding:15px;
+    border-radius:8px;
+}
+
+.contenido{
+    flex:1;
+    padding:30px;
+}

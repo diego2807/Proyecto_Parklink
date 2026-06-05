@@ -1,0 +1,77 @@
+.novedades{
+    flex:1;
+    padding:30px;
+    background:#f1f5f9;
+}
+
+.formulario-novedad{
+    background:white;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+.campo{
+    margin-bottom:20px;
+}
+
+.campo label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:bold;
+    color:#334155;
+}
+
+.campo input,
+.campo select,
+.campo textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
+    font-size:16px;
+    outline:none;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus{
+    border-color:#2563eb;
+}
+
+.btn-registrar{
+    width:100%;
+    border:none;
+    padding:14px;
+    border-radius:8px;
+    background:#2563eb;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.btn-registrar:hover{
+    background:#1d4ed8;
+}
+
+.recordatorio{
+    margin-top:20px;
+    background:#fefce8;
+    border-left:4px solid #eab308;
+    padding:15px;
+    border-radius:8px;
+}
+
+@media(max-width:768px){
+
+    .novedades{
+        padding:15px;
+    }
+
+    .formulario-novedad{
+        padding:20px;
+    }
+
+}
