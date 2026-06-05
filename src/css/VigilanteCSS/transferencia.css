@@ -1,0 +1,28 @@
+.transferencia{
+    width:100%;
+    max-width:900px;
+    margin:0 auto;
+}
+
+.panel-resumen{
+    background:white;
+    padding:25px;
+    border-radius:12px;
+}
+
+.estadisticas{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:15px;
+}
+
+.stat-card{
+    background:#f8fafc;
+    padding:20px;
+    border-radius:12px;
+}
+
+.btn-transferir{
+    background:#2563eb;
+    color:white;
+}

@@ -22,6 +22,15 @@ import Notificaciones from './pages/user/Notificaciones'
 import PanelControl from './pages/user/PanelControl'
 import Semaforo from './pages/user/Semaforo'
 import VehiculosU from './pages/user/VehiculosU'
+import AperturaTurno from './pages/aperturaTurno'
+import CierreTurno from './pages/cierreTurno'
+import FormularioEntrada from './pages/formularioEntrada'
+import FormularioSalida from './pages/formularioSalida'
+import FormularioVisitantes from './pages/FormularioVisitantes'
+import MapaGrafico from './pages/mapaGrafico'
+import Novedades from './pages/registroNovedades'
+import HistorialTurno from './pages/historialTurno'
+import ConsolaTransferencia from './pages/consolaTransferencia'
 
 function App() {
   return (
@@ -34,7 +43,7 @@ function App() {
         <Route path='/ListaVehiculosActivo' element={<ListaVehiculosActivo />}/>
         <Route path='/ModalConfirmacion' element={<ModalConfirmacion />}/>
         <Route path='/RecuperacionToken' element={<RecuperacionToken />} />
-        <Route path='/RegistroNovedades' element={<RegistroNovedades />}/>
+        <Route path='/Novedades' element={<Novedades />}/>
         <Route path='/Accesos' element={<Accesos />} />
         <Route path='/Alertas' element={<Alertas />} />
         <Route path='/Celdas' element={<Celdas/>}/>
@@ -50,6 +59,15 @@ function App() {
         <Route path='/PanelControl' element={<PanelControl />} />
         <Route path='/Semaforo' element={<Semaforo />} />
         <Route path='/VehiculosU' element={<VehiculosU />} />
+          <Route path="/apertura-turno" element={<AperturaTurno />} />
+          <Route path="/cierre-turno" element={<CierreTurno />} />
+          <Route path="/formulario-entrada" element={<FormularioEntrada />} />
+          <Route path="/formulario-salida" element={<FormularioSalida />} />
+          <Route path="/formulario-visitantes" element={<FormularioVisitantes />} />
+          <Route path="/mapa-grafico" element={<MapaGrafico />} />
+          <Route path="/novedades" element={<Novedades />} />
+          <Route path="/historialturno" element={<HistorialTurno />} />
+          <Route path="/consola-transferencia" element={<ConsolaTransferencia />} />
       </Routes>
     </BrowserRouter>
   );

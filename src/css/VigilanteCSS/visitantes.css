@@ -1,0 +1,74 @@
+.visitantes{
+    flex:1;
+    padding:30px;
+    background:#f1f5f9;
+}
+
+.formulario-visitante{
+    background:white;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+.campo{
+    margin-bottom:20px;
+}
+
+.campo label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:bold;
+    color:#334155;
+}
+
+.campo input,
+.campo textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
+    font-size:16px;
+    outline:none;
+}
+
+.campo input:focus,
+.campo textarea:focus{
+    border-color:#2563eb;
+}
+
+.recordatorio{
+    margin:20px 0;
+    background:#ecfdf5;
+    border-left:4px solid #10b981;
+    padding:15px;
+    border-radius:8px;
+}
+
+.btn-registrar{
+    width:100%;
+    border:none;
+    padding:14px;
+    border-radius:8px;
+    background:#16a34a;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.btn-registrar:hover{
+    background:#15803d;
+}
+
+@media(max-width:768px){
+
+    .visitantes{
+        padding:15px;
+    }
+
+    .formulario-visitante{
+        padding:20px;
+    }
+
+}
