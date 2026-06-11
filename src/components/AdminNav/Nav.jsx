@@ -20,12 +20,14 @@ function Nav() {
                     <span className="nav-heading">Operaciones e Historial</span>
                     <Link to="/Log" className="nav-link">4. Log de Eventos</Link>
                     <Link to="/Exportador" className="nav-link">5. Exportador</Link>
-                    <Link to="/Vehiculos" className="nav-link active">7. Registro Vehículos</Link>
+                    <Link to="/Vehiculos" className="nav-link active">6. Registro Vehículos</Link>
                 </div>
 
                 <div className="nav-group">
                     <span className="nav-heading">Configuración</span>
-                    <Link to="/Config" className="nav-link">10. Parametrización</Link>
+                    <Link to="/Accesos" className="nav-link">7. Accesos</Link>
+                    <Link to="/Config" className="nav-link">8. Parametrización</Link>
+                    <Link to="/Alertas" className="nav-link">9. Alertas</Link>
                 </div>
             </nav>
 
