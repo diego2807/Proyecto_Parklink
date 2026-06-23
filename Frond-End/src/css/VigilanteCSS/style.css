@@ -1,0 +1,300 @@
+/* ==========================================================================
+   PARKLINK - ESTILOS DE AUTENTICACIÓN (Login, Registro)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --navy:      #0B1629;
+  --navy2:     #132240;
+  --blue:      #1A6FE8;
+  --blue-dark: #1256b8;
+  --surface:   #FFFFFF;
+  --bg:        #F0F4FA;
+  --border:    #DDE3EF;
+  --txt:       #1A2540;
+  --muted:     #6B7A99;
+  --green:     #10C98A;
+  --red:       #F04438;
+  --shadow:    0 10px 30px rgba(11, 22, 41, 0.05);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--txt);
+  min-height: 100vh;
+}
+
+/* Contenedor Principal de Pantalla Dividida */
+.auth-wrapper {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Panel Lateral Izquierdo (Hero/Info) */
+.auth-aside {
+  flex: 1;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 50px;
+}
+
+.auth-aside .brand {
+  font-size: 24px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.auth-aside .brand span {
+  color: var(--blue);
+}
+
+.auth-hero-text {
+  max-width: 480px;
+  margin: auto 0;
+}
+
+.auth-hero-text h1 {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 20px;
+}
+
+.auth-hero-text p {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.auth-aside-footer {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Panel Derecho (Contenedor del Formulario) */
+.auth-main {
+  flex: 1;
+  background-color: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.auth-box {
+  width: 100%;
+  max-width: 420px;
+}
+
+.auth-box h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--navy);
+}
+
+.auth-box .auth-subtitle {
+  color: var(--muted);
+  font-size: 15px;
+  margin-bottom: 32px;
+}
+
+/* Alertas de Error y Éxito */
+.alert-message {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.alert-message.error {
+  background-color: #FEE4E2;
+  color: #B42318;
+  border: 1px solid #FDA29B;
+}
+
+.alert-message.success {
+  background-color: #D1FADF;
+  color: #027A48;
+  border: 1px solid #6CE9A6;
+}
+
+/* Grupos de Formulario (Form Groups) */
+.fg {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.fg label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--navy2);
+}
+
+/* Wrappers de Inputs para Iconos y Botón Ojo */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 12px 16px 12px 44px; /* Espacio izquierdo para el icono SVG */
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 15px;
+  color: var(--txt);
+  background-color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.input-wrapper input:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 4px rgba(26, 111, 232, 0.15);
+}
+
+.input-wrapper input::placeholder {
+  color: #A0AEC0;
+}
+
+/* Iconos SVG dentro del input */
+.input-wrapper svg {
+  position: absolute;
+  left: 14px;
+  width: 20px;
+  height: 20px;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+/* Botón para mostrar/ocultar contraseña (Ojo) */
+.btn-eye {
+  position: absolute;
+  right: 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+}
+
+.btn-eye:hover {
+  color: var(--navy);
+}
+
+/* Medidor de fortaleza de contraseña */
+.strength-meter {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.strength-seg {
+  flex: 1;
+  height: 4px;
+  background-color: var(--border);
+  border-radius: 2px;
+  transition: background-color 0.3s ease;
+}
+
+.strength-seg.weak {
+  background-color: var(--red);
+}
+
+.strength-seg.medium {
+  background-color: #FACC15; /* Amarillo de advertencia */
+}
+
+.strength-seg.strong {
+  background-color: var(--green);
+}
+
+/* Botón de Envío Primario (Iniciar Sesión / Crear Cuenta) */
+.btn-block {
+  width: 100%;
+  padding: 14px;
+  background-color: var(--blue);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin-top: 10px;
+}
+
+.btn-block:hover:not(:disabled) {
+  background-color: var(--blue-dark);
+}
+
+.btn-block:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn-block:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Enlaces y navegación inferior */
+.auth-bottom {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.auth-bottom a {
+  color: var(--blue);
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+.auth-bottom a:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (Media Queries)
+   ========================================================================== */
+@media (max-width: 900px) {
+  .auth-aside {
+    display: none; /* Oculta el panel hero en pantallas medianas/pequeñas */
+  }
+  
+  .auth-main {
+    padding: 24px;
+  }
+  
+  .auth-box {
+    max-width: 100%;
+  }
+}

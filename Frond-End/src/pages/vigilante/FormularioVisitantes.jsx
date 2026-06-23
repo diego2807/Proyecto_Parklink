@@ -1,0 +1,67 @@
+import Footer from "../../components/VigilanteNav/VigilanteFooter"
+import Header from "../../components/VigilanteNav/VigilanteHeader";
+import Nav from "../../components/VigilanteNav/VigilanteNav";
+import "../../css/VigilanteCSS/visitantes.css"
+
+function formularioVisitantes() {
+    return (
+        <>
+        <Header />
+        <main className="main-content">
+        <Nav />
+            <section className="visitantes">
+
+            <div className="titulo-pagina">
+                <h2>👥 Registro de Visitantes</h2>
+
+                <p>
+                    Registre los datos del visitante para autorizar el ingreso.
+                </p>
+            </div>
+
+            <form className="formulario-visitante">
+
+                <div className="campo">
+                    <label>Nombre Completo</label>
+                    <input type="text" />
+                </div>
+
+                <div className="campo">
+                    <label>Documento</label>
+                    <input type="text" />
+                </div>
+
+                <div className="campo">
+                    <label>Placa del Vehículo</label>
+                    <input type="text" />
+                </div>
+
+                <div className="campo">
+                    <label>Persona o Área Visitada</label>
+                    <input type="text" />
+                </div>
+
+                <div className="campo">
+                    <label>Motivo de la Visita</label>
+                    <textarea rows="4"></textarea>
+                </div>
+
+            <div className="recordatorio">
+            <strong>💡 Importante:</strong>
+            Verifique la identidad del visitante antes de autorizar el ingreso.
+        </div>
+
+                <button type="submit" className="btn-registrar">
+                    ✅ Registrar Visitante
+                </button>
+
+            </form>
+
+        </section>
+        </main>
+        <Footer/>
+        </>
+    )
+}
+
+export default formularioVisitantes;

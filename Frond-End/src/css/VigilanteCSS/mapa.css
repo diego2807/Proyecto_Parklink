@@ -1,0 +1,218 @@
+/* ==========================================================================
+   ESTILOS ENCAPSULADOS PARA EL MÓDULO MAPA GRÁFICO (VIGILANTE)
+   Evita la interferencia global con las clases del Administrador (.main-content)
+   ========================================================================== */
+
+/* Contenedor principal del layout en el módulo del mapa */
+#modulo-mapa-vigilante .main-content {
+    display: flex;
+    width: 100%;
+    min-height: calc(100vh - 70px); /* Ajuste según la altura del Header/Footer */
+    background-color: #f8fafc;
+    box-sizing: border-box;
+}
+
+/* Sección interna que contiene el plano y las métricas */
+#modulo-mapa-vigilante .mapa {
+    flex: 1;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    box-sizing: border-box;
+}
+
+/* Encabezado de la página */
+#modulo-mapa-vigilante .titulo-pagina h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #0f172a;
+    font-weight: 600;
+}
+
+#modulo-mapa-vigilante .titulo-pagina p {
+    margin: 5px 0 0 0;
+    color: #64748b;
+    font-size: 0.95rem;
+}
+
+/* ==========================================================================
+   METRICAS / TARJETAS DE INDICADORES
+   ========================================================================== */
+
+#modulo-mapa-vigilante .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+#modulo-mapa-vigilante .metric-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    border: 1px solid #e2e8f0;
+}
+
+#modulo-mapa-vigilante .metric-icon {
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#modulo-mapa-vigilante .metric-data {
+    display: flex;
+    flex-direction: column;
+}
+
+#modulo-mapa-vigilante .metric-data .num {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1e293b;
+    line-height: 1.2;
+}
+
+#modulo-mapa-vigilante .metric-data .lbl {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   PLANO ARQUITECTÓNICO DEL PARQUEADERO
+   ========================================================================== */
+
+#modulo-mapa-vigilante .plano-container {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: center;
+}
+
+#modulo-mapa-vigilante .esquema-sotano {
+    width: 100%;
+    max-width: 900px;
+    background: #f1f5f9;
+    border: 3px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#modulo-mapa-vigilante .zona-parqueo {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 15px;
+}
+
+/* Filas verticales de celdas */
+#modulo-mapa-vigilante .fila-vertical {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    background: #e2e8f0;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+/* Puesto / Celda individual */
+#modulo-mapa-vigilante .puesto {
+    width: 65px;
+    height: 75px;
+    background: #ffffff;
+    border: 2px solid #94a3b8;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #334155;
+    transition: all 0.2s ease;
+}
+
+#modulo-mapa-vigilante .puesto span {
+    font-size: 0.75rem;
+    color: #64748b;
+}
+
+/* Estados dinámicos de las celdas */
+#modulo-mapa-vigilante .puesto.disponible {
+    border-color: #22c55e;
+    background-color: #f0fdf4;
+    color: #166534;
+}
+
+#modulo-mapa-vigilante .puesto.ocupado {
+    border-color: #ef4444;
+    background-color: #fef2f2;
+    color: #991b1b;
+}
+
+/* Calle de rodamiento / Vía de circulación */
+#modulo-mapa-vigilante .calle-rodamiento {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 2px dashed #94a3b8;
+    border-right: 2px dashed #94a3b8;
+    margin: 0 10px;
+    background: #f8fafc;
+}
+
+#modulo-mapa-vigilante .flecha-direccion {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 2px;
+    transform: rotate(-90deg); /* O de frente según prefieras el sentido de la vía */
+    white-space: nowrap;
+}
+
+/* Núcleo estructural (Ascensores / Escaleras) */
+#modulo-mapa-vigilante .nucleo {
+    background: #cbd5e1;
+    border: 2px solid #94a3b8;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #475569;
+    letter-spacing: 1px;
+}
+
+/* ==========================================================================
+   FOOTER DEL MAPA (INFORMACIÓN TÉCNICA)
+   ========================================================================== */
+
+#modulo-mapa-vigilante .footer-mapa {
+    display: flex;
+    justify-content: space-between;
+    background: #334155;
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: #f8fafc;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#modulo-mapa-vigilante .footer-mapa span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}

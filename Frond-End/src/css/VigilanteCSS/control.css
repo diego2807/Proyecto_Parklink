@@ -1,0 +1,212 @@
+/* CONTENEDOR PRINCIPAL */
+.dash-content {
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ENCABEZADO */
+.dash-header {
+  margin-bottom: 20px;
+}
+
+.dash-header h2 {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+}
+
+/* TARJETAS DE MÉTRICAS */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.metric-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.08);
+}
+
+.metric-icon {
+  width: 55px;
+  height: 55px;
+  min-width: 55px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+.blue { background: #dbeafe; }
+.green { background: #dcfce7; }
+.orange { background: #fed7aa; }
+
+.metric-data .num {
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+.metric-data .lbl {
+  color: #64748b;
+  font-size: .9rem;
+}
+
+/* FORMULARIO + TABLA */
+.dash-grid-two{
+    display:grid;
+    grid-template-columns:minmax(320px,450px) 1fr;
+    gap:20px;
+    align-items:start;
+}
+
+.panel-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,.08);
+}
+
+.panel-card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.panel-card-body {
+  padding: 20px;
+}
+
+/* FORMULARIO */
+.fg {
+  margin-bottom: 16px;
+}
+
+.fg label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.input-wrapper input,
+.input-wrapper select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.warning-txt {
+  display: block;
+  margin-top: 6px;
+  color: #dc2626;
+  font-size: .8rem;
+}
+
+.btn-dual-wrap {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-action-in,
+.btn-action-out {
+  flex: 1;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-action-in {
+  background: #16a34a;
+}
+
+.btn-action-out {
+  background: #dc2626;
+}
+
+/* TABLA */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.modern-table{
+    width:100%;
+    min-width:500px;
+}
+
+.modern-table th {
+  background: #f8fafc;
+  padding: 12px;
+  text-align: left;
+}
+
+.modern-table td {
+  padding: 12px;
+  border-top: 1px solid #e2e8f0;
+}
+
+
+/* TABLET */
+
+@media (max-width: 1024px){
+
+    .dash-grid-two{
+        grid-template-columns:1fr;
+    }
+
+}
+
+/* CELULAR */
+
+@media (max-width: 768px){
+
+    .metrics-grid{
+        grid-template-columns:1fr;
+    }
+
+    .dash-grid-two{
+        grid-template-columns:1fr;
+    }
+
+    .btn-dual-wrap{
+        flex-direction:column;
+    }
+
+    .btn-action-in,
+    .btn-action-out{
+        width:100%;
+    }
+
+    .panel-card-body{
+        padding:15px;
+    }
+
+}
+
+/* CELULARES PEQUEÑOS */
+
+@media (max-width:480px){
+
+    .dash-header h2{
+        font-size:1.6rem;
+    }
+
+    .metric-card{
+        padding:15px;
+    }
+
+    .metric-data .num{
+        font-size:1.4rem;
+    }
+
+}
