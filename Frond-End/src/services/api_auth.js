@@ -1,8 +1,7 @@
 // src/services/api_auth.js
 //
 // Servicio centralizado para hablar con el backend de autenticación
-// (registro, login y consulta de perfil). Sigue el mismo patrón que
-// api_admin.js para mantener consistencia en todo el proyecto.
+// (Login y consulta de perfil común). Mantiene consistencia con api_admin.js.
 
 const BASE_URL = "http://localhost:5000/api/auth";
 
@@ -16,31 +15,9 @@ const getAuthHeaders = () => {
 
 export const authService = {
   /**
-   * Registra un nuevo usuario. El rol (usuario/vigilante/administrador) lo
-   * decide el backend automáticamente según el dominio/correo usado.
-   */
-  registrar: async ({ nombreCompleto, correo, password }) => {
-    const response = await fetch(`${BASE_URL}/register`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        nombre_completo: nombreCompleto,
-        correo,
-        password,
-      }),
-    });
-
-    const data = await response.json();
-    if (!response.ok) {
-      throw new Error(data.mensaje || "No se pudo completar el registro.");
-    }
-    return data;
-  },
-
-  /**
    * Inicia sesión y guarda el token + datos de usuario en localStorage.
    * Retorna el usuario (incluyendo su rol) para que el componente decida
-   * a qué vista redireccionar.
+   * a qué vista redireccionar de inmediato.
    */
   login: async ({ correo, password }) => {
     const response = await fetch(`${BASE_URL}/login`, {
@@ -51,9 +28,11 @@ export const authService = {
 
     const data = await response.json();
     if (!response.ok) {
+      // Captura el mensaje de error estructurado que retorna tu AuthController
       throw new Error(data.mensaje || "Usuario o contraseña incorrectos.");
     }
 
+    // 🔑 GUARDADO SEGURO: Crucial para que api_admin.jsx inyecte el Bearer token
     localStorage.setItem("token", data.token);
     localStorage.setItem("usuario", JSON.stringify(data.usuario));
 
@@ -74,7 +53,7 @@ export const authService = {
     return data.usuario;
   },
 
-  /** Cierra sesión localmente (no requiere llamada al backend). */
+  /** Cierra sesión localmente eliminando los datos del almacenamiento. */
   logout: () => {
     localStorage.removeItem("token");
     localStorage.removeItem("usuario");
@@ -86,11 +65,12 @@ export const authService = {
     return raw ? JSON.parse(raw) : null;
   },
 
+  /** Valida de forma rápida si existe una sesión activa en el cliente. */
   estaAutenticado: () => !!localStorage.getItem("token"),
 
   /**
-   * Calcula a qué ruta del frontend debe ir el usuario según su rol.
-   * Centralizar esto aquí evita repetir el switch/if en cada componente.
+   * Calcula a qué ruta del frontend debe ir el usuario según su rol en ParkLink.
+   * Centralizar esto aquí evita repetir estructuras switch/if redundantes en Login.jsx.
    */
   rutaSegunRol: (rol) => {
     switch (rol) {

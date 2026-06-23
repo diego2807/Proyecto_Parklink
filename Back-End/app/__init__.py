@@ -1,7 +1,8 @@
+
 import os
 from flask import Flask, jsonify
 from flask_cors import CORS
-from flask_migrate import Migrate  # Importación de la librería de migraciones
+from flask_migrate import Migrate  
 from app.config.settings import Config
 from app.database.database import db, bcrypt, jwt
 
@@ -31,7 +32,7 @@ def create_app():
     bcrypt.init_app(app)
     jwt.init_app(app)
     
-    # 🛠️ CORREGIDO: Inicializa y vincula Flask-Migrate con la App y SQLAlchemy
+    # 🛠️ Inicializa y vincula Flask-Migrate con la App y SQLAlchemy
     migrate.init_app(app, db)
 
     # ── 4. Manejadores de errores JWT ─────────────────────────────────────────
@@ -57,17 +58,13 @@ def create_app():
         }), 401
 
     # ── 5. Registro de Blueprints ─────────────────────────────────────────────
-    # Se importan AQUÍ dentro para prevenir referencias circulares en Python.
+    # Se importan aquí dentro para prevenir referencias circulares en Python.
     from app.routes.auth import auth_bp
-    app.register_blueprint(auth_bp, url_prefix="/api/auth")
+    from app.routes.admin import admin_bp
 
-    try:
-        from app.routes.admin import admin_bp  # noqa: F401
-        app.register_blueprint(admin_bp, url_prefix="/api/admin")
-    except ImportError:
-        app.logger.warning(
-            "Blueprint 'admin' no encontrado — /api/admin no estará disponible."
-        )
+    # Registro limpio y obligatorio de ambos controladores
+    app.register_blueprint(auth_bp, url_prefix="/api/auth")
+    app.register_blueprint(admin_bp, url_prefix="/api/admin")
 
     # ── 6. Ruta de salud ──────────────────────────────────────────────────────
     @app.route("/health", methods=["GET"])
@@ -75,7 +72,7 @@ def create_app():
         return jsonify({
             "status": "online",
             "servicio": "ParkLink API",
-            "base_de_datos": "MySQL (XAMPP)"
+            "base_de_datos": "conectada"
         }), 200
 
     return app

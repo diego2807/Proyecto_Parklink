@@ -9,7 +9,7 @@ import Log from './pages/Admin/Log'
 import Tendencias from './pages/Admin/Tendencias'
 import Vehiculos from './pages/Admin/Vehiculos'
 import Login from './pages/global_sistema/Login'
-import Registro from './pages/global_sistema/Registro'
+import Registro from './pages/Admin/Registro'
 import Ayuda from './pages/user/Ayuda'
 import Historial from './pages/user/Historial'
 import Notificaciones from './pages/user/Notificaciones'
@@ -36,7 +36,6 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Login />}/>
-        <Route path='/Registro' element={<Registro />}/>
 
         {/* ===== Rutas del rol VIGILANTE ===== */}
         <Route path='/Inicio' element={<RutaProtegida rolesPermitidos={['vigilante']}><Inicio /></RutaProtegida>}/>
@@ -53,6 +52,7 @@ function App() {
         <Route path="/RegistroNovedades" element={<RutaProtegida rolesPermitidos={['vigilante']}><RegistroNovedades /></RutaProtegida>} />
 
         {/* ===== Rutas del rol ADMINISTRADOR ===== */}
+        <Route path='/Registro' element={<RutaProtegida rolesPermitidos={['administrador']}><Registro /></RutaProtegida>} />
         <Route path='/Accesos' element={<RutaProtegida rolesPermitidos={['administrador']}><Accesos /></RutaProtegida>} />
         <Route path='/Alertas' element={<RutaProtegida rolesPermitidos={['administrador']}><Alertas /></RutaProtegida>} />
         <Route path='/Celdas' element={<RutaProtegida rolesPermitidos={['administrador']}><Celdas/></RutaProtegida>}/>

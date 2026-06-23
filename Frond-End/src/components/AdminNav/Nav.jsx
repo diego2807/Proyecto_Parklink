@@ -28,6 +28,7 @@ function Nav() {
                     <Link to="/Accesos" className="nav-link">7. Accesos</Link>
                     <Link to="/Config" className="nav-link">8. Parametrización</Link>
                     <Link to="/Alertas" className="nav-link">9. Alertas</Link>
+                    <Link to="/Registro" className="nav-link">10. Registro</Link>
                 </div>
             </nav>
 

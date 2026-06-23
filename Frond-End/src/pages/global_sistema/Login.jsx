@@ -109,7 +109,7 @@ function Login() {
           </form>
 
           <div className="auth-bottom">
-            ¿No tienes cuenta? <Link to="/registro">Regístrate aquí</Link>
+           <Link to="/registro">Regístrate aquí</Link>
           </div>
         </div>
       </section>

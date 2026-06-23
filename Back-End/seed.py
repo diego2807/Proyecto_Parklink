@@ -20,18 +20,16 @@ def poblar_base_de_datos():
     print("🌱 INICIANDO EL PROCESO DE POBLADO DE DATOS (SEEDING)...")
     print("=" * 60)
 
-    # 2. Definir las credenciales iniciales que deseas registrar.
-    # RECUERDA: Modifica estos correos para que coincidan exactamente con lo que 
-    # tienes definido en la configuración de tu app (EMAIL_ADMIN_EXACTOS y EMAIL_VIGILANTE_DOMINIO).
+
     usuarios_iniciales = [
         {
             "nombre_completo": "Administrador Principal",
-            "correo": "admin@redeban.com",  # El correo que aparece en tu captura de pantalla
+            "correo": "admin@redeban.com", 
             "password": "AdminPassword123*"
         },
         {
             "nombre_completo": "Vigilante Técnico",
-            "correo": "guardia1@redeban.com",  # Asegúrate de usar el dominio configurado para vigilantes
+            "correo": "guardia1@redeban.com", 
             "password": "VigilantePassword123*"
         }
     ]
