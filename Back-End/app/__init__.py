@@ -64,12 +64,14 @@ def create_app():
     from app.routes.admin import admin_bp
     from app.routes.accesos import accesos_bp 
     from app.routes.celdas import celdas_bp
+    from app.routes.alertas import alertas_bp
 
     # Registro limpio y obligatorio de los controladores de ParkLink
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
     app.register_blueprint(admin_bp, url_prefix="/api/admin")
     app.register_blueprint(accesos_bp, url_prefix="/api/admin")
     app.register_blueprint(celdas_bp, url_prefix="/api/admin")
+    app.register_blueprint(alertas_bp, url_prefix="/api/admin")
 
     # ── 6. Ruta de salud ──────────────────────────────────────────────────────
     @app.route("/health", methods=["GET"])

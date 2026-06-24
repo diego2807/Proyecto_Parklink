@@ -219,5 +219,46 @@ export const apiService = {
       console.error("Error en registrarCelda:", error);
       throw error;
     }
+  },
+  // ... métodos anteriores (actualizarEstadoCelda, etc.) ...
+
+  /**
+   * 10. Obtener la lista completa de alertas del sistema (GET)
+   */
+  getAlertas: async () => {
+    try {
+      const respuesta = await fetch(`${API_URL}/admin/alertas`, {
+        method: "GET",
+        headers: getAuthHeaders(),
+      });
+      const resultado = await respuesta.json();
+      if (!respuesta.ok) {
+        throw new Error(resultado.error || "No se pudo sincronizar la bitácora de alertas.");
+      }
+      return resultado;
+    } catch (error) {
+      console.error("Error en getAlertas:", error);
+      throw error;
+    }
+  }, // 👈 No olvides esta coma si el método queda arriba del otro
+
+  /**
+   * 11. Descartar una alerta por su ID (DELETE)
+   */
+  eliminarAlerta: async (alertaId) => {
+    try {
+      const respuesta = await fetch(`${API_URL}/admin/alertas/${alertaId}`, {
+        method: "DELETE",
+        headers: getAuthHeaders(),
+      });
+      const resultado = await respuesta.json();
+      if (!respuesta.ok) {
+        throw new Error(resultado.error || "No se pudo descartar la alerta del sistema.");
+      }
+      return resultado;
+    } catch (error) {
+      console.error("Error en eliminarAlerta:", error);
+      throw error;
+    }
   }
 };

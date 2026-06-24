@@ -46,6 +46,7 @@ function Vehiculos() {
             setCargandoTabla(false);
         }
     };
+
     const handleEliminarVehiculo = async (id, placa) => {
         const confirmar = window.confirm(`¿Está seguro de que desea dar de baja de ParkLink el vehículo con placas [ ${placa} ]?`);
         if (!confirmar) return;
@@ -83,23 +84,48 @@ function Vehiculos() {
         };
     }, []);
 
-    // 5. Manejador del envío del formulario (POST)
+    // 5. Manejador del envío del formulario (POST) con validaciones corporativas
     const handleSubmit = async (e) => {
         e.preventDefault();
         setMensajeError("");
         setMensajeExito("");
 
+        // Validación inicial de campos vacíos
         if (!nombreFuncionario.trim() || !documento.trim() || !placa.trim()) {
             setMensajeError("Por favor, diligencia todos los campos requeridos.");
+            return;
+        }
+
+        // ── VALIDACIÓN 1: PLACA (3 letras, un guion, 3 números) ──
+        const placaFormateada = placa.trim().toUpperCase();
+        const regexPlaca = /^[A-Z]{3}-[0-9]{3}$/;
+        if (!regexPlaca.test(placaFormateada)) {
+            setMensajeError("La placa debe cumplir con el formato de 3 letras, un guion y 3 números (Ej: ABC-123).");
+            return;
+        }
+
+        // ── VALIDACIÓN 2: NOMBRE FUNCIONARIO (Solo texto y espacios, sin números) ──
+        const nombreFormateado = nombreFuncionario.trim();
+        const regexNombre = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/;
+        if (!regexNombre.test(nombreFormateado)) {
+            setMensajeError("El nombre completo solo puede contener letras y espacios operacionales.");
+            return;
+        }
+
+        // ── VALIDACIÓN 3: DOCUMENTO (Debe empezar con 1019 y máximo/exactamente 10 dígitos) ──
+        const documentoFormateado = documento.trim();
+        const regexDocumento = /^1019[0-9]{6}$/; // 1019 + 6 dígitos = 10 dígitos en total
+        if (!regexDocumento.test(documentoFormateado)) {
+            setMensajeError("El documento de identidad debe iniciar obligatoriamente con '1019' y contener exactamente 10 dígitos numéricos.");
             return;
         }
 
         setCargandoForm(true);
 
         const payload = {
-            nombre_funcionario: nombreFuncionario.trim(),
-            documento_identidad: documento.trim(),
-            placa: placa.trim().toUpperCase(), 
+            nombre_funcionario: nombreFormateado,
+            documento_identidad: documentoFormateado,
+            placa: placaFormateada, 
             tipo_vehiculo: tipoVehiculo,
             area: area
         };
@@ -165,7 +191,8 @@ function Vehiculos() {
                                 placeholder="Ej: Karen Rodríguez" 
                                 required
                                 value={nombreFuncionario}
-                                onChange={(e) => setNombreFuncionario(e.target.value)}
+                                // MÁSCARA: Elimina números instantáneamente si el usuario intenta digitarlos
+                                onChange={(e) => setNombreFuncionario(e.target.value.replace(/[0-9]/g, ""))}
                             />
                         </div>
 
@@ -175,10 +202,12 @@ function Vehiculos() {
                                 type="text" 
                                 id="inputDocumento" 
                                 className="field-input" 
-                                placeholder="C.C. o NIT" 
+                                placeholder="Ej: 1019XXXXXX" 
                                 required
+                                maxLength={10} // Límite estricto de 10 caracteres en la interfaz
                                 value={documento}
-                                onChange={(e) => setDocumento(e.target.value)}
+                                // MÁSCARA: Elimina letras u otros caracteres especiales en tiempo real
+                                onChange={(e) => setDocumento(e.target.value.replace(/\D/g, ""))}
                             />
                         </div>
 
@@ -189,8 +218,8 @@ function Vehiculos() {
                                     type="text" 
                                     id="inputPlaca" 
                                     className="field-input" 
-                                    placeholder="Ej: ABC123" 
-                                    maxLength="6" 
+                                    placeholder="Ej: ABC-123" 
+                                    maxLength={7} // 3 letras + 1 guion + 3 números = 7 caracteres máximo
                                     required
                                     value={placa}
                                     onChange={(e) => setPlaca(e.target.value)}
@@ -273,7 +302,7 @@ function Vehiculos() {
                                                 <button 
                                                     className="btn-action-delete" 
                                                     style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontWeight: '600', fontSize: '0.85rem' }}
-                                                    onClick={() => handleEliminarVehiculo(item.id, item.placa)} // 👈 ¡Ahora sí usa la función! 🚀
+                                                    onClick={() => handleEliminarVehiculo(item.id, item.placa)}
                                                 >
                                                 🗑️ Dar de Baja
                                                 </button>
