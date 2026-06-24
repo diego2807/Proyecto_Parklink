@@ -1,3 +1,4 @@
+# app/__init__.py
 
 import os
 from flask import Flask, jsonify
@@ -61,18 +62,22 @@ def create_app():
     # Se importan aquí dentro para prevenir referencias circulares en Python.
     from app.routes.auth import auth_bp
     from app.routes.admin import admin_bp
+    from app.routes.accesos import accesos_bp 
+    from app.routes.celdas import celdas_bp
 
-    # Registro limpio y obligatorio de ambos controladores
+    # Registro limpio y obligatorio de los controladores de ParkLink
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
     app.register_blueprint(admin_bp, url_prefix="/api/admin")
+    app.register_blueprint(accesos_bp, url_prefix="/api/admin")
+    app.register_blueprint(celdas_bp, url_prefix="/api/admin")
 
     # ── 6. Ruta de salud ──────────────────────────────────────────────────────
     @app.route("/health", methods=["GET"])
     def health_check():
         return jsonify({
             "status": "online",
-            "servicio": "ParkLink API",
-            "base_de_datos": "conectada"
+            "project": "ParkLink",
+            "version": "1.0.0"
         }), 200
 
     return app

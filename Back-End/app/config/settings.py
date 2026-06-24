@@ -78,7 +78,7 @@ class Config:
 
     # Correos que TERMINAN con este dominio → rol VIGILANTE
     EMAIL_VIGILANTE_DOMINIO = os.getenv(
-        "EMAIL_VIGILANTE_DOMINIO", "@vigilancia.redeban.com"
+        "EMAIL_VIGILANTE_DOMINIO", "guardia1@redeban.com"
     )
 
     # Correos EXACTOS (separados por coma en .env) → rol ADMINISTRADOR

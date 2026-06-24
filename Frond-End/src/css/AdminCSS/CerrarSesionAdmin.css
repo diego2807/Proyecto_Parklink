@@ -1,0 +1,138 @@
+/* ==========================================================================
+   🔒 PARKLINK - CSS COMPLETO Y TOTALMENTE AISLADO DEL NAV DE ADMINISTRADOR
+   ========================================================================== */
+
+/* Contenedor principal de la barra lateral de administración */
+#pl-admin-sidebar-root {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    height: 100vh !important;
+    width: 260px !important; /* Ancho fijo para evitar colapsos */
+    min-width: 260px !important;
+    padding: 20px 15px !important;
+    box-sizing: border-box !important;
+    background-color: #0f172a !important; /* Slate oscuro elegante */
+    border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Título superior de la marca (Header) */
+#pl-admin-sidebar-header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    font-size: 1.3rem !important;
+    font-weight: 700 !important;
+    color: #f8fafc !important;
+    padding-bottom: 15px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    margin-bottom: 15px !important;
+    flex-shrink: 0 !important; /* Evita que el título se achique */
+}
+
+#pl-admin-sidebar-header .pl-admin-brand-text {
+    color: #38bdf8 !important; /* Cyan corporativo */
+}
+
+/* Grupo central de enlaces con scroll integrado */
+#pl-admin-nav-links-group {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+    flex-grow: 1 !important;
+    overflow-y: auto !important; /* Habilita scroll si los links desbordan */
+    padding-right: 4px !important;
+}
+
+/* Personalización del scroll interno para que no se vea feo */
+#pl-admin-nav-links-group::-webkit-scrollbar {
+    width: 4px;
+}
+#pl-admin-nav-links-group::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+/* Botones y enlaces internos de navegación */
+#pl-admin-nav-links-group .pl-admin-menu-item {
+    display: block !important;
+    padding: 10px 14px !important;
+    color: #94a3b8 !important;
+    text-decoration: none !important;
+    border-radius: 6px !important;
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease-in-out !important;
+    white-space: nowrap !important; /* Evita que el texto de los links se parta en dos líneas */
+}
+
+#pl-admin-nav-links-group .pl-admin-menu-item:hover {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    color: #f1f5f9 !important;
+}
+
+/* Resalte dinámico cuando la ruta de React Router está activa */
+#pl-admin-nav-links-group .pl-admin-menu-item.active {
+    background-color: #1e293b !important;
+    color: #38bdf8 !important;
+    border-left: 3px solid #38bdf8 !important;
+    font-weight: 600 !important;
+    padding-left: 11px !important;
+}
+
+/* Contenedor inferior del pie del sidebar (Footer) */
+#pl-admin-sidebar-footer-block {
+    padding-top: 15px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+    margin-top: auto !important;
+    flex-shrink: 0 !important; /* Fuerza al contenedor a mantener su tamaño */
+}
+
+/* 🛑 BOTÓN DE LOGOUT CORREGIDO - FUERZA VISIBILIDAD DE LETRAS */
+#pl-admin-sidebar-root #pl-admin-btn-logout-action {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 12px 16px !important;
+    background-color: #334155 !important; /* Gris slate base */
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    flex-shrink: 0 !important; /* Prohíbe al contenedor aplastarlo */
+    
+    /* Reglas estrictas para el Texto */
+    color: #f1f5f9 !important;            /* Fuerza color gris claro/blanco */
+    font-size: 0.95rem !important;        /* Tamaño de fuente legible */
+    font-weight: 600 !important;          /* Letra gruesa */
+    text-transform: none !important;       /* Desactiva transformaciones raras */
+    white-space: nowrap !important;       /* Obliga al texto a quedarse en una sola línea */
+    letter-spacing: 0.3px !important;
+    
+    /* Asegurar renderizado */
+    visibility: visible !important;
+    opacity: 1 !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+/* 🌟 EFECTO HOVER REPARADO (CON CIERRE CORRECTO DE LLAVES) */
+#pl-admin-sidebar-root #pl-admin-btn-logout-action:hover {
+    background-color: #ef4444 !important; /* Cambia a rojo de salida */
+    color: #ffffff !important;            /* Letras blancas puras */
+    border-color: #ef4444 !important;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25) !important;
+}
+
+/* Efecto al hacer click */
+#pl-admin-sidebar-root #pl-admin-btn-logout-action:active {
+    transform: scale(0.97) !important;
+}
+
+/* Forzar tamaño y color del Emoji */
+#pl-admin-sidebar-root #pl-admin-btn-logout-action .pl-admin-logout-icon {
+    font-size: 1.1rem !important;
+    display: inline-block !important;
+    line-height: 1 !important;
+}

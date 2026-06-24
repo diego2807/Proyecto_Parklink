@@ -1,46 +1,51 @@
-import { Link } from "react-router-dom";
+// src/components/admin/Nav.jsx
+import { NavLink, useNavigate } from "react-router-dom";
+import { authService } from "../../services/api_auth"; // Asegura la ruta correcta de tu servicio
+import '../../css/AdminCSS/CerrarSesionAdmin.css'
 
-function Nav() {
-    return(
-        <aside className="sidebar">
-            <div className="sidebar-header">
-                <span className="logo-icon">P</span>
-                <span className="logo-text">ParkLink</span>
+function NavAdmin() {
+    const navigate = useNavigate();
+
+    // Función encargada de destruir los tokens y redirigir al Login limpio
+    const handleLogout = () => {
+        authService.logout(); // Limpia localStorage
+        navigate("/");        // Redirección inmediata a la raíz
+    };
+
+    return (
+        <aside id="pl-admin-sidebar-root" className="pl-admin-sidebar">
+            {/* Cabecera del panel de administración */}
+            <div id="pl-admin-sidebar-header" className="pl-admin-header">
+                👑 <span className="pl-admin-brand-text">ParkLink Admin</span>
             </div>
-            
-            <nav className="sidebar-nav">
-                <div className="nav-group">
-                    <span className="nav-heading">Módulo Dashboard</span>
-                    <Link to="/KPIs" className="nav-link">1. Tablero KPIs</Link>
-                    <Link to="/Tendencias" className="nav-link">2. Gráficos Tendencias</Link>
-                    <Link to="/Celdas" className="nav-link">3. Celdas Especiales</Link>
-                </div>
-                
-                <div className="nav-group">
-                    <span className="nav-heading">Operaciones e Historial</span>
-                    <Link to="/Log" className="nav-link">4. Log de Eventos</Link>
-                    <Link to="/Exportador" className="nav-link">5. Exportador</Link>
-                    <Link to="/Vehiculos" className="nav-link active">6. Registro Vehículos</Link>
-                </div>
 
-                <div className="nav-group">
-                    <span className="nav-heading">Configuración</span>
-                    <Link to="/Accesos" className="nav-link">7. Accesos</Link>
-                    <Link to="/Config" className="nav-link">8. Parametrización</Link>
-                    <Link to="/Alertas" className="nav-link">9. Alertas</Link>
-                    <Link to="/Registro" className="nav-link">10. Registro</Link>
-                </div>
+            {/* Bloque central de navegación con enlaces del rol administrador */}
+            <nav id="pl-admin-nav-links-group" className="pl-admin-nav-list">
+                <NavLink to="/KPIs" className={({ isActive }) => isActive ? "pl-admin-menu-item active" : "pl-admin-menu-item"}>📈 Dashboard</NavLink>
+                <NavLink to="/Vehiculos" className={({ isActive }) => isActive ? "pl-admin-menu-item active" : "pl-admin-menu-item"}>🚗 Control Vehicular</NavLink>
+                <NavLink to="/Celdas" className={({ isActive }) => isActive ? "pl-admin-menu-item active" : "pl-admin-menu-item"}>📦 Gestión de Celdas</NavLink>
+                <NavLink to="/Registro" className={({ isActive }) => isActive ? "pl-admin-menu-item active" : "pl-admin-menu-item"}>➕ Registrar Personal</NavLink>
+                <NavLink to="/Accesos" className={({ isActive }) => isActive ? "pl-admin-menu-item active" : "pl-admin-menu-item"}>🔑 Accesos</NavLink>
+                <NavLink to="/Alertas" className={({ isActive }) => isActive ? "pl-admin-menu-item active" : "pl-admin-menu-item"}>🚨 Alertas Sistema</NavLink>
+                <NavLink to="/Config" className={({ isActive }) => isActive ? "pl-admin-menu-item active" : "pl-admin-menu-item"}>⚙️ Configuración</NavLink>
+                <NavLink to="/Exportador" className={({ isActive }) => isActive ? "pl-admin-menu-item active" : "pl-admin-menu-item"}>📥 Exportar Datos</NavLink>
+                <NavLink to="/Log" className={({ isActive }) => isActive ? "pl-admin-menu-item active" : "pl-admin-menu-item"}>📋 Auditoría Log</NavLink>
+                <NavLink to="/Tendencias" className={({ isActive }) => isActive ? "pl-admin-menu-item active" : "pl-admin-menu-item"}>📊 Tendencias</NavLink>
             </nav>
 
-            <div className="sidebar-footer">
-                <div className="user-avatar">DP</div>
-                <div className="user-info">
-                    <p className="user-name">Diego Plazas</p>
-                    <span className="user-role">Administrador</span>
-                </div>
+            {/* 🚪 Sección inferior exclusiva para el botón de salida del Administrador */}
+            <div id="pl-admin-sidebar-footer-block" className="pl-admin-footer">
+                <button 
+                    type="button" 
+                    id="pl-admin-btn-logout-action" 
+                    className="pl-admin-logout-trigger"
+                    onClick={handleLogout}
+                >
+                    <span className="pl-admin-logout-icon">🚪</span> Cerrar Sesion
+                </button>
             </div>
         </aside>
-    )
+    );
 }
 
-export default Nav
+export default NavAdmin;

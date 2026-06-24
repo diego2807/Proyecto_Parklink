@@ -1,8 +1,8 @@
 """Migraciones Completas
 
-Revision ID: 8606afc88135
+Revision ID: 6a9c07beaeda
 Revises: 
-Create Date: 2026-06-22 11:21:17.672759
+Create Date: 2026-06-23 23:30:22.709449
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '8606afc88135'
+revision = '6a9c07beaeda'
 down_revision = None
 branch_labels = None
 depends_on = None

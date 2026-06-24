@@ -1,4 +1,4 @@
-// src/services/api_admin.jsx
+// src/services/api_admin.js
 
 const API_URL = "http://127.0.0.1:5000/api"; // Ajusta el puerto según corra tu Flask
 
@@ -7,7 +7,7 @@ const API_URL = "http://127.0.0.1:5000/api"; // Ajusta el puerto según corra tu
  * Recupera el token JWT que guardaste en el localStorage durante el Login.
  */
 const getAuthHeaders = () => {
-  const token = localStorage.getItem("token"); // O como lo hayas guardado en tu api_auth.jsx
+  const token = localStorage.getItem("token"); 
   return {
     "Content-Type": "application/json",
     "Authorization": token ? `Bearer ${token}` : "",
@@ -17,7 +17,6 @@ const getAuthHeaders = () => {
 export const apiService = {
   /**
    * 1. Registrar un nuevo usuario (Funcionario o Vigilante)
-   * Envia el nombre, correo y rol elegidos por el Administrador.
    */
   registrarUsuario: async (datosUsuario) => {
     try {
@@ -33,7 +32,7 @@ export const apiService = {
         throw new Error(resultado.error || "No se pudo registrar al usuario.");
       }
 
-      return resultado; // Retorna el JSON (incluyendo la clave temporal generada por Flask)
+      return resultado; 
     } catch (error) {
       console.error("Error en registrarUsuario:", error);
       throw error;
@@ -41,8 +40,7 @@ export const apiService = {
   },
 
   /**
-   * 2. Obtener las celdas del parqueadero (Eléctricas y Movilidad Reducida)
-   * Usado en tu componente Celdas.jsx
+   * 2. Obtener el estado de las celdas especiales
    */
   getCeldas: async () => {
     try {
@@ -54,10 +52,10 @@ export const apiService = {
       const resultado = await respuesta.json();
 
       if (!respuesta.ok) {
-        throw new Error(resultado.error || "Error al obtener el estado de las celdas.");
+        throw new Error(resultado.error || "Error al obtener las celdas.");
       }
 
-      return resultado; // Retorna { electricas: [...], movilidad: [...] }
+      return resultado; 
     } catch (error) {
       console.error("Error en getCeldas:", error);
       throw error;
@@ -66,7 +64,6 @@ export const apiService = {
 
   /**
    * 3. Obtener el historial de ingresos y salidas corporativas
-   * Para consumirse en componentes de auditoría o listas
    */
   getHistorial: async () => {
     try {
@@ -88,8 +85,54 @@ export const apiService = {
     }
   },
 
+  registrarAcceso: async (datosAcceso) => {
+    try {
+      const respuesta = await fetch(`${API_URL}/admin/registrar-acceso`, {
+        method: "POST",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(datosAcceso),
+      });
+
+      const resultado = await respuesta.json();
+
+      if (!respuesta.ok) {
+        throw new Error(resultado.error || "No se pudo procesar el registro en portería.");
+      }
+
+      return resultado;
+    } catch (error) {
+      console.error("Error en registrarAcceso:", error);
+      throw error;
+    }
+  },
+
   /**
-   * 4. Vincular un nuevo vehículo a un funcionario
+   * 4. Obtener todos los vehículos vinculados (GET)
+   * ¡Este es el método que consume la tabla de Vehiculos.jsx!
+   */
+  getVehiculos: async () => {
+    try {
+      const respuesta = await fetch(`${API_URL}/admin/vehiculos`, {
+        method: "GET",
+        headers: getAuthHeaders(),
+      });
+
+      const resultado = await respuesta.json();
+
+      if (!respuesta.ok) {
+        // Lanza el mensaje de error que viene directo desde Flask
+        throw new Error(resultado.error || "Error al recuperar el listado de vehículos.");
+      }
+
+      return resultado; // Retorna el array de vehículos
+    } catch (error) {
+      console.error("Error en getVehiculos:", error);
+      throw error;
+    }
+  },
+
+  /**
+   * 5. Vincular un nuevo vehículo a un funcionario (POST)
    * Usado en Vehiculos.jsx para asociar placas
    */
   vincularVehiculo: async (datosVehiculo) => {
@@ -103,12 +146,77 @@ export const apiService = {
       const resultado = await respuesta.json();
 
       if (!respuesta.ok) {
-        throw new Error(resultado.error || "Error al vincular el vehículo.");
+        throw new Error(resultado.error || "No se pudo vincular el vehículo.");
       }
 
       return resultado;
     } catch (error) {
       console.error("Error en vincularVehiculo:", error);
+      throw error;
+    }
+  },
+  
+  /**
+   * 6. Dar de baja un vehículo por su ID (DELETE)
+   */
+    eliminarVehiculo: async (vehiculoId) => {
+    try {
+      const respuesta = await fetch(`${API_URL}/admin/vehiculos/${vehiculoId}`, {
+        method: "DELETE",
+        headers: getAuthHeaders(),
+      });
+
+      const resultado = await respuesta.json();
+
+      if (!respuesta.ok) {
+        throw new Error(resultado.error || "No se pudo dar de baja el vehículo.");
+      }
+
+      return resultado;
+    } catch (error) {
+      console.error("Error en eliminarVehiculo:", error);
+      throw error;
+    }
+  },
+  /**
+   * 8. Cambiar el estado de ocupación de una celda (PUT)
+   */
+  actualizarEstadoCelda: async (celdaId, estadoOcupada) => {
+    try {
+      const respuesta = await fetch(`${API_URL}/admin/celdas/${celdaId}/estado`, {
+        method: "PUT",
+        headers: getAuthHeaders(),
+        body: JSON.stringify({ ocupada: estadoOcupada }),
+      });
+      const resultado = await respuesta.json();
+      if (!respuesta.ok) {
+        throw new Error(resultado.error || "No se pudo actualizar el estado de la celda.");
+      }
+      return resultado;
+    } catch (error) {
+      console.error("Error en actualizarEstadoCelda:", error);
+      throw error;
+    }
+  },
+  // Dentro de apiService en api_admin.js (Recuerda poner la coma arriba)
+  
+  /**
+   * 9. Registrar una nueva celda de uso prioritario (POST)
+   */
+    registrarCelda: async (datosCelda) => {
+    try {
+      const respuesta = await fetch(`${API_URL}/admin/celdas`, {
+        method: "POST",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(datosCelda),
+      });
+      const resultado = await respuesta.json();
+      if (!respuesta.ok) {
+        throw new Error(resultado.error || "No se pudo registrar la celda.");
+      }
+      return resultado;
+    } catch (error) {
+      console.error("Error en registrarCelda:", error);
       throw error;
     }
   }

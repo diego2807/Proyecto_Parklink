@@ -1,8 +1,131 @@
-import Nav from '../../components/AdminNav/Nav'
-import '../../css/AdminCSS/Vehiculos.css'
+// src/components/admin/Vehiculos.jsx
+import { useState, useEffect } from 'react';
+import Nav from '../../components/AdminNav/Nav';
+import { apiService } from '../../services/api_admin'; 
+import '../../css/AdminCSS/Vehiculos.css';
 
-function Vehiculos (){
-    return(
+// COMPONENTE MAYÚSCULA: Soluciona el error del Hook useEffect
+function Vehiculos() {
+    // 1. Estados nativos del formulario para capturar los datos
+    const [nombreFuncionario, setNombreFuncionario] = useState("");
+    const [documento, setDocumento] = useState("");
+    const [placa, setPlaca] = useState("");
+    const [tipoVehiculo, setTipoVehiculo] = useState("Automóvil"); 
+    const [area, setArea] = useState("Tecnología");                
+
+    // 2. Estados de control para la tabla, loaders y feedback visual
+    const [listaVehiculos, setListaVehiculos] = useState([]); 
+    const [cargandoTabla, setCargandoTabla] = useState(true);
+    const [cargandoForm, setCargandoForm] = useState(false);
+    const [mensajeError, setMensajeError] = useState("");
+    const [mensajeExito, setMensajeExito] = useState("");
+
+    // 3. Cargar y sincronizar la lista de vehículos desde el backend (Flask)
+    const cargarVehiculosRegistrados = async () => {
+        try {
+            setMensajeError("");
+            const data = await apiService.getVehiculos();
+            
+            console.log("Datos recibidos de Flask en la tabla:", data);
+
+            if (data && Array.isArray(data)) {
+                setListaVehiculos(data);
+            } else if (data && data.vehiculos && Array.isArray(data.vehiculos)) {
+                setListaVehiculos(data.vehiculos);
+            } else if (data && data.data && Array.isArray(data.data)) {
+                setListaVehiculos(data.data);
+            } else {
+                console.warn("La estructura devuelta no es un array válido:", data);
+                setListaVehiculos([]); 
+            }
+        } catch (err) {
+            console.error("Error al recuperar vehículos:", err);
+            setMensajeError(err.message || "No se pudo sincronizar la lista con el servidor corporativo.");
+            setListaVehiculos([]); 
+        } finally {
+            setCargandoTabla(false);
+        }
+    };
+    const handleEliminarVehiculo = async (id, placa) => {
+        const confirmar = window.confirm(`¿Está seguro de que desea dar de baja de ParkLink el vehículo con placas [ ${placa} ]?`);
+        if (!confirmar) return;
+
+        try {
+            setMensajeError("");
+            setMensajeExito("");
+            
+            // Llamar al servicio real del backend
+            const respuesta = await apiService.eliminarVehiculo(id);
+            
+            setMensajeExito(respuesta.message || "Vehículo eliminado con éxito.");
+            
+            // Refrescar la tabla automáticamente consultando los datos limpios de la BD
+            await cargarVehiculosRegistrados();
+        } catch (error) {
+            setMensajeError(error.message || "No se pudo completar la eliminación del vehículo.");
+        }
+    };
+
+    // 4. Hook de montaje corregido y alineado al ciclo de vida del componente
+    useEffect(() => {
+        let activo = true;
+        
+        const ejecutarCarga = async () => {
+            if (activo) {
+                await cargarVehiculosRegistrados();
+            }
+        };
+
+        ejecutarCarga();
+
+        return () => {
+            activo = false;
+        };
+    }, []);
+
+    // 5. Manejador del envío del formulario (POST)
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setMensajeError("");
+        setMensajeExito("");
+
+        if (!nombreFuncionario.trim() || !documento.trim() || !placa.trim()) {
+            setMensajeError("Por favor, diligencia todos los campos requeridos.");
+            return;
+        }
+
+        setCargandoForm(true);
+
+        const payload = {
+            nombre_funcionario: nombreFuncionario.trim(),
+            documento_identidad: documento.trim(),
+            placa: placa.trim().toUpperCase(), 
+            tipo_vehiculo: tipoVehiculo,
+            area: area
+        };
+
+        try {
+            await apiService.vincularVehiculo(payload);
+            setMensajeExito(`¡Vehículo con placa ${payload.placa} vinculado exitosamente!`);
+            
+            setNombreFuncionario("");
+            setDocumento("");
+            setPlaca("");
+            setTipoVehiculo("Automóvil");
+            setArea("Tecnología");
+
+            setCargandoTabla(true);
+            await cargarVehiculosRegistrados();
+
+        } catch (err) {
+            console.error("Error en vinculación vehicular:", err);
+            setMensajeError(err.message || "Error al procesar la vinculación del vehículo.");
+        } finally {
+            setCargandoForm(false);
+        }
+    };
+
+    return (
         <>
         <Nav/>
         <main className="main-content">
@@ -15,32 +138,73 @@ function Vehiculos (){
                 </div>
             </header>
 
+            {mensajeError && (
+                <div className="form-msg error" style={{ padding: '12px', marginBottom: '15px', background: '#fde8e8', color: '#9b1c1c', borderRadius: '6px', border: '1px solid #f8b4b4', fontSize: '0.9rem', fontWeight: '500' }}>
+                    ⚠️ {mensajeError}
+                </div>
+            )}
+            {mensajeExito && (
+                <div className="form-msg success" style={{ padding: '12px', marginBottom: '15px', background: '#def7ec', color: '#03543f', borderRadius: '6px', border: '1px solid #bcf0da', fontSize: '0.9rem', fontWeight: '500' }}>
+                    ✅ {mensajeExito}
+                </div>
+            )}
+
             <div className="vehicles-grid">
                 
                 <section className="vehicles-card">
                     <h2>Vincular Nuevo Vehículo</h2>
                     <p className="section-desc">Asocia la información de un empleado para permitir la lectura automatizada en portería.</p>
                     
-                    <form id="form-registro-vehiculo" className="vehicles-form">
+                    <form id="form-registro-vehiculo" className="vehicles-form" onSubmit={handleSubmit}>
                         <div className="input-field">
-                            <label for="inputNombreFuncionario" className="field-label">Nombre Completo:</label>
-                            <input type="text" id="inputNombreFuncionario" className="field-input" placeholder="Ej: Karen Rodríguez" required/>
+                            <label htmlFor="inputNombreFuncionario" className="field-label">Nombre Completo:</label>
+                            <input 
+                                type="text" 
+                                id="inputNombreFuncionario" 
+                                className="field-input" 
+                                placeholder="Ej: Karen Rodríguez" 
+                                required
+                                value={nombreFuncionario}
+                                onChange={(e) => setNombreFuncionario(e.target.value)}
+                            />
                         </div>
 
                         <div className="input-field">
-                            <label for="inputDocumento" className="field-label">Documento de Identidad:</label>
-                            <input type="text" id="inputDocumento" className="field-input" placeholder="C.C. o NIT" required/>
+                            <label htmlFor="inputDocumento" className="field-label">Documento de Identidad:</label>
+                            <input 
+                                type="text" 
+                                id="inputDocumento" 
+                                className="field-input" 
+                                placeholder="C.C. o NIT" 
+                                required
+                                value={documento}
+                                onChange={(e) => setDocumento(e.target.value)}
+                            />
                         </div>
 
                         <div className="form-row">
                             <div className="input-field">
-                                <label for="inputPlaca" className="field-label">Placa del Vehículo:</label>
-                                <input type="text" id="inputPlaca" className="field-input" placeholder="Ej: ABC123" max-length="6" required/>
+                                <label htmlFor="inputPlaca" className="field-label">Placa del Vehículo:</label>
+                                <input 
+                                    type="text" 
+                                    id="inputPlaca" 
+                                    className="field-input" 
+                                    placeholder="Ej: ABC123" 
+                                    maxLength="6" 
+                                    required
+                                    value={placa}
+                                    onChange={(e) => setPlaca(e.target.value)}
+                                />
                             </div>
                             
                             <div className="input-field">
-                                <label for="selectTipoVehiculo" className="field-label">Tipo:</label>
-                                <select id="selectTipoVehiculo" className="field-select">
+                                <label htmlFor="selectTipoVehiculo" className="field-label">Tipo:</label>
+                                <select 
+                                    id="selectTipoVehiculo" 
+                                    className="field-select"
+                                    value={tipoVehiculo}
+                                    onChange={(e) => setTipoVehiculo(e.target.value)}
+                                >
                                     <option value="Automóvil">Automóvil</option>
                                     <option value="Motocicleta">Motocicleta</option>
                                 </select>
@@ -48,8 +212,13 @@ function Vehiculos (){
                         </div>
 
                         <div className="input-field">
-                            <label for="selectArea" className="field-label">Área / Dependencia:</label>
-                            <select id="selectArea" className="field-select">
+                            <label htmlFor="selectArea" className="field-label">Área / Dependencia:</label>
+                            <select 
+                                id="selectArea" 
+                                className="field-select"
+                                value={area}
+                                onChange={(e) => setArea(e.target.value)}
+                            >
                                 <option value="Tecnología">Tecnología e Innovación</option>
                                 <option value="Operaciones">Operaciones y Logística</option>
                                 <option value="Administración">Administración y Finanzas</option>
@@ -57,8 +226,8 @@ function Vehiculos (){
                             </select>
                         </div>
 
-                        <button type="submit" className="btn-submit">
-                            Registrar y Autorizar
+                        <button type="submit" className="btn-submit" disabled={cargandoForm}>
+                            {cargandoForm ? "Procesando..." : "Registrar y Autorizar"}
                         </button>
                     </form>
                 </section>
@@ -78,11 +247,42 @@ function Vehiculos (){
                                 </tr>
                             </thead>
                             <tbody id="tabla-vehiculos-cuerpo">
-                                <tr className="row-loading">
-                                    <td colspan="4">Consultando base de datos de funcionarios...</td>
-                                </tr>
+                                {cargandoTabla ? (
+                                    <tr className="row-loading">
+                                        <td colSpan="4" style={{ textAlign: 'center', padding: '15px', color: '#64748b' }}>
+                                            Consultando base de datos de funcionarios...
+                                        </td>
+                                    </tr>
+                                ) : (!listaVehiculos || listaVehiculos.length === 0) ? (
+                                    <tr>
+                                        <td colSpan="4" style={{ textAlign: 'center', padding: '15px', color: '#64748b' }}>
+                                            No se encontraron vehículos vinculados en el sistema.
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    listaVehiculos.map((item, index) => (
+                                        <tr key={item.id || index}>
+                                            <td>{item.nombre_funcionario || item.funcionario || "No asignado"}</td>
+                                            <td>
+                                                <span className="plate-badge" style={{ background: '#f1f5f9', padding: '4px 8px', borderRadius: '4px', fontFamily: 'monospace', fontWeight: 'bold', border: '1px solid #cbd5e1', color: '#0f172a' }}>
+                                                    {item.placa}
+                                                </span>
+                                            </td>
+                                            <td>{item.area || "General"}</td>
+                                            <td>
+                                                <button 
+                                                    className="btn-action-delete" 
+                                                    style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontWeight: '600', fontSize: '0.85rem' }}
+                                                    onClick={() => handleEliminarVehiculo(item.id, item.placa)} // 👈 ¡Ahora sí usa la función! 🚀
+                                                >
+                                                🗑️ Dar de Baja
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
                             </tbody>
-                        </table>
+                        </table>    
                     </div>
                 </section>
 
@@ -90,7 +290,7 @@ function Vehiculos (){
 
         </main>
         </>
-    )
+    );
 }
 
-export default Vehiculos
+export default Vehiculos;
