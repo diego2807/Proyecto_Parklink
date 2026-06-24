@@ -38,6 +38,23 @@ export const apiService = {
       throw error;
     }
   },
+  // Al final de apiService en api_admin.js
+  getMetricasKPIs: async () => {
+    try {
+      const respuesta = await fetch(`${API_URL}/admin/kpis`, {
+        method: "GET",
+        headers: getAuthHeaders(),
+      });
+      const resultado = await respuesta.json();
+      if (!respuesta.ok) {
+        throw new Error(resultado.error || "No se pudieron sincronizar los indicadores KPI.");
+      }
+      return resultado;
+    } catch (error) {
+      console.error("Error en getMetricasKPIs:", error);
+      throw error;
+    }
+  },
 
   /**
    * 2. Obtener el estado de las celdas especiales
@@ -105,6 +122,18 @@ export const apiService = {
       throw error;
     }
   },
+  // Dentro de tu apiService en src/services/api_admin.js agrega:
+// En src/services/api_admin.js
+getLogs: async () => {
+    const token = localStorage.getItem('token');
+    // 💡 Cambia "axios.get" por la instancia configurada en tu archivo (ej: api.get)
+    const respuesta = await api.get('http://localhost:5000/api/admin/log', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+    return respuesta.data;
+},
 
   /**
    * 4. Obtener todos los vehículos vinculados (GET)
@@ -120,7 +149,6 @@ export const apiService = {
       const resultado = await respuesta.json();
 
       if (!respuesta.ok) {
-        // Lanza el mensaje de error que viene directo desde Flask
         throw new Error(resultado.error || "Error al recuperar el listado de vehículos.");
       }
 

@@ -17,7 +17,7 @@ app = create_app()
 
 def poblar_base_de_datos():
     print("=" * 60)
-    print("🌱 INICIANDO EL PROCESO DE POBLADO DE DATOS (SEEDING)...")
+    print(" INICIANDO EL PROCESO DE POBLADO DE DATOS (SEEDING)...")
     print("=" * 60)
 
 
