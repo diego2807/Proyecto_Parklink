@@ -19,8 +19,31 @@ function Accesos() {
     const [mensajeError, setMensajeError] = useState("");
     const [mensajeExito, setMensajeExito] = useState("");
 
+    // 🌟 NUEVA FUNCIÓN: Formateador dinámico y restricción estricta (AAA-123)
+    const handlePlacaChange = (e) => {
+        // Limpiar el valor eliminando guiones previos y pasando a mayúsculas
+        let valor = e.target.value.replace(/-/g, '').toUpperCase();
+        
+        // Validar y restringir según la posición de los caracteres
+        if (valor.length <= 3) {
+            // Los primeros 3 caracteres solo pueden ser letras
+            valor = valor.replace(/[^A-Z]/g, '');
+        } else {
+            // Separa las primeras 3 letras y obliga a que los siguientes 3 caracteres sean solo números
+            const letras = valor.slice(0, 3).replace(/[^A-Z]/g, '');
+            const numeros = valor.slice(3, 6).replace(/[^0-9]/g, '');
+            valor = letras + numeros;
+        }
+
+        // Inyectar el guion automático si ya se digitaron las 3 letras
+        if (valor.length > 3) {
+            valor = `${valor.slice(0, 3)}-${valor.slice(3)}`;
+        }
+
+        setPlaca(valor);
+    };
+
     // 3. Función para cargar el historial de accesos desde el backend
-    // 3. Función para cargar el historial de accesos blindada contra fallos de respuesta
     const cargarHistorialDeAccesos = async () => {
         try {
             setCargandoHistorial(true);
@@ -28,17 +51,15 @@ function Accesos() {
             
             const datos = await apiService.getHistorial();
             
-            // Validamos defensivamente que la respuesta sea un array antes de asignarla
             if (datos && Array.isArray(datos)) {
                 setHistorial(datos);
             } else if (datos && datos.error) {
                 setMensajeError(datos.error);
             } else {
-                setHistorial([]); // Fallback seguro si viene vacío
+                setHistorial([]); 
             }
         } catch (error) {
             console.error("Error al recuperar el historial corporativo:", error);
-            // Captura el mensaje exacto del backend o pone uno por defecto sin romper el componente
             setMensajeError(error.message || "No se pudo sincronizar el historial de movimientos o el token expiró.");
         } finally {
             setCargandoHistorial(false);
@@ -57,7 +78,6 @@ function Accesos() {
 
         ejecutarCarga();
 
-        // Función de limpieza para evitar fugas de memoria o llamadas concurrentes en React
         return () => {
             activo = false;
         };
@@ -69,8 +89,10 @@ function Accesos() {
         setMensajeError("");
         setMensajeExito("");
 
-        if (!placa.trim()) {
-            setMensajeError("Por favor, digite o valide una placa vehicular.");
+        // Validación estricta antes de enviar al backend de Flask
+        const regexPlaca = /^[A-Z]{3}-[0-9]{3}$/;
+        if (!regexPlaca.test(placa)) {
+            setMensajeError("El formato de la placa no es válido. Debe ser 3 letras, un guion y 3 números (Ej: ABC-123).");
             return;
         }
 
@@ -85,17 +107,14 @@ function Accesos() {
         try {
             setProcesandoAcceso(true);
             
-            // 🚀 LLAMADA REAL A LA API DE PARKLINK
             const respuesta = await apiService.registrarAcceso(payload);
             
-            // Mensaje de éxito con lo que responde el backend
             setMensajeExito(respuesta.message || `¡Registro de ${tipoMovimiento} guardado con éxito!`);
             
             // Limpiar formulario básico para el siguiente vehículo
             setPlaca("");
             setCeldaAsignada("");
             
-            // Recargar la barra lateral inmediatamente para ver el cambio reflejado en tiempo real
             await cargarHistorialDeAccesos();
 
         } catch (error) {
@@ -104,6 +123,9 @@ function Accesos() {
             setProcesandoAcceso(false);
         }
     };
+
+    // Determinar si la placa cumple con el largo exacto de la máscara (7 caracteres: AAA-123)
+    const placaEsValida = placa.length === 7;
 
     return (
         <>
@@ -162,17 +184,17 @@ function Accesos() {
                             </label>
                         </div>
 
-                        {/* Input Controlado de Placa */}
+                        {/* Input Controlado de Placa con Máscara Automática */}
                         <div className="input-field">
                             <label htmlFor="inputPlaca" className="field-label">Placa del Vehículo:</label>
                             <input 
                                 type="text" 
                                 id="inputPlaca" 
                                 className="field-input text-uppercase" 
-                                placeholder="Ej: ABC123" 
-                                maxLength="10"
+                                placeholder="Ej: ABC-123" 
+                                maxLength="7" // 🌟 Reducido a 7 para encajar perfectamente con 'AAA-123'
                                 value={placa}
-                                onChange={(e) => setPlaca(e.target.value.toUpperCase())}
+                                onChange={handlePlacaChange} // 🌟 Enlazado a la nueva validación
                                 required
                             />
                         </div>
@@ -207,10 +229,10 @@ function Accesos() {
                             </select>
                         </div>
 
-                        {/* Estado Dinámico de Validación */}
-                        <div className={`gate-status ${placa.length >= 5 ? 'status-success' : 'status-pending'}`}>
+                        {/* Estado Dinámico de Validación Ajustado */}
+                        <div className={`gate-status ${placaEsValida ? 'status-success' : 'status-pending'}`}>
                             <p className="status-title">
-                                {placa.length >= 5 ? `Placa lista para autorizar: ${placa}` : "Esperando validación de placa..."}
+                                {placaEsValida ? `Placa lista para autorizar: ${placa}` : "Esperando formato completo (Ej: ABC-123)..."}
                             </p>
                         </div>
 

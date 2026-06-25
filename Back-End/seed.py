@@ -12,7 +12,6 @@ from app.database.database import db
 from app.models.usuario import Usuario
 from app.services.auth_service import AuthService
 
-# 1. Inicializar el contexto de la aplicación Flask
 app = create_app()
 
 def poblar_base_de_datos():

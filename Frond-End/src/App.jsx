@@ -3,7 +3,6 @@ import Accesos from './pages/Admin/Accesos'
 import Alertas from './pages/Admin/Alertas'
 import Celdas from './pages/Admin/Celdas'
 import Config from './pages/Admin/Config'
-import Exportador from './pages/Admin/Exportador'
 import KPIs from './pages/Admin/KPIs'
 import Log from './pages/Admin/Log'
 import Tendencias from './pages/Admin/Tendencias'
@@ -57,7 +56,6 @@ function App() {
         <Route path='/Alertas' element={<RutaProtegida rolesPermitidos={['administrador']}><Alertas /></RutaProtegida>} />
         <Route path='/Celdas' element={<RutaProtegida rolesPermitidos={['administrador']}><Celdas/></RutaProtegida>}/>
         <Route path='/Config' element={<RutaProtegida rolesPermitidos={['administrador']}><Config /></RutaProtegida>} />
-        <Route path='/Exportador' element={<RutaProtegida rolesPermitidos={['administrador']}><Exportador /></RutaProtegida>} />
         <Route path='/KPIs' element={<RutaProtegida rolesPermitidos={['administrador']}><KPIs /></RutaProtegida>} />
         <Route path='/Log' element={<RutaProtegida rolesPermitidos={['administrador']}><Log /></RutaProtegida>} />
         <Route path='/Tendencias' element={<RutaProtegida rolesPermitidos={['administrador']}><Tendencias /></RutaProtegida>} />

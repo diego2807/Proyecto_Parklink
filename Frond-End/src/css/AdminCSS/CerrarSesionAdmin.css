@@ -1,5 +1,5 @@
 /* ==========================================================================
-   🔒 PARKLINK - CSS COMPLETO Y TOTALMENTE AISLADO DEL NAV DE ADMINISTRADOR
+   🔒 PARKLINK - MASTER ADMIN SIDEBAR CSS (TOTALMENTE FIJO Y AISLADO)
    ========================================================================== */
 
 /* Contenedor principal de la barra lateral de administración */
@@ -7,13 +7,21 @@
     display: flex !important;
     flex-direction: column !important;
     justify-content: space-between !important;
-    height: 100vh !important;
     width: 260px !important; /* Ancho fijo para evitar colapsos */
     min-width: 260px !important;
+    height: 100vh !important;
     padding: 20px 15px !important;
     box-sizing: border-box !important;
     background-color: #0f172a !important; /* Slate oscuro elegante */
     border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
+
+    /* 🌟 COMPONENTE FIJO EN VIEWPORT 
+       Evita que empuje los módulos hacia abajo en el flujo HTML
+    */
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    z-index: 999 !important; /* Capa superior absoluta */
 }
 
 /* Título superior de la marca (Header) */
@@ -44,7 +52,7 @@
     padding-right: 4px !important;
 }
 
-/* Personalización del scroll interno para que no se vea feo */
+/* Personalización del scroll interno */
 #pl-admin-nav-links-group::-webkit-scrollbar {
     width: 4px;
 }
@@ -88,7 +96,7 @@
     flex-shrink: 0 !important; /* Fuerza al contenedor a mantener su tamaño */
 }
 
-/* 🛑 BOTÓN DE LOGOUT CORREGIDO - FUERZA VISIBILIDAD DE LETRAS */
+/* BOTÓN DE LOGOUT - CONFIGURACIÓN DE VISIBILIDAD DE TEXTO */
 #pl-admin-sidebar-root #pl-admin-btn-logout-action {
     display: flex !important;
     align-items: center !important;
@@ -103,12 +111,12 @@
     cursor: pointer !important;
     flex-shrink: 0 !important; /* Prohíbe al contenedor aplastarlo */
     
-    /* Reglas estrictas para el Texto */
-    color: #f1f5f9 !important;            /* Fuerza color gris claro/blanco */
-    font-size: 0.95rem !important;        /* Tamaño de fuente legible */
-    font-weight: 600 !important;          /* Letra gruesa */
-    text-transform: none !important;       /* Desactiva transformaciones raras */
-    white-space: nowrap !important;       /* Obliga al texto a quedarse en una sola línea */
+    /* Reglas para el Texto */
+    color: #f1f5f9 !important;            
+    font-size: 0.95rem !important;        
+    font-weight: 600 !important;          
+    text-transform: none !important;       
+    white-space: nowrap !important;       
     letter-spacing: 0.3px !important;
     
     /* Asegurar renderizado */
@@ -117,20 +125,20 @@
     transition: all 0.2s ease-in-out !important;
 }
 
-/* 🌟 EFECTO HOVER REPARADO (CON CIERRE CORRECTO DE LLAVES) */
+/* EFECTO HOVER DEL BOTÓN DE CIERRE */
 #pl-admin-sidebar-root #pl-admin-btn-logout-action:hover {
-    background-color: #ef4444 !important; /* Cambia a rojo de salida */
-    color: #ffffff !important;            /* Letras blancas puras */
+    background-color: #ef4444 !important; /* Rojo corporativo de salida */
+    color: #ffffff !important;            
     border-color: #ef4444 !important;
     box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25) !important;
 }
 
-/* Efecto al hacer click */
+/* Efecto al presionar */
 #pl-admin-sidebar-root #pl-admin-btn-logout-action:active {
     transform: scale(0.97) !important;
 }
 
-/* Forzar tamaño y color del Emoji */
+/* Forzar tamaño y alineación del icono */
 #pl-admin-sidebar-root #pl-admin-btn-logout-action .pl-admin-logout-icon {
     font-size: 1.1rem !important;
     display: inline-block !important;

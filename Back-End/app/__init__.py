@@ -66,7 +66,9 @@ def create_app():
     from app.routes.celdas import celdas_bp
     from app.routes.alertas import alertas_bp
     from app.routes.kpis import kpis_bp
-    from app.routes.log import logs_bp
+    from app.routes.logs import logs_bp
+    from app.routes.configuraciones import config_bp
+    from app.routes.tendencias import tendencias_bp
 
     # Registro limpio y obligatorio de los controladores de ParkLink
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
@@ -75,7 +77,9 @@ def create_app():
     app.register_blueprint(celdas_bp, url_prefix="/api/admin")
     app.register_blueprint(alertas_bp, url_prefix="/api/admin")
     app.register_blueprint(kpis_bp, url_prefix="/api/admin")
-    app.register_blueprint(logs_bp, url_prefix="/api/admin")
+    app.register_blueprint(logs_bp)
+    app.register_blueprint(config_bp, url_prefix="/api/admin")
+    app.register_blueprint(tendencias_bp)
 
     # ── 6. Ruta de salud ──────────────────────────────────────────────────────
     @app.route("/health", methods=["GET"])

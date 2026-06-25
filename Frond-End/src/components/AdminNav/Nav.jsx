@@ -28,7 +28,6 @@ function NavAdmin() {
                 <NavLink to="/Accesos" className={({ isActive }) => isActive ? "pl-admin-menu-item active" : "pl-admin-menu-item"}>🔑 Accesos</NavLink>
                 <NavLink to="/Alertas" className={({ isActive }) => isActive ? "pl-admin-menu-item active" : "pl-admin-menu-item"}>🚨 Alertas Sistema</NavLink>
                 <NavLink to="/Config" className={({ isActive }) => isActive ? "pl-admin-menu-item active" : "pl-admin-menu-item"}>⚙️ Configuración</NavLink>
-                <NavLink to="/Exportador" className={({ isActive }) => isActive ? "pl-admin-menu-item active" : "pl-admin-menu-item"}>📥 Exportar Datos</NavLink>
                 <NavLink to="/Log" className={({ isActive }) => isActive ? "pl-admin-menu-item active" : "pl-admin-menu-item"}>📋 Auditoría Log</NavLink>
                 <NavLink to="/Tendencias" className={({ isActive }) => isActive ? "pl-admin-menu-item active" : "pl-admin-menu-item"}>📊 Tendencias</NavLink>
             </nav>

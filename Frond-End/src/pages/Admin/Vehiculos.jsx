@@ -96,7 +96,7 @@ function Vehiculos() {
             return;
         }
 
-        // ── VALIDACIÓN 1: PLACA (3 letras, un guion, 3 números) ──
+        // ── 🌟 VALIDACIÓN ACTUALIZADA: PLACA (3 letras, un guion, 3 números) ──
         const placaFormateada = placa.trim().toUpperCase();
         const regexPlaca = /^[A-Z]{3}-[0-9]{3}$/;
         if (!regexPlaca.test(placaFormateada)) {
@@ -191,7 +191,6 @@ function Vehiculos() {
                                 placeholder="Ej: Karen Rodríguez" 
                                 required
                                 value={nombreFuncionario}
-                                // MÁSCARA: Elimina números instantáneamente si el usuario intenta digitarlos
                                 onChange={(e) => setNombreFuncionario(e.target.value.replace(/[0-9]/g, ""))}
                             />
                         </div>
@@ -204,9 +203,8 @@ function Vehiculos() {
                                 className="field-input" 
                                 placeholder="Ej: 1019XXXXXX" 
                                 required
-                                maxLength={10} // Límite estricto de 10 caracteres en la interfaz
+                                maxLength={10} 
                                 value={documento}
-                                // MÁSCARA: Elimina letras u otros caracteres especiales en tiempo real
                                 onChange={(e) => setDocumento(e.target.value.replace(/\D/g, ""))}
                             />
                         </div>
@@ -219,10 +217,17 @@ function Vehiculos() {
                                     id="inputPlaca" 
                                     className="field-input" 
                                     placeholder="Ej: ABC-123" 
-                                    maxLength={7} // 3 letras + 1 guion + 3 números = 7 caracteres máximo
+                                    maxLength={7} 
                                     required
                                     value={placa}
-                                    onChange={(e) => setPlaca(e.target.value)}
+                                    // 🌟 MÁSCARA EN LÍNEA: Convierte a mayúsculas y fuerza el formato sin romper nada
+                                    onChange={(e) => {
+                                        let val = e.target.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+                                        if (val.length > 3) {
+                                            val = val.slice(0, 3) + '-' + val.slice(3, 6);
+                                        }
+                                        setPlaca(val);
+                                    }}
                                 />
                             </div>
                             
@@ -285,7 +290,7 @@ function Vehiculos() {
                                 ) : (!listaVehiculos || listaVehiculos.length === 0) ? (
                                     <tr>
                                         <td colSpan="4" style={{ textAlign: 'center', padding: '15px', color: '#64748b' }}>
-                                            No se encontraron vehículos vinculados en el sistema.
+                                            No se encontraron vehículos vínculos en el sistema.
                                         </td>
                                     </tr>
                                 ) : (
