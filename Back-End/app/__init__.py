@@ -6,6 +6,7 @@ from flask_cors import CORS
 from flask_migrate import Migrate  
 from app.config.settings import Config
 from app.database.database import db, bcrypt, jwt
+from app.models.novedad import Novedad
 
 # ── Inicialización de la instancia global de Migrate ────────────────────────
 migrate = Migrate()
