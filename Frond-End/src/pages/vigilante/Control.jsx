@@ -1,174 +1,338 @@
-import Footer from "../../components/VigilanteNav/VigilanteFooter"
-import Header from "../../components/VigilanteNav/VigilanteHeader";
+import { useEffect, useState } from "react";
 import Nav from "../../components/VigilanteNav/VigilanteNav";
-import "../../css/VigilanteCSS/control.css"
+
+import { vigilanteService } from "../../services/vigilanteService";
+
+import "../../css/VigilanteCSS/control.css";
 
 function Control() {
-  const handleRegisterAction = (tipo) => {
-    alert(`Registro de ${tipo} realizado`);
-  };
 
-  return (
-    <>
-      <Header />
+    const [resumen, setResumen] = useState({
+        entradas: 0,
+        salidas: 0,
+        vehiculos_activos: 0,
+        celdas_ocupadas: 0,
+        celdas_libres: 0,
+        total_celdas: 0
+    });
 
-      <main>
-        <Nav />
+    const [historial, setHistorial] = useState([]);
 
-        <section className="dash-content">
-          <div className="dash-page">
+    const [cargando, setCargando] = useState(true);
 
-            <div className="dash-header">
-              <h2>Panel de Control Central</h2>
-            </div>
+    useEffect(() => {
 
-            <section className="metrics-grid">
-              <div className="metric-card">
-                <div className="metric-icon blue">🚗</div>
-                <div className="metric-data">
-                  <div className="num">0</div>
-                  <div className="lbl">Registros Totales</div>
-                </div>
-              </div>
+        cargarDashboard();
 
-              <div className="metric-card">
-                <div className="metric-icon green">✓</div>
-                <div className="metric-data">
-                  <div className="num">0</div>
-                  <div className="lbl">Vehículos Dentro</div>
-                </div>
-              </div>
+    }, []);
 
-              <div className="metric-card">
-                <div className="metric-icon orange">✕</div>
-                <div className="metric-data">
-                  <div className="num">0</div>
-                  <div className="lbl">Vehículos Salidos</div>
-                </div>
-              </div>
-            </section>
+    const cargarDashboard = async () => {
 
-            {/* CONTENIDO */}
-            <div className="dash-grid-two">
+        try {
 
-              {/* FORMULARIO */}
-              <article className="panel-card">
-                <div className="panel-card-header">
-                  <h3>Registro Operativo de Turno</h3>
-                </div>
+            const resumenData =
+                await vigilanteService.obtenerResumenTurno();
 
-                <div className="panel-card-body">
-                  <form onSubmit={(e) => e.preventDefault()}>
+            const historialData =
+                await vigilanteService.obtenerHistorialTurno();
 
-                    <div className="fg">
-                      <label htmlFor="car-plate">
-                        Número de Placa Vehicular
-                      </label>
+            setResumen(resumenData);
 
-                      <div className="input-wrapper">
-                        <input
-                          type="text"
-                          id="car-plate"
-                          required
-                          placeholder="ABC123"
-                        />
-                      </div>
+            setHistorial(historialData);
 
-                      <span className="warning-txt">
-                        La placa debe ser un formato válido de 6 caracteres (ej. AAA123).
-                      </span>
+        } catch (error) {
+
+            alert(error.message);
+
+        } finally {
+
+            setCargando(false);
+
+        }
+
+    };
+
+    return (
+
+        <>
+
+            <main>
+
+                <Nav />
+
+                <section className="dash-content">
+
+                    <div className="dash-page">
+
+                        <div className="dash-header">
+
+                            <h2>📊 Panel de Control del Turno</h2>
+
+                            <button
+                                className="btn-action-in"
+                                onClick={cargarDashboard}
+                            >
+                                🔄 Actualizar
+                            </button>
+
+                        </div>
+
+                        {
+                            cargando
+                                ? <p>Cargando información...</p>
+                                :
+                                <>
+
+                                    <section className="metrics-grid">
+
+                                        <div className="metric-card">
+
+                                            <div className="metric-icon blue">
+                                                🚗
+                                            </div>
+
+                                            <div className="metric-data">
+
+                                                <div className="num">
+                                                    {resumen.entradas}
+                                                </div>
+
+                                                <div className="lbl">
+                                                    Entradas
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div className="metric-card">
+
+                                            <div className="metric-icon orange">
+                                                🚙
+                                            </div>
+
+                                            <div className="metric-data">
+
+                                                <div className="num">
+                                                    {resumen.salidas}
+                                                </div>
+
+                                                <div className="lbl">
+                                                    Salidas
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div className="metric-card">
+
+                                            <div className="metric-icon green">
+                                                🅿️
+                                            </div>
+
+                                            <div className="metric-data">
+
+                                                <div className="num">
+                                                    {resumen.vehiculos_activos}
+                                                </div>
+
+                                                <div className="lbl">
+                                                    Vehículos Activos
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div className="metric-card">
+
+                                            <div className="metric-icon blue">
+                                                📍
+                                            </div>
+
+                                            <div className="metric-data">
+
+                                                <div className="num">
+                                                    {resumen.celdas_ocupadas}
+                                                </div>
+
+                                                <div className="lbl">
+                                                    Celdas Ocupadas
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div className="metric-card">
+
+                                            <div className="metric-icon green">
+                                                ✅
+                                            </div>
+
+                                            <div className="metric-data">
+
+                                                <div className="num">
+                                                    {resumen.celdas_libres}
+                                                </div>
+
+                                                <div className="lbl">
+                                                    Celdas Libres
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div className="metric-card">
+
+                                            <div className="metric-icon orange">
+                                                🏢
+                                            </div>
+
+                                            <div className="metric-data">
+
+                                                <div className="num">
+                                                    {resumen.total_celdas}
+                                                </div>
+
+                                                <div className="lbl">
+                                                    Total Celdas
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </section>
+
+                                    <div className="dash-grid-two">
+
+                        <article className="panel-card">
+
+                            <div className="panel-card-header">
+
+                                <h3>📋 Bitácora del Turno</h3>
+
+                            </div>
+
+                            <div
+                                className="panel-card-body"
+                                style={{ padding: 0 }}
+                            >
+
+                                <div className="table-responsive">
+
+                                    <table className="modern-table">
+
+                                        <thead>
+
+                                            <tr>
+                                                <th>Hora</th>
+                                                <th>Movimiento</th>
+                                                <th>Placa</th>
+                                                <th>Celda</th>
+                                            </tr>
+
+                                        </thead>
+
+                                        <tbody>
+
+                                            {
+                                                historial.length === 0 ?
+
+                                                    (
+                                                        <tr>
+
+                                                            <td
+                                                                colSpan="4"
+                                                                style={{
+                                                                    textAlign: "center",
+                                                                    padding: "20px"
+                                                                }}
+                                                            >
+                                                                No hay movimientos registrados.
+                                                            </td>
+
+                                                        </tr>
+                                                    )
+
+                                                    :
+
+                                                    historial.map((item) => (
+
+                                                        <tr key={item.id}>
+
+                                                            <td>
+                                                                {
+                                                                    item.fecha_hora
+                                                                }
+                                                            </td>
+
+                                                            <td>
+
+                                                                {
+                                                                    item.movimiento === "Entrada"
+
+                                                                        ?
+
+                                                                        <span
+                                                                            className="badge directivo"
+                                                                        >
+                                                                            Entrada
+                                                                        </span>
+
+                                                                        :
+
+                                                                        <span
+                                                                            className="badge invitado"
+                                                                        >
+                                                                            Salida
+                                                                        </span>
+                                                                }
+
+                                                            </td>
+
+                                                            <td>
+                                                                {item.placa}
+                                                            </td>
+
+                                                            <td>
+                                                                {item.celda}
+                                                            </td>
+
+                                                        </tr>
+
+                                                    ))
+
+                                            }
+
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
                     </div>
 
-                    <div className="fg">
-                      <label htmlFor="car-type">
-                        Tipo de Vehículo
-                      </label>
+                </>
+            }
 
-                      <div className="input-wrapper">
-                        <select id="car-type" required>
-                          <option value="Automóvil">Automóvil Particular</option>
-                          <option value="Motocicleta">Motocicleta</option>
-                          <option value="Camioneta">Camioneta</option>
-                        </select>
-                      </div>
-                    </div>
+        </div>
 
-                    <div className="btn-dual-wrap">
-                      <button
-                        type="button"
-                        className="btn-action-in"
-                        onClick={() => handleRegisterAction("Entrada")}
-                      >
-                        Registrar Entrada
-                      </button>
+    </section>
 
-                      <button
-                        type="button"
-                        className="btn-action-out"
-                        onClick={() => handleRegisterAction("Salida")}
-                      >
-                        Registrar Salida
-                      </button>
-                    </div>
+</main>
 
-                  </form>
-                </div>
-              </article>
+</>
 
-              {/* BITÁCORA */}
-              <article className="panel-card">
-                <div className="panel-card-header">
-                  <h3>Bitácora Reciente</h3>
-                </div>
+);
 
-                <div className="panel-card-body" style={{ padding: 0 }}>
-                  <div className="table-responsive">
-                    <table className="modern-table">
-                      <thead>
-                        <tr>
-                          <th>Placa</th>
-                          <th>Tipo</th>
-                          <th>Movimiento</th>
-                          <th>Fecha y Hora</th>
-                        </tr>
-                      </thead>
-
-                      <tbody>
-                        <tr>
-                          <td>ABC123</td>
-                          <td>Automóvil</td>
-                          <td>Entrada</td>
-                          <td>11/06/2026 14:30</td>
-                        </tr>
-
-                        <tr>
-                          <td>XYZ456</td>
-                          <td>Motocicleta</td>
-                          <td>Salida</td>
-                          <td>11/06/2026 15:10</td>
-                        </tr>
-
-                        <tr>
-                          <td>KFX542</td>
-                          <td>Camioneta</td>
-                          <td>Entrada</td>
-                          <td>11/06/2026 16:00</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </article>
-
-            </div>
-
-          </div>
-        </section>
-      </main>
-
-      <Footer />
-    </>
-  );
 }
 
 export default Control;

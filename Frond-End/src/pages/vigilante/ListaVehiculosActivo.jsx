@@ -1,177 +1,250 @@
-import Footer from "../../components/VigilanteNav/VigilanteFooter"
-import Header from "../../components/VigilanteNav/VigilanteHeader";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Nav from "../../components/VigilanteNav/VigilanteNav";
-import "../../css/VigilanteCSS/vehiculosActivos.css"
+
+import { vigilanteService } from "../../services/vigilanteService";
+
+import "../../css/VigilanteCSS/vehiculosActivos.css";
 
 function ListaVehiculosActivo() {
 
-  const handleLiberar = (placa) => {
-    alert(`Procesando Check-out de la placa ${placa}`);
-  };
+    const navigate = useNavigate();
 
-  return (
-    <>
-      <Header />
+    const [vehiculos, setVehiculos] = useState([]);
+    const [busqueda, setBusqueda] = useState("");
+    const [cargando, setCargando] = useState(true);
 
-      <main>
-        <Nav />
+    useEffect(() => {
+        cargarVehiculos();
+    }, []);
 
-        <section className="dash-content">
-          <div className="dash-page">
+    const cargarVehiculos = async () => {
 
-            {/* TITULO PRINCIPAL */}
-            <div className="page-title">
-              <h2>🚗 Vehículos en Estacionamiento</h2>
-              <p>Administra en tiempo real los vehículos activos dentro del sistema</p>
-            </div>
+        try {
 
-            <article className="panel-card">
+            setCargando(true);
 
-              {/* HEADER */}
-              <div className="panel-card-header vehiculos-header">
+            const data = await vigilanteService.obtenerVehiculosActivos();
 
-                <div>
-                  <h3>Inventario activo</h3>
-                  <span className="subtext">
-                    Filtra vehículos por placa o tipo de usuario
-                  </span>
-                </div>
+            setVehiculos(data);
 
-                <div className="header-actions">
+        } catch (error) {
 
-                  <div className="search-box">
-                    <span className="search-icon">🔎</span>
+            console.error(error);
+            alert(error.message);
 
-                    <input
-                      type="search"
-                      placeholder="Buscar placa..."
-                      className="search-input"
-                    />
-                  </div>
+        } finally {
 
-                  <div className="action-divider" />
+            setCargando(false);
 
-                  <button
-                    className="btn-action-in small"
-                    onClick={() => alert("Abrir check-in rápido")}
-                  >
-                    + Nuevo ingreso
-                  </button>
+        }
 
-                </div>
+    };
 
-              </div>
+    const handleLiberar = (placa) => {
 
-              {/* MINI ESTADÍSTICAS */}
-              <div className="mini-stats">
+        navigate(`/vigilante/salida?placa=${placa}`);
 
-                <div className="stat-card">
-                  <span>🟢 Activos</span>
-                  <strong>3</strong>
-                </div>
+    };
 
-                <div className="stat-card">
-                  <span>🔵 Directivos</span>
-                  <strong>1</strong>
-                </div>
+    const vehiculosFiltrados = vehiculos.filter((vehiculo) =>
+        vehiculo.placa.toLowerCase().includes(busqueda.toLowerCase())
+    );
 
-                <div className="stat-card">
-                  <span>🟡 Invitados</span>
-                  <strong>1</strong>
-                </div>
+    return (
+        <>
 
-              </div>
+            <main>
 
-              {/* TABLA */}
-              <div className="panel-card-body no-padding">
+                <Nav />
 
-                <div className="table-responsive">
+                <section className="dash-content">
 
-                  <table className="modern-table vehiculos-table">
+                    <div className="dash-page">
 
-                    <thead>
-                      <tr>
-                        <th>Celda</th>
-                        <th>Placa</th>
-                        <th>Ingreso</th>
-                        <th>Usuario</th>
-                        <th>Póliza</th>
-                        <th>Tiempo</th>
-                        <th>Acción</th>
-                      </tr>
-                    </thead>
+                        <div className="page-title">
 
-                    <tbody>
+                            <h2>🚗 Vehículos en Estacionamiento</h2>
 
-                      <tr>
-                        <td className="strong">A-04</td>
-                        <td className="plate">KFX542</td>
-                        <td>08:15 AM</td>
-                        <td><span className="badge directivo">Directivo</span></td>
-                        <td className="ok">Vigente</td>
-                        <td>01h 45m</td>
-                        <td>
-                          <button
-                            className="btn-danger small"
-                            onClick={() => handleLiberar("KFX542")}
-                          >
-                            Liberar
-                          </button>
-                        </td>
-                      </tr>
+                            <p>
+                                Administra en tiempo real los vehículos activos dentro del sistema.
+                            </p>
 
-                      <tr>
-                        <td className="strong">B-12</td>
-                        <td className="plate">MHQ910</td>
-                        <td>09:02 AM</td>
-                        <td><span className="badge invitado">Invitado</span></td>
-                        <td className="ok">Vigente</td>
-                        <td>00h 58m</td>
-                        <td>
-                          <button
-                            className="btn-danger small"
-                            onClick={() => handleLiberar("MHQ910")}
-                          >
-                            Liberar
-                          </button>
-                        </td>
-                      </tr>
+                        </div>
 
-                      <tr>
-                        <td className="strong">M-02</td>
-                        <td className="plate">ZZX88C</td>
-                        <td>07:30 AM</td>
-                        <td><span className="badge moto">Moto</span></td>
-                        <td className="ok">Vigente</td>
-                        <td>02h 30m</td>
-                        <td>
-                          <button
-                            className="btn-danger small"
-                            onClick={() => handleLiberar("ZZX88C")}
-                          >
-                            Liberar
-                          </button>
-                        </td>
-                      </tr>
+                        <article className="panel-card">
 
-                    </tbody>
+                            <div className="panel-card-header vehiculos-header">
 
-                  </table>
+                                <div>
 
-                </div>
+                                    <h3>Inventario Activo</h3>
 
-              </div>
+                                    <span className="subtext">
+                                        Vehículos actualmente dentro del parqueadero.
+                                    </span>
 
-            </article>
+                                </div>
 
-          </div>
-        </section>
+                                <div className="header-actions">
 
-      </main>
+                                    <div className="search-box">
 
-      <Footer />
-    </>
-  );
+                                        <span className="search-icon">
+                                            🔎
+                                        </span>
+
+                                        <input
+                                            type="search"
+                                            className="search-input"
+                                            placeholder="Buscar placa..."
+                                            value={busqueda}
+                                            onChange={(e) =>
+                                                setBusqueda(e.target.value)
+                                            }
+                                        />
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div className="mini-stats">
+
+                                <div className="stat-card">
+
+                                    <span>🟢 Vehículos Activos</span>
+
+                                    <strong>{vehiculos.length}</strong>
+
+                                </div>
+
+                            </div>
+
+                            <div className="panel-card-body no-padding">
+
+                                <div className="table-responsive">
+
+                                    <table className="modern-table vehiculos-table">
+
+                                        <thead>
+
+                                            <tr>
+
+                                                <th>Celda</th>
+                                                <th>Placa</th>
+                                                <th>Fecha de Entrada</th>
+                                                <th>Tipo Vehículo</th>
+                                                <th>Estado</th>
+                                                <th>Acción</th>
+
+                                            </tr>
+
+                                        </thead>
+
+                                        <tbody>
+
+                                            {
+                                                cargando ? (
+
+                                                    <tr>
+
+                                                        <td colSpan="6">
+                                                            Cargando vehículos...
+                                                        </td>
+
+                                                    </tr>
+
+                                                ) :
+
+                                                    vehiculosFiltrados.length === 0 ? (
+
+                                                        <tr>
+
+                                                            <td colSpan="6">
+                                                                No hay vehículos activos.
+                                                            </td>
+
+                                                        </tr>
+
+                                                    ) :
+
+                                                        (
+
+                                                            vehiculosFiltrados.map((vehiculo) => (
+
+                                                                <tr key={vehiculo.placa}>
+
+                                                                    <td className="strong">
+                                                                        {vehiculo.celda}
+                                                                    </td>
+
+                                                                    <td className="plate">
+                                                                        {vehiculo.placa}
+                                                                    </td>
+
+                                                                    <td>
+                                                                        {vehiculo.fecha_entrada}
+                                                                    </td>
+
+                                                                    <td>
+                                                                        {vehiculo.tipo_vehiculo}
+                                                                    </td>
+
+                                                                    <td>
+
+                                                                        <span className="badge directivo">
+                                                                            Activo
+                                                                        </span>
+
+                                                                    </td>
+
+                                                                    <td>
+
+                                                                        <button
+                                                                            className="btn-danger small"
+                                                                            onClick={() =>
+                                                                                handleLiberar(
+                                                                                    vehiculo.placa
+                                                                                )
+                                                                            }
+                                                                        >
+
+                                                                            Registrar Salida
+
+                                                                        </button>
+
+                                                                    </td>
+
+                                                                </tr>
+
+                                                            ))
+
+                                                        )
+
+                                            }
+
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                    </div>
+
+                </section>
+
+            </main>
+
+
+        </>
+    );
+
 }
 
 export default ListaVehiculosActivo;

@@ -28,6 +28,7 @@ import MapaGrafico from './pages/vigilante/MapaGrafico'
 import ModalConfirmacion from './pages/vigilante/ModalConfirmacion'
 import RegistroNovedades from './pages/vigilante/RegistroNovedades'
 import RutaProtegida from './components/RutaProtegida'
+import Control from './pages/vigilante/Control'
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
         <Route path="/HistorialTurno" element={<RutaProtegida rolesPermitidos={['vigilante']}><HistorialTurno /></RutaProtegida>} />
         <Route path="/ConsolaTransferencia" element={<RutaProtegida rolesPermitidos={['vigilante']}><ConsolaTransferencia /></RutaProtegida>} />
         <Route path="/RegistroNovedades" element={<RutaProtegida rolesPermitidos={['vigilante']}><RegistroNovedades /></RutaProtegida>} />
+        <Route path="/Control" element={<RutaProtegida rolesPermitidos={['vigilante']}><Control /></RutaProtegida>} />
 
         {/* ===== Rutas del rol ADMINISTRADOR ===== */}
         <Route path='/Registro' element={<RutaProtegida rolesPermitidos={['administrador']}><Registro /></RutaProtegida>} />

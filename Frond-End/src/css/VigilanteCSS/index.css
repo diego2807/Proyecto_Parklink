@@ -1,46 +1,96 @@
-.bienvenida{
-    margin-bottom:30px;
+/* ==========================================================================
+   ESTILOS FLUIDOS - SOLUCCIÓN DEFINITIVA DE CENTRADO (SIN TOCAR EL NAV)
+   ========================================================================== */
+
+/* --- 1. CONFIGURACIÓN COMPLETA PARA MÓVIL (Por defecto) --- */
+.main-content {
+    display: block !important; /* Desactiva el flexbox en móvil para evitar que se pongan uno al lado del otro */
+    width: 100% !important;
+    min-height: 100vh;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden; /* Elimina la barra de scroll horizontal gris de abajo */
 }
 
-.bienvenida h2{
-    color:#0f172a;
-    margin-bottom:10px;
+.contenido {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important; /* ¡CLAVE! Destruye el espacio vacío que lo corre a la derecha */
+    margin-right: 0 !important;
+    padding: 20px 16px !important; /* Espaciado interno perfecto y simétrico en el celular */
+    box-sizing: border-box !important;
+    display: block !important;
 }
 
-.bienvenida p{
-    color:#64748b;
+/* Tarjetas que se expanden simétricamente en el celular */
+.turno, .guia {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    width: 100% !important; 
+    max-width: 100% !important;
+    box-sizing: border-box !important; /* Evita que el padding las desplace */
 }
 
-.turno,
-.guia{
-    background:white;
-    padding:25px;
-    border-radius:12px;
-    margin-bottom:20px;
-    box-shadow:0 2px 8px rgba(0,0,0,.08);
+.bienvenida {
+    margin-bottom: 25px;
+    width: 100%;
 }
 
-.turno h3,
-.guia h3{
-    color:#0f172a;
-    margin-bottom:15px;
+.bienvenida h2 {
+    color: #0f172a;
+    margin-bottom: 8px;
+    font-size: 1.6rem;
+    word-break: break-word;
 }
 
-.item-guia{
-    margin-bottom:20px;
-    padding-bottom:15px;
-    border-bottom:1px solid #e5e7eb;
+.bienvenida p {
+    color: #64748b;
+    font-size: 0.95rem;
 }
 
-.recordatorio{
-    margin-top:20px;
-    background:#ecfdf5;
-    border-left:4px solid #10b981;
-    padding:15px;
-    border-radius:8px;
+.turno h3, .guia h3 {
+    color: #0f172a;
+    margin-bottom: 15px;
 }
 
-.contenido{
-    flex:1;
-    padding:30px;
+.turno p, .item-guia p, .recordatorio {
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+.item-guia {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.recordatorio {
+    margin-top: 20px;
+    background: #ecfdf5;
+    border-left: 4px solid #10b981;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+
+/* --- 2. CONFIGURACIÓN EXCLUSIVA PARA COMPUTADOR (Pantallas grandes) --- */
+@media (min-width: 768px) {
+    .main-content {
+        display: flex !important; /* En PC vuelve a activar el Flexbox para poner el Nav al lado */
+        flex-direction: row !important;
+    }
+
+    .contenido {
+        flex: 1 !important;
+        width: auto !important;
+        max-width: none !important;
+        padding: 30px !important; /* Recupera tus márgenes amplios de escritorio */
+    }
+
+    .bienvenida h2 {
+        font-size: 2rem;
+    }
 }

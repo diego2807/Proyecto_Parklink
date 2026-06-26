@@ -1,171 +1,191 @@
-/* ===== CONTENIDO PRINCIPAL ===== */
+/* ==========================================================================
+   Contenedor Principal y Fondo (Estilo Dashboard Premium)
+   ========================================================================== */
 
 .dash-content {
     flex: 1;
-    padding: 25px;
+    padding: 30px;
+    margin-left: 270px; /* Ancho del sidebar en escritorio */
+    background: #f8fafc; /* Fondo limpio y claro */
+    min-height: 100vh;
+    box-sizing: border-box;
+    transition: margin-left .35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .dash-page {
     width: 100%;
+    max-width: 1400px; /* Evita que se estire demasiado en monitores gigantes */
+    margin: 0 auto;
 }
 
-/* ===== TITULO ===== */
+/* ==========================================================================
+   Títulos y Encabezados
+   ========================================================================== */
 
 .page-title {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .page-title h2 {
     margin: 0;
     font-size: 2rem;
-    color: #1e293b;
+    color: #0f172a;
+    font-weight: 700;
+    letter-spacing: -0.025em;
 }
 
 .page-title p {
-    margin-top: 8px;
+    margin-top: 6px;
     color: #64748b;
+    font-size: 0.95rem;
 }
 
-/* ===== TARJETA ===== */
+/* ==========================================================================
+   Tarjetas de Estadísticas (Mini Stats) - Grid Adaptativo
+   ========================================================================== */
+
+.mini-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    padding: 0;
+    background: transparent;
+    border-bottom: none;
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Indicador lateral verde elegante */
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: #10b981;
+}
+
+.stat-card span {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+}
+
+.stat-card strong {
+    font-size: 2.25rem;
+    color: #0f172a;
+    font-weight: 700;
+    line-height: 1;
+}
+
+/* ==========================================================================
+   Tarjeta Contenedora de la Tabla (Panel)
+   ========================================================================== */
 
 .panel-card {
-    background: white;
+    background: #ffffff;
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0,0,0,.08);
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
 }
 
-/* ===== HEADER TARJETA ===== */
-
+/* Header del panel (Título de inventario + Buscador) */
 .panel-card-header {
-    padding: 20px;
-    border-bottom: 1px solid #e2e8f0;
+    padding: 24px;
+    border-bottom: 1px solid #f1f5f9;
 }
 
 .vehiculos-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
     gap: 20px;
 }
 
 .vehiculos-header h3 {
     margin: 0;
+    font-size: 1.15rem;
+    color: #1e293b;
+    font-weight: 600;
 }
 
 .subtext {
-    color: #64748b;
-    font-size: .9rem;
+    color: #94a3b8;
+    font-size: .875rem;
+    display: block;
+    margin-top: 4px;
 }
 
-/* ===== ACCIONES ===== */
-
+/* Caja de búsqueda */
 .header-actions {
     display: flex;
     align-items: center;
-    gap: 15px;
+    width: auto;
 }
-
-.action-divider {
-    width: 1px;
-    height: 30px;
-    background: #dbe3ec;
-}
-
-/* ===== BUSCADOR ===== */
 
 .search-box {
     position: relative;
+    width: 100%;
 }
 
 .search-icon {
     position: absolute;
-    left: 12px;
+    left: 14px;
     top: 50%;
     transform: translateY(-50%);
+    font-size: 0.9rem;
+    pointer-events: none;
 }
 
 .search-input {
-    padding: 10px 12px 10px 35px;
-    border: 1px solid #dbe3ec;
+    padding: 10px 16px 10px 42px;
+    border: 1px solid #cbd5e1;
     border-radius: 10px;
-    min-width: 220px;
+    width: 280px;
+    font-size: 0.9rem;
+    color: #334155;
+    background-color: #f8fafc;
+    transition: all 0.2s ease;
 }
 
-/* ===== BOTONES ===== */
-
-.btn-action-in {
-    background: #2563eb;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 600;
+.search-input:focus {
+    outline: none;
+    border-color: #2563eb;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
 }
 
-.btn-action-in:hover {
-    background: #1d4ed8;
-}
+/* ==========================================================================
+   Tabla Moderna y Responsiva
+   ========================================================================== */
 
-.btn-danger {
-    background: #dc2626;
-    color: white;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-.btn-danger:hover {
-    background: #b91c1c;
-}
-
-.small {
-    font-size: .85rem;
-}
-
-/* ===== MINI STATS ===== */
-
-.mini-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    padding: 20px;
-    background: #f8fafc;
-    border-bottom: 1px solid #e2e8f0;
-}
-
-.stat-card {
-    background: white;
-    padding: 15px;
-    border-radius: 12px;
-    text-align: center;
-    border: 1px solid #e2e8f0;
-}
-
-.stat-card span {
-    display: block;
-    margin-bottom: 5px;
-    color: #64748b;
-}
-
-.stat-card strong {
-    font-size: 1.5rem;
-}
-
-/* ===== TABLA ===== */
-
-.panel-card-body {
-    padding: 20px;
-}
-
-.no-padding {
+.panel-card-body.no-padding {
     padding: 0;
 }
 
+/* Contenedor con scroll horizontal inteligente para celulares */
 .table-responsive {
+    width: 100%;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .modern-table {
@@ -178,81 +198,144 @@
 }
 
 .modern-table th {
-    text-align: left;
-    padding: 15px;
-    font-size: .9rem;
+    padding: 16px 24px;
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     color: #475569;
+    font-weight: 700;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: left; /* Alineación por defecto */
+}
+
+/* Centrado estricto de los encabezados de Placa (Col 2) y Estado (Col 5) */
+.modern-table th:nth-child(2),
+.modern-table th:nth-child(5) {
+    text-align: center !important;
 }
 
 .modern-table td {
-    padding: 15px;
-    border-top: 1px solid #e2e8f0;
+    padding: 16px 24px;
+    border-top: 1px solid #f1f5f9;
+    color: #334155;
+    font-size: 0.9rem;
+    vertical-align: middle !important; /* Fuerza a que todo se alinee al centro vertical */
+    text-align: left;
+}
+
+/* Centrado de las celdas de Placa (Col 2) y Estado (Col 5) */
+.modern-table td:nth-child(2),
+.modern-table td:nth-child(5) {
+    text-align: center !important;
+}
+
+.modern-table tbody tr {
+    transition: background-color 0.15s ease;
 }
 
 .modern-table tbody tr:hover {
-    background: #f8fafc;
+    background-color: #f8fafc;
 }
 
-/* ===== BADGES ===== */
+/* Estados de carga o vacíos */
+.modern-table td[colSpan="6"] {
+    text-align: center;
+    padding: 40px;
+    color: #94a3b8;
+    font-style: italic;
+}
 
+/* ==========================================================================
+   Componentes Menores (Botones, Badges, Placas)
+   ========================================================================== */
+
+/* Botón Registrar Salida */
+.btn-danger {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 9px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(239, 68, 68, 0.05);
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(239, 68, 68, 0.15);
+}
+
+.btn-danger:active {
+    transform: translateY(0);
+}
+
+/* Badge de Estado "Activo" */
 .badge {
-    padding: 5px 10px;
-    border-radius: 30px;
-    font-size: .8rem;
+    padding: 6px 12px;
+    border-radius: 9999px;
+    font-size: .75rem;
     font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.directivo {
-    background: #dbeafe;
-    color: #1d4ed8;
+.badge.directivo {
+    background: #ecfdf5;
+    color: #047857;
+    border: 1px solid #a7f3d0;
 }
 
-.invitado {
-    background: #fef3c7;
-    color: #b45309;
-}
-
-.moto {
-    background: #dcfce7;
-    color: #15803d;
-}
-
-/* ===== UTILIDADES ===== */
-
+/* Texto Destacado y Celda */
 .strong {
-    font-weight: 700;
-}
-
-.plate {
-    font-family: monospace;
-    font-weight: bold;
-}
-
-.ok {
-    color: #16a34a;
     font-weight: 600;
+    color: #0f172a;
 }
 
-/* ===== RESPONSIVE ===== */
 
-@media (max-width: 900px) {
+
+/* ==========================================================================
+   Media Queries - Optimización móvil estricta (Breakpoint 992px)
+   ========================================================================== */
+
+@media (max-width: 992px) {
+    .dash-content {
+        margin-left: 0;
+        padding: 20px 16px;
+    }
+
+    .page-title h2 {
+        font-size: 1.75rem;
+    }
 
     .vehiculos-header {
         flex-direction: column;
         align-items: stretch;
+        gap: 16px;
     }
 
     .header-actions {
-        flex-direction: column;
-        align-items: stretch;
+        width: 100%;
     }
 
     .search-input {
         width: 100%;
         min-width: 100%;
+        box-sizing: border-box;
     }
 
-    .mini-stats {
-        grid-template-columns: 1fr;
+    .modern-table th, 
+    .modern-table td {
+        padding: 12px 16px;
+    }
+
+    .btn-danger {
+        width: 100%;
+        text-align: center;
+        padding: 12px;
     }
 }

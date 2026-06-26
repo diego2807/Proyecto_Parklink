@@ -1,8 +1,6 @@
 // CierreTurno.jsx
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; 
-import Footer from "../../components/VigilanteNav/VigilanteFooter";
-import Header from "../../components/VigilanteNav/VigilanteHeader";
 import Nav from "../../components/VigilanteNav/VigilanteNav";
 import { vigilanteService } from "../../services/vigilanteService";
 import "../../css/VigilanteCSS/cierre.css";
@@ -92,7 +90,6 @@ function CierreTurno() {
 
     return (
         <>
-        <Header />
         <main className="main-content">
             <Nav />
             <section className="cierre">
@@ -230,7 +227,6 @@ function CierreTurno() {
 
             </section>
         </main>
-        <Footer/>
         </>
     );
 }

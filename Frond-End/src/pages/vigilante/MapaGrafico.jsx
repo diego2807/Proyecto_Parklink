@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 
-import Footer from "../../components/VigilanteNav/VigilanteFooter";
-import Header from "../../components/VigilanteNav/VigilanteHeader";
 import Nav from "../../components/VigilanteNav/VigilanteNav";
 
 import "../../css/VigilanteCSS/mapa.css";
@@ -49,7 +47,6 @@ function MapaGrafico() {
 
     return (
         <>
-            <Header />
 
             <div id="modulo-mapa-vigilante">
 
@@ -163,8 +160,6 @@ function MapaGrafico() {
                 </main>
 
             </div>
-
-            <Footer />
         </>
     );
 }

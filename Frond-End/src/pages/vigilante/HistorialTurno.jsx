@@ -1,89 +1,123 @@
-import Footer from "../../components/VigilanteNav/VigilanteFooter"
-import Header from "../../components/VigilanteNav/VigilanteHeader";
+import { useEffect, useState } from "react";
+
 import Nav from "../../components/VigilanteNav/VigilanteNav";
-import "../../css/VigilanteCSS/historial.css"
+
+import { vigilanteService } from "../../services/vigilanteService";
+
+import "../../css/VigilanteCSS/historial.css";
 
 function HistorialTurno() {
+
+    const [historial, setHistorial] = useState([]);
+    const [cargando, setCargando] = useState(true);
+
+    useEffect(() => {
+        cargarHistorial();
+    }, []);
+
+    const cargarHistorial = async () => {
+
+        try {
+
+            const data = await vigilanteService.obtenerHistorialTurno();
+
+            setHistorial(data);
+
+        } catch (error) {
+
+            alert(error.message);
+
+        } finally {
+
+            setCargando(false);
+
+        }
+
+    };
+
     return (
         <>
-        <Header />
-        <main className="main-content">
-        <Nav />
-            <section className="historial">
+            <main className="main-content">
 
-            <div className="titulo-pagina">
-                <h2>📚 Historial de Turno</h2>
+                <Nav />
 
-                <p>
-                    Consulte los registros realizados durante el turno actual.
-                </p>
-            </div>
+                <section className="historial">
 
-            <div className="filtros">
+                    <div className="titulo-pagina">
+                        <h2>📚 Historial del Turno</h2>
 
-                <label>Fecha</label>
+                        <p>
+                            Consulte todos los movimientos registrados durante el turno activo.
+                        </p>
+                    </div>
 
-                <div className="busqueda-fecha">
-                    <input type="date" />
-                    <button>Buscar</button>
-                </div>
+                    <div className="tabla-historial">
 
-            </div>
+                        <h3>📋 Registros del turno</h3>
 
-            <div className="tabla-historial">
+                        {
+                            cargando ? (
 
-                <h3>📋 Registros</h3>
+                                <p>Cargando historial...</p>
 
-                <table>
+                            ) : historial.length === 0 ? (
 
-                    <thead>
-                        <tr>
-                            <th>Hora</th>
-                            <th>Movimiento</th>
-                            <th>Placa</th>
-                        </tr>
-                    </thead>
+                                <p>No existen registros durante este turno.</p>
 
-                    <tbody>
+                            ) : (
 
-                        <tr>
-                            <td>08:10</td>
-                            <td>Entrada</td>
-                            <td>ABC123</td>
-                        </tr>
+                                <table>
 
-                        <tr>
-                            <td>08:25</td>
-                            <td>Visitante</td>
-                            <td>XYZ789</td>
-                        </tr>
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha y Hora</th>
+                                            <th>Movimiento</th>
+                                            <th>Placa</th>
+                                            <th>Celda</th>
+                                        </tr>
+                                    </thead>
 
-                        <tr>
-                            <td>08:40</td>
-                            <td>Salida</td>
-                            <td>ABC123</td>
-                        </tr>
+                                    <tbody>
 
-                    </tbody>
+                                        {
+                                            historial.map((registro) => (
 
-                </table>
+                                                <tr key={registro.id}>
 
-            </div>
+                                                    <td>{registro.fecha_hora}</td>
 
-            <div className="recordatorio">
-                <strong>📌 Resumen:</strong>
-                Total de registros realizados durante el turno: 3.
-            </div>
+                                                    <td>{registro.movimiento}</td>
 
-        </section>
+                                                    <td>{registro.placa}</td>
 
-        </main>
+                                                    <td>{registro.celda}</td>
 
+                                                </tr>
 
+                                            ))
+                                        }
 
-        <Footer/>
+                                    </tbody>
+
+                                </table>
+
+                            )
+                        }
+
+                    </div>
+
+                    <div className="recordatorio">
+
+                        <strong>📌 Total de registros:</strong>{" "}
+                        {historial.length}
+
+                    </div>
+
+                </section>
+
+            </main>
         </>
-    )
+    );
 }
 
 export default HistorialTurno;

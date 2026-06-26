@@ -282,19 +282,26 @@ body {
   text-decoration: underline;
 }
 
-/* ==========================================================================
-   RESPONSIVE DESIGN (Media Queries)
-   ========================================================================== */
-@media (max-width: 900px) {
-  .auth-aside {
-    display: none; /* Oculta el panel hero en pantallas medianas/pequeñas */
-  }
-  
-  .auth-main {
-    padding: 24px;
-  }
-  
-  .auth-box {
-    max-width: 100%;
-  }
+/* --- PRUEBA DE FUERZA BRUTA PARA MÓVIL --- */
+@media (max-width: 767px) {
+    .main-content {
+        display: block !important; /* Quita el flexbox temporalmente en móvil */
+        width: 100% !important;
+        overflow-x: hidden; /* Elimina la barra de desplazamiento horizontal */
+    }
+
+    .contenido {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 15px !important;
+        margin: 0 !important;
+    }
+
+    /* Esto va a encoger tu Nav a la fuerza si está molestando */
+    .main-content > nav, 
+    .main-content > div:first-child { 
+        width: 0px !important;
+        overflow: hidden !important;
+        position: absolute !important;
+    }
 }

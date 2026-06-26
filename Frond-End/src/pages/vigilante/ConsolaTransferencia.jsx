@@ -1,12 +1,9 @@
-import Footer from "../../components/VigilanteNav/VigilanteFooter"
-import Header from "../../components/VigilanteNav/VigilanteHeader";
 import Nav from "../../components/VigilanteNav/VigilanteNav";
 import "../../css/VigilanteCSS/transferencia.css"
 
 function ConsolaTransferencia() {
     return (
         <>
-        <Header />
         <main className="main-content">
             <Nav />
         <section className="transferencia">
@@ -90,8 +87,6 @@ function ConsolaTransferencia() {
         </section>
 
         </main>
-
-    <Footer/>
         </>
     )
 }

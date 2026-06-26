@@ -1,7 +1,4 @@
 import { useState } from "react";
-
-import Footer from "../../components/VigilanteNav/VigilanteFooter";
-import Header from "../../components/VigilanteNav/VigilanteHeader";
 import Nav from "../../components/VigilanteNav/VigilanteNav";
 
 import "../../css/VigilanteCSS/visitantes.css";
@@ -67,7 +64,6 @@ function FormularioVisitantes() {
 
     return (
         <>
-            <Header />
 
             <main className="main-content">
                 <Nav />
@@ -165,7 +161,6 @@ function FormularioVisitantes() {
 
             </main>
 
-            <Footer />
         </>
     );
 }

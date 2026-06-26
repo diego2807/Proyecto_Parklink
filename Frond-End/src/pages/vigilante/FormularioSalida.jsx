@@ -1,77 +1,145 @@
-import Footer from "../../components/VigilanteNav/VigilanteFooter"
-import Header from "../../components/VigilanteNav/VigilanteHeader";
+import { useState } from "react";
 import Nav from "../../components/VigilanteNav/VigilanteNav";
-import "../../css/VigilanteCSS/salida.css"
+import { vigilanteService } from "../../services/vigilanteService";
+import "../../css/VigilanteCSS/salida.css";
 
-function formularioSalida() {
+function FormularioSalida() {
+
+    const [placa, setPlaca] = useState("");
+
+    const [resultado, setResultado] = useState(null);
+
+    const [cargando, setCargando] = useState(false);
+
+    const registrarSalida = async () => {
+
+        if (!placa.trim()) {
+            alert("Ingrese una placa.");
+            return;
+        }
+
+        try {
+
+            setCargando(true);
+
+            const placaRegistrada = placa.toUpperCase();
+
+            const data = await vigilanteService.registrarSalida(
+                placaRegistrada
+            );
+
+            setResultado({
+                placa: placaRegistrada,
+                ...data
+            });
+
+            alert(data.mensaje);
+
+            setPlaca("");
+
+        } catch (error) {
+
+            alert(error.message);
+
+        } finally {
+
+            setCargando(false);
+
+        }
+
+    };
+
     return (
         <>
-        <Header />
-        <main className="main-content">
-        <Nav />
-        <section className="salida">
+            <main className="main-content">
+                <Nav />
+                <section className="salida">
 
-            <div className="titulo-pagina">
-                <h2>🚙 Registro de Salida</h2>
-                <p>
-                    Consulte la información del vehículo y confirme la salida.
-                </p>
-            </div>
+                    <div className="titulo-pagina">
 
-            <div className="busqueda">
-                <label for="placaSalida">Placa del vehículo</label>
+                        <h2>🚙 Registro de Salida</h2>
 
-                <div className="busqueda-placa">
-                    <input
-                        type="text"
-                        id="placaSalida"
-                        placeholder="Ej: ABC123"
-                    />
+                        <p>
+                            Digite la placa del vehículo para registrar su salida.
+                        </p>
 
-                    <button>Buscar</button>
-                </div>
-            </div>
+                    </div>
 
-            <div className="reserva">
+                    <div className="busqueda">
 
-                <h3>📄 Información del Vehículo</h3>
+                        <label htmlFor="placaSalida">
+                            Placa del vehículo
+                        </label>
 
-                <div className="dato">
-                    <strong>👤 Propietario</strong>
-                    <span>Andrés Yate</span>
-                </div>
+                        <div className="busqueda-placa">
 
-                <div className="dato">
-                    <strong>🚗 Placa</strong>
-                    <span>ABC123</span>
-                </div>
+                            <input
+                                type="text"
+                                id="placaSalida"
+                                value={placa}
+                                onChange={(e) =>
+                                    setPlaca(e.target.value.toUpperCase())
+                                }
+                                placeholder="Ej: ABC123"
+                            />
 
-                <div className="dato">
-                    <strong>🅿️ Espacio</strong>
-                    <span>A-15</span>
-                </div>
+                            <button
+                                onClick={registrarSalida}
+                                disabled={cargando}
+                            >
+                                {
+                                    cargando
+                                        ? "Registrando..."
+                                        : "Registrar Salida"
+                                }
+                            </button>
 
-                <div className="dato">
-                    <strong>📅 Fecha</strong>
-                    <span>01/06/2026</span>
-                </div>
+                        </div>
 
-            </div>
+                    </div>
 
-            <div className="acciones">
+                    {
+                        resultado && (
 
-                <button className="btn-confirmar">
-                    ✅ Confirmar Salida
-                </button>
+                            <div className="reserva">
 
-            </div>
+                                <h3>✅ Salida Registrada</h3>
 
-        </section>
+                                <div className="dato">
 
-    </main>
-        <Footer/>
+                                    <strong>🚗 Placa</strong>
+
+                                    <span>{resultado.placa}</span>
+
+                                </div>
+
+                                <div className="dato">
+
+                                    <strong>🅿️ Celda Liberada</strong>
+
+                                    <span>{resultado.celda_liberada}</span>
+
+                                </div>
+
+                                <div className="dato">
+
+                                    <strong>📋 Estado</strong>
+
+                                    <span>Salida registrada correctamente</span>
+
+                                </div>
+
+                            </div>
+
+                        )
+                    }
+
+                </section>
+            </main>
+
         </>
-    )
+    );
+
 }
 
-export default formularioSalida;
+export default FormularioSalida;

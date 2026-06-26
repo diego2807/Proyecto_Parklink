@@ -1,8 +1,6 @@
 // Inicio.jsx
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Footer from "../../components/VigilanteNav/VigilanteFooter";
-import Header from "../../components/VigilanteNav/VigilanteHeader";
 import Nav from "../../components/VigilanteNav/VigilanteNav";
 import { vigilanteService } from "../../services/vigilanteService"; // Asegúrate de tener este import
 import "../../css/VigilanteCSS/index.css";
@@ -65,11 +63,15 @@ function Inicio() {
         return () => clearInterval(intervaloReloj);
     }, []);
 
-    return (
-        <>
-        <Header />
+return (
+    <>
+        {/* Contenedor principal del Layout */}
         <main className="main-content">
+            
+            {/* El Nav controla de forma interna su comportamiento lateral */}
             <Nav />
+            
+            {/* El área limpia donde renderizas la app */}
             <section className="contenido">
                 <div className="bienvenida">
                     <h2>Bienvenido a Parklink, {nombreVigilante.split(" ")[0]} 👋</h2>
@@ -78,7 +80,6 @@ function Inicio() {
 
                 <div className="turno">
                     <h3>📌 Estado Actual</h3>
-
                     <p><strong>Usuario:</strong> {nombreVigilante}</p>
                     <p><strong>Hora del Sistema:</strong> <span style={{ color: '#007bff', fontWeight: 'bold' }}>{horaActual}</span></p>
                     <p><strong>Jornada Estimada:</strong> {jornada}</p>
@@ -107,7 +108,6 @@ function Inicio() {
                         )}
                     </p>
 
-                    {/* Alerta de recordatorio rápida si el turno está inactivo */}
                     {!estadoTurno.cargando && !estadoTurno.activo && (
                         <div style={{ marginTop: '15px', fontSize: '13px', color: '#856404', backgroundColor: '#fff3cd', padding: '10px', borderRadius: '4px' }}>
                             ⚠️ No has iniciado jornada laboral en el sistema. Ve a <strong>Apertura de Turno</strong> para comenzar.
@@ -137,12 +137,10 @@ function Inicio() {
                         <strong>💡 Recuerda:</strong> Verificar placas y registrar novedades antes de cerrar el turno.
                     </div>
                 </div>
-
             </section>
         </main>
-        <Footer/>
-        </>
-    );
+    </>
+);
 }
 
 export default Inicio;

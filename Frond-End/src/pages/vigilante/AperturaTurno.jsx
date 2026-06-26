@@ -1,7 +1,5 @@
 // AperturaTurno.jsx
 import { useState, useEffect } from "react";
-import Footer from "../../components/VigilanteNav/VigilanteFooter";
-import Header from "../../components/VigilanteNav/VigilanteHeader";
 import Nav from "../../components/VigilanteNav/VigilanteNav";
 import { vigilanteService } from "../../services/vigilanteService";
 import "../../css/VigilanteCSS/apertura.css";
@@ -92,7 +90,6 @@ function AperturaTurno() {
 
     return (        
         <>
-        <Header />
         <main className="main-content">
             <Nav />
             <section className="apertura">
@@ -194,7 +191,6 @@ function AperturaTurno() {
 
             </section>
         </main>
-        <Footer/>
         </>
     );
 }

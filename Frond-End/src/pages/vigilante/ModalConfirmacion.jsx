@@ -1,12 +1,10 @@
-import Footer from "../../components/VigilanteNav/VigilanteFooter"
-import Header from "../../components/VigilanteNav/VigilanteHeader";
+
 import Nav from "../../components/VigilanteNav/VigilanteNav";
 import "../../css/VigilanteCSS/modalConfirmacion.css"
 
 function ModalConfirmacion() {
   return (
     <>
-      <Header />
 
       <main className="main-content">
         <Nav />
@@ -196,7 +194,6 @@ function ModalConfirmacion() {
         </section>
       </main>
 
-      <Footer />
     </>
   );
 }

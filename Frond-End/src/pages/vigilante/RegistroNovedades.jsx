@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 
-import Footer from "../../components/VigilanteNav/VigilanteFooter";
-import Header from "../../components/VigilanteNav/VigilanteHeader";
 import Nav from "../../components/VigilanteNav/VigilanteNav";
 
 import "../../css/VigilanteCSS/novedades.css";
@@ -84,7 +82,6 @@ function RegistroNovedades() {
 
     return (
         <>
-            <Header />
 
             <main className="main-content">
 
@@ -165,7 +162,6 @@ function RegistroNovedades() {
 
             </main>
 
-            <Footer />
         </>
     );
 }
