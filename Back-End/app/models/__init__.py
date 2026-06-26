@@ -8,3 +8,4 @@ from .visitante import Visitante
 from .log_auditoria import LogAuditoria
 from .alertas import Alerta
 from .configuracion import Configuracion
+from .novedad_vigilante import NovedadVigilante

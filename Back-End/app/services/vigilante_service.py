@@ -7,7 +7,7 @@ from app.models.vehiculo import Vehiculo
 from app.models.celda import Celda
 from app.models.acceso import Acceso
 from app.models.visitante import Visitante
-from app.models.novedad import Novedad
+from app.models.novedad_vigilante import NovedadVigilante
 
 def abrir_turno(usuario_id):
 
@@ -308,7 +308,7 @@ def listar_visitantes():
 
 def crear_novedad(usuario_id, descripcion):
 
-    nueva_novedad = Novedad(
+    nueva_novedad = NovedadVigilante(
         descripcion=descripcion,
         usuario_id=int(usuario_id)
     )
@@ -322,8 +322,8 @@ def crear_novedad(usuario_id, descripcion):
 
 def listar_novedades():
 
-    novedades = Novedad.query.order_by(
-        Novedad.fecha.desc()
+    novedades = NovedadVigilante.query.order_by(
+        NovedadVigilante.fecha.desc()
     ).all()
 
     return [
