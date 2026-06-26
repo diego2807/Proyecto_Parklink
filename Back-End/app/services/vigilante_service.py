@@ -86,6 +86,18 @@ def registrar_entrada(usuario_id, placa):
 
     if not celda:
         return {"error": "No hay celdas disponibles"}
+    
+    # Verificar último movimiento del vehículo
+    ultimo_movimiento = Acceso.query.filter_by(
+        vehiculo_id=vehiculo.id
+    ).order_by(
+        Acceso.fecha_hora.desc()
+    ).first()
+
+    if ultimo_movimiento and ultimo_movimiento.tipo_movimiento == "Entrada":
+        return {
+            "error": "El vehículo ya se encuentra dentro del parqueadero"
+        }
 
     nuevo_acceso = Acceso(
         placa=vehiculo.placa,
@@ -108,10 +120,13 @@ def registrar_entrada(usuario_id, placa):
     return {
         "mensaje": "Entrada registrada correctamente",
         "celda": celda.codigo_celda
+
     }
+
 
 def registrar_salida(usuario_id, placa):
 
+    # Buscar vehículo
     vehiculo = Vehiculo.query.filter_by(
         placa=placa
     ).first()
@@ -119,6 +134,7 @@ def registrar_salida(usuario_id, placa):
     if not vehiculo:
         return {"error": "Vehículo no encontrado"}
 
+    # Verificar turno activo
     turno = Turno.query.filter_by(
         usuario_id=int(usuario_id),
         estado="Activo"
@@ -127,29 +143,38 @@ def registrar_salida(usuario_id, placa):
     if not turno:
         return {"error": "No existe un turno activo"}
 
-    ultimo_ingreso = Acceso.query.filter_by(
-        vehiculo_id=vehiculo.id,
-        tipo_movimiento="Entrada"
+    # Obtener el ÚLTIMO movimiento del vehículo
+    ultimo_movimiento = Acceso.query.filter_by(
+        vehiculo_id=vehiculo.id
     ).order_by(
         Acceso.fecha_hora.desc()
     ).first()
 
-    if not ultimo_ingreso:
-        return {"error": "No existe un ingreso registrado"}
+    if not ultimo_movimiento:
+        return {"error": "El vehículo nunca ha ingresado"}
 
-    celda = Celda.query.get(ultimo_ingreso.celda_id)
+    # Si el último movimiento ya fue una salida,
+    # no puede volver a salir.
+    if ultimo_movimiento.tipo_movimiento == "Salida":
+        return {
+            "error": "El vehículo ya salió del parqueadero"
+        }
+
+    # Liberar la celda
+    celda = Celda.query.get(ultimo_movimiento.celda_id)
 
     if celda:
         celda.ocupada = False
 
+    # Registrar la salida
     nueva_salida = Acceso(
         placa=vehiculo.placa,
         vehiculo_id=vehiculo.id,
         tipo_movimiento="Salida",
         tipo_vehiculo=vehiculo.tipo_vehiculo,
-        tipo_usuario="Funcionario",
-        celda_id=ultimo_ingreso.celda_id,
-        celda_asignada=ultimo_ingreso.celda_asignada,
+        tipo_usuario=ultimo_movimiento.tipo_usuario,
+        celda_id=ultimo_movimiento.celda_id,
+        celda_asignada=ultimo_movimiento.celda_asignada,
         turno_id=turno.id
     )
 
@@ -160,7 +185,7 @@ def registrar_salida(usuario_id, placa):
 
     return {
         "mensaje": "Salida registrada correctamente",
-        "celda_liberada": ultimo_ingreso.celda_asignada
+        "celda_liberada": ultimo_movimiento.celda_asignada
     }
 
 
@@ -201,34 +226,34 @@ def vehiculos_activos(usuario_id):
     if not turno:
         return {"error": "No existe un turno activo"}
 
-    accesos = Acceso.query.filter_by(
+    # Obtener todas las placas que tuvieron movimientos en este turno
+    placas = db.session.query(
+        Acceso.placa
+    ).filter_by(
         turno_id=turno.id
-    ).order_by(
-        Acceso.fecha_hora.desc()
-    ).all()
-
-    ultimos_por_placa = {}
-
-    for acceso in accesos:
-        placa = acceso.placa
-
-        if placa not in ultimos_por_placa:
-            ultimos_por_placa[placa] = acceso
+    ).distinct().all()
 
     activos = []
 
-    for placa, acceso in ultimos_por_placa.items():
+    for (placa,) in placas:
 
-        if acceso.tipo_movimiento == "Entrada":
+        ultimo_movimiento = Acceso.query.filter_by(
+            turno_id=turno.id,
+            placa=placa
+        ).order_by(
+            Acceso.fecha_hora.desc()
+        ).first()
+
+        if ultimo_movimiento and ultimo_movimiento.tipo_movimiento == "Entrada":
+
             activos.append({
-                "placa": placa,
-                "celda": acceso.celda_asignada,
-                "fecha_entrada": acceso.fecha_hora.strftime("%Y-%m-%d %H:%M:%S"),
-                "tipo_vehiculo": acceso.tipo_vehiculo
+                "placa": ultimo_movimiento.placa,
+                "celda": ultimo_movimiento.celda_asignada,
+                "fecha_entrada": ultimo_movimiento.fecha_hora.strftime("%Y-%m-%d %H:%M:%S"),
+                "tipo_vehiculo": ultimo_movimiento.tipo_vehiculo
             })
 
     return activos
-
 
 def resumen_turno(usuario_id):
 
