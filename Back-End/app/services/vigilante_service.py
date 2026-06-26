@@ -240,7 +240,6 @@ def resumen_turno(usuario_id):
     if not turno:
         return {"error": "No existe un turno activo"}
 
-    # 🚗 Entradas y salidas del turno
     entradas = Acceso.query.filter_by(
         turno_id=turno.id,
         tipo_movimiento="Entrada"
@@ -251,13 +250,19 @@ def resumen_turno(usuario_id):
         tipo_movimiento="Salida"
     ).count()
 
-    # 🅿️ Celdas
     total_celdas = Celda.query.count()
-    celdas_ocupadas = Celda.query.filter_by(ocupada=True).count()
+
+    celdas_ocupadas = Celda.query.filter_by(
+        ocupada=True
+    ).count()
+
     celdas_libres = total_celdas - celdas_ocupadas
 
-    # 🚗 Vehículos activos (reutilizamos tu función)
     activos = vehiculos_activos(usuario_id)
+
+    visitantes = Visitante.query.count()
+
+    novedades = NovedadVigilante.query.count()
 
     return {
         "entradas": entradas,
@@ -265,7 +270,9 @@ def resumen_turno(usuario_id):
         "vehiculos_activos": len(activos),
         "celdas_ocupadas": celdas_ocupadas,
         "celdas_libres": celdas_libres,
-        "total_celdas": total_celdas
+        "total_celdas": total_celdas,
+        "visitantes": visitantes,
+        "novedades": novedades
     }
 
 def registrar_visitante(data):
