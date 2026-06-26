@@ -45,6 +45,22 @@ function MapaGrafico() {
     const celdasDisponibles =
         totalCeldas - celdasOcupadas;
 
+
+    const grupos = {};
+
+
+    celdas.forEach((celda) => {
+
+    const letra = celda.codigo_celda.split("-")[0];
+
+    if (!grupos[letra]) {
+        grupos[letra] = [];
+    }
+
+    grupos[letra].push(celda);
+
+    });
+
     return (
         <>
 

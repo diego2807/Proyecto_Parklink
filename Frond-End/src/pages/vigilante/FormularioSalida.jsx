@@ -1,15 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+
 import Nav from "../../components/VigilanteNav/VigilanteNav";
 import { vigilanteService } from "../../services/vigilanteService";
+
 import "../../css/VigilanteCSS/salida.css";
 
 function FormularioSalida() {
 
     const [placa, setPlaca] = useState("");
-
     const [resultado, setResultado] = useState(null);
-
     const [cargando, setCargando] = useState(false);
+
+    const [searchParams] = useSearchParams();
+
+    // Cargar automáticamente la placa que viene desde ListaVehiculosActivo
+    useEffect(() => {
+
+        const placaURL = searchParams.get("placa");
+
+        if (placaURL) {
+            setPlaca(placaURL);
+        }
+
+    }, [searchParams]);
 
     const registrarSalida = async () => {
 
@@ -52,7 +66,9 @@ function FormularioSalida() {
     return (
         <>
             <main className="main-content">
+
                 <Nav />
+
                 <section className="salida">
 
                     <div className="titulo-pagina">
@@ -125,7 +141,9 @@ function FormularioSalida() {
 
                                     <strong>📋 Estado</strong>
 
-                                    <span>Salida registrada correctamente</span>
+                                    <span>
+                                        Salida registrada correctamente
+                                    </span>
 
                                 </div>
 
@@ -135,8 +153,8 @@ function FormularioSalida() {
                     }
 
                 </section>
-            </main>
 
+            </main>
         </>
     );
 

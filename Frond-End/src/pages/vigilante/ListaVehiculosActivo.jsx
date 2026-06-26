@@ -43,7 +43,7 @@ function ListaVehiculosActivo() {
 
     const handleLiberar = (placa) => {
 
-        navigate(`/vigilante/salida?placa=${placa}`);
+    navigate(`/FormularioSalida?placa=${placa}`);
 
     };
 
