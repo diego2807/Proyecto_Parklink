@@ -1,0 +1,328 @@
+/* ==========================================================================
+   PARKLINK - ESTILOS INICIO (DASHBOARD PREMIUM REPARADO)
+   ========================================================================== */
+
+/* ==========================================
+   MÓVIL (POR DEFECTO - CAPA BASE)
+========================================== */
+
+body {
+    background-color: #f8fafc;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.inicio-main-content {
+    display: block;
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.inicio-contenido {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    /* 💡 SOLUCIÓN BUG MENÚ HAMBURGUESA: 
+       Añadimos un padding-top generoso (70px) para que el botón flotante no tape el título */
+    padding: 75px 16px 24px 16px;
+    box-sizing: border-box;
+}
+
+/* ── Encabezado de Bienvenida ── */
+.inicio-bienvenida {
+    width: 100%;
+    margin-bottom: 28px;
+}
+
+.inicio-bienvenida h2 {
+    color: #0f172a;
+    margin: 0 0 6px 0;
+    font-size: 1.65rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    word-break: break-word;
+}
+
+.inicio-bienvenida p {
+    color: #64748b;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+/* ── Contenedor de Bloques ── */
+.inicio-bloques-container {
+    /* 💡 SOLUCIÓN BUG TARJETAS APRETADAS EN MÓVIL:
+       Forzamos a que en celulares se mantenga uno debajo del otro de forma limpia */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+/* ── Estilo de Tarjetas (Cards) ── */
+.inicio-turno,
+.inicio-guia {
+    width: 100%;
+    box-sizing: border-box;
+    background: #ffffff;
+    padding: 22px;
+    border-radius: 16px;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -2px rgba(0, 0, 0, 0.03);
+}
+
+.inicio-turno h3,
+.inicio-guia h3 {
+    color: #0f172a;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+.inicio-turno p {
+    color: #334155;
+    font-size: 0.95rem;
+    margin: 12px 0;
+    line-height: 1.5;
+    border-bottom: 1px dashed #f1f5f9;
+    padding-bottom: 8px;
+}
+
+.inicio-turno p:last-of-type {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.inicio-turno p strong {
+    color: #64748b;
+    font-weight: 500;
+}
+
+.inicio-item-guia {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.inicio-item-guia:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.inicio-item-guia h4 {
+    margin: 0 0 4px 0;
+    color: #1e293b;
+    font-size: 0.98rem;
+    font-weight: 600;
+}
+
+.inicio-item-guia p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.inicio-recordatorio {
+    margin-top: 20px;
+    padding: 14px;
+    background: #f0fdf4;
+    border-left: 4px solid #10b981;
+    border-radius: 8px;
+    color: #166534;
+    font-size: 0.88rem;
+}
+
+.inicio-turno p,
+.inicio-item-guia p,
+.inicio-recordatorio {
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+
+/* ==========================================
+   TABLET Y ESCRITORIO (PANTALLAS GRANDES)
+========================================== */
+
+/* Cambiamos el breakpoint a 1024px para PCs reales. En tablets medianas se verá apilado perfecto */
+@media (min-width: 1024px) {
+
+    .inicio-contenido {
+        width: auto;
+        /* Restablecemos el padding superior normal porque el menú ya no flota encima */
+        padding: 44px 44px 44px 284px; 
+    }
+
+    .inicio-bienvenida h2 {
+        font-size: 2.25rem;
+    }
+
+    /* Activamos el Grid únicamente cuando hay pantalla suficiente */
+    .inicio-bloques-container {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 28px;
+    }
+
+    .inicio-turno,
+    .inicio-guia {
+        padding: 28px;
+    }
+}
+
+/* ==========================================================================
+   DISEÑO MEJORADO PARA LA TARJETA DE ESTADO ACTUAL (NO MORE WHITE SPACE)
+   ========================================================================== */
+
+.inicio-turno-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 14px;
+}
+
+.inicio-turno-header h3 {
+    margin: 0 !important;
+}
+
+/* Reorganización interna en columnas */
+.inicio-turno-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.turno-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.turno-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+.turno-valor-principal {
+    font-size: 1.15rem;
+    color: #1e293b;
+    font-weight: 600;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-bottom: none !important;
+}
+
+.turno-meta-container {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+}
+
+.turno-meta-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Badges modernos para la metadata */
+.turno-badge-info {
+    margin: 0 !important;
+    padding: 10px 14px !important;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem !important;
+    border-bottom: none !important;
+    display: flex;
+    align-items: center;
+}
+
+.time-highlight {
+    background-color: #eff6ff;
+    color: #1d4ed8;
+}
+
+.jor-highlight {
+    background-color: #f7fee7;
+    color: #4d7c0f;
+}
+
+/* Estilización de Badges de Estado del Encabezado */
+.badge {
+    padding: 6px 12px;
+    border-radius: 99px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.badge-active {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+
+.badge-inactive {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+.badge-loading {
+    background-color: #f1f5f9;
+    color: #64748b;
+}
+
+/* Efecto de punto parpadeante (Live Pulse) */
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #22c55e;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+    animation: pulse 1.6s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+    }
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+    }
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+    }
+}
+
+.inicio-alerta-turno {
+    margin-top: 20px;
+    padding: 12px;
+    background: #fef3c7;
+    border-left: 4px solid #d97706;
+    border-radius: 8px;
+    color: #92400e;
+    font-size: 0.88rem;
+}
+
+/*ajuste responsivo para que las subcolumnas se acomoden perfecto*/
+@media (max-width: 480px) {
+    .turno-meta-container {
+        flex-direction: column;
+        gap: 12px;
+    }
+}

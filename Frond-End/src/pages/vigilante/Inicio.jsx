@@ -1,9 +1,8 @@
 // Inicio.jsx
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import Nav from "../../components/VigilanteNav/VigilanteNav";
-import { vigilanteService } from "../../services/vigilanteService"; // Asegúrate de tener este import
-import "../../css/VigilanteCSS/index.css";
+import { vigilanteService } from "../../services/vigilanteService"; 
+import "../../css/VigilanteCSS/principal.css";
 
 function Inicio() {
     // ── Estados Dinámicos ─────────────────────────────────────────────────────
@@ -40,14 +39,8 @@ function Inicio() {
         // 3. Consultar a Flask si el turno está verdaderamente activo
         const verificarTurnoEnBackend = async () => {
             try {
-                // Aquí usamos el servicio para ver el estado real en la DB
-                // NOTA: Si no tienes una ruta directa de "ver estado", al fallar cualquier GET como 
-                // obtener historial o vehículos te sirve para deducir si está activo o no.
-                // Simulamos una verificación directa o puedes consultar una ruta de tu API:
                 const token = localStorage.getItem("token");
                 if (token) {
-                    // Si tu backend tiene un endpoint para chequear el turno, lo llamas acá.
-                    // Por ahora asumimos que si el flujo inicial funciona, evaluamos su estado:
                     setEstadoTurno({ activo: true, cargando: false });
                 } else {
                     setEstadoTurno({ activo: false, cargando: false });
@@ -63,84 +56,88 @@ function Inicio() {
         return () => clearInterval(intervaloReloj);
     }, []);
 
-return (
-    <>
-        {/* Contenedor principal del Layout */}
-        <main className="main-content">
-            
-            {/* El Nav controla de forma interna su comportamiento lateral */}
-            <Nav />
-            
-            {/* El área limpia donde renderizas la app */}
-            <section className="contenido">
-                <div className="bienvenida">
-                    <h2>Bienvenido a Parklink, {nombreVigilante.split(" ")[0]} 👋</h2>
-                    <p>Sistema de gestión y control de parqueaderos empresariales.</p>
-                </div>
+    return (
+        <>
+            <main className="inicio-main-content">
+                <Nav />
 
-                <div className="turno">
-                    <h3>📌 Estado Actual</h3>
-                    <p><strong>Usuario:</strong> {nombreVigilante}</p>
-                    <p><strong>Hora del Sistema:</strong> <span style={{ color: '#007bff', fontWeight: 'bold' }}>{horaActual}</span></p>
-                    <p><strong>Jornada Estimada:</strong> {jornada}</p>
-                    <p>
-                        <strong>Estado: </strong> 
-                        {estadoTurno.cargando ? (
-                            <span>Verificando...</span>
-                        ) : estadoTurno.activo ? (
-                            <span style={{ 
-                                backgroundColor: '#d4edda', 
-                                color: '#155724', 
-                                padding: '3px 8px', 
-                                borderRadius: '4px', 
-                                fontWeight: 'bold',
-                                fontSize: '14px' 
-                            }}>🟢 Activo</span>
-                        ) : (
-                            <span style={{ 
-                                backgroundColor: '#f8d7da', 
-                                color: '#721c24', 
-                                padding: '3px 8px', 
-                                borderRadius: '4px', 
-                                fontWeight: 'bold',
-                                fontSize: '14px' 
-                            }}>🔴 Inactivo (Requiere Apertura)</span>
-                        )}
-                    </p>
+                <section className="inicio-contenido">
+                    <div className="inicio-bienvenida">
+                        <h2>Bienvenido a Parklink, {nombreVigilante.split(" ")[0]} 👋</h2>
+                        <p>Sistema de gestión y control de parqueaderos empresariales.</p>
+                    </div>
 
-                    {!estadoTurno.cargando && !estadoTurno.activo && (
-                        <div style={{ marginTop: '15px', fontSize: '13px', color: '#856404', backgroundColor: '#fff3cd', padding: '10px', borderRadius: '4px' }}>
-                            ⚠️ No has iniciado jornada laboral en el sistema. Ve a <strong>Apertura de Turno</strong> para comenzar.
+                    {/* 🛠️ CONTENEDOR AGREGADO PARA EL RESPONSIVE EN ESCRITORIO */}
+                    <div className="inicio-bloques-container">
+
+                        
+                        <div className="inicio-turno">
+                        <div className="inicio-turno-header">
+                            <h3>📌 Estado del Turno</h3>
+                            {estadoTurno.cargando ? (
+                                <span className="badge badge-loading">Verificando...</span>
+                            ) : estadoTurno.activo ? (
+                                <span className="badge badge-active"><span className="pulse-dot"></span> Activo</span>
+                            ) : (
+                                <span className="badge badge-inactive">🔴 Inactivo</span>
+                            )}
                         </div>
-                    )}
-                </div>
 
-                <div className="guia">
-                    <h3>📖 Guía rápida del sistema</h3>
+                        {/* Contenedor interno para organizar los datos */}
+                        <div className="inicio-turno-grid">
+                            <div className="turno-grupo">
+                                <span className="turno-label">Vigilante asignado</span>
+                                <p className="turno-valor-principal">👤 {nombreVigilante}</p>
+                            </div>
 
-                    <div className="item-guia">
-                        <h4>🚗 Entrada</h4>
-                        <p>Registra vehículos que ingresan al parqueadero.</p>
+                            <div className="turno-meta-container">
+                                <div className="turno-meta-item">
+                                    <span className="turno-label">Hora de la máquina</span>
+                                    <p className="turno-badge-info time-highlight">🕒 {horaActual}</p>
+                                </div>
+                                
+                                <div className="turno-meta-item">
+                                    <span className="turno-label">Jornada estimada</span>
+                                    <p className="turno-badge-info jor-highlight">⛅ Turno {jornada}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {!estadoTurno.cargando && !estadoTurno.activo && (
+                            <div className="inicio-alerta-turno">
+                                ⚠️ No has iniciado jornada laboral en el sistema. Ve a <strong>Apertura de Turno</strong> para comenzar.
+                            </div>
+                        )}
                     </div>
 
-                    <div className="item-guia">
-                        <h4>🚙 Salida</h4>
-                        <p>Registra vehículos que abandonan el parqueadero.</p>
-                    </div>
+                        <div className="inicio-guia">
+                            <h3>📖 Guía rápida del sistema</h3>
 
-                    <div className="item-guia">
-                        <h4>📋 Novedades</h4>
-                        <p>Registra incidentes o situaciones especiales.</p>
-                    </div>
+                            <div className="inicio-item-guia">
+                                <h4>🚗 Entrada</h4>
+                                <p>Registra vehículos que ingresan al parqueadero.</p>
+                            </div>
 
-                    <div className="recordatorio">
-                        <strong>💡 Recuerda:</strong> Verificar placas y registrar novedades antes de cerrar el turno.
-                    </div>
-                </div>
-            </section>
-        </main>
-    </>
-);
+                            <div className="inicio-item-guia">
+                                <h4>🚙 Salida</h4>
+                                <p>Registra vehículos que abandonan el parqueadero.</p>
+                            </div>
+
+                            <div className="inicio-item-guia">
+                                <h4>📋 Novedades</h4>
+                                <p>Registra incidentes o situaciones especiales.</p>
+                            </div>
+
+                            <div className="inicio-recordatorio">
+                                <strong>💡 Recuerda:</strong> Verificar placas y registrar novedades antes de cerrar el turno.
+                            </div>
+                        </div>
+
+                    </div> {/* /inicio-bloques-container */}
+                </section>
+            </main>
+        </>
+    );
 }
 
 export default Inicio;
