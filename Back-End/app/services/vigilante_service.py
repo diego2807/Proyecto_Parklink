@@ -8,6 +8,28 @@ from app.models.celda import Celda
 from app.models.acceso import Acceso
 from app.models.visitante import Visitante
 from app.models.novedad_vigilante import NovedadVigilante
+from app.models.log_auditoria import LogAuditoria
+
+
+def registrar_log(nivel, modulo, descripcion, usuario_id=None, placa=None):
+    try:
+        log = LogAuditoria(
+            nivel=nivel,
+            modulo=modulo,
+            descripcion=descripcion,
+            usuario_id=usuario_id,
+            placa=placa
+        )
+
+        db.session.add(log)
+        db.session.commit()
+
+    except Exception as e:
+        db.session.rollback()
+        print("Error registrando log:", e)
+
+
+
 
 def abrir_turno(usuario_id):
 
@@ -26,6 +48,13 @@ def abrir_turno(usuario_id):
 
     db.session.add(nuevo_turno)
     db.session.commit()
+
+    registrar_log(
+    "informativo",
+    "Turnos",
+    "Se abrió un turno",
+    usuario_id
+)
 
     return "Turno abierto correctamente"
 
@@ -59,6 +88,13 @@ def cerrar_turno(usuario_id):
     turno.fecha_cierre = datetime.utcnow()
 
     db.session.commit()
+
+    registrar_log(
+    "informativo",
+    "Turnos",
+    "Se cerró un turno",
+    usuario_id
+)
 
     return "Turno cerrado correctamente"
 
@@ -116,6 +152,14 @@ def registrar_entrada(usuario_id, placa):
 
     db.session.add(nuevo_acceso)
     db.session.commit()
+
+    registrar_log(
+    "informativo",
+    "Accesos",
+    f"Entrada registrada del vehículo {placa}",
+    usuario_id,
+    placa
+)
 
     return {
         "mensaje": "Entrada registrada correctamente",
@@ -182,6 +226,14 @@ def registrar_salida(usuario_id, placa):
 
     db.session.add(nueva_salida)
     db.session.commit()
+
+    registrar_log(
+    "informativo",
+    "Accesos",
+    f"Salida registrada del vehículo {placa}",
+    usuario_id,
+    placa
+)
 
     return {
         "mensaje": "Salida registrada correctamente",
@@ -347,6 +399,13 @@ def crear_novedad(usuario_id, descripcion):
 
     db.session.add(nueva_novedad)
     db.session.commit()
+
+    registrar_log(
+    "advertencia",
+    "Novedades",
+    descripcion,
+    usuario_id
+)
 
     return {
         "mensaje": "Novedad registrada correctamente"
