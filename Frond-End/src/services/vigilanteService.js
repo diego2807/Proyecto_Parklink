@@ -143,8 +143,6 @@ obtenerVisitantes: async () => {
     return await response.json();
 },
 
-
-
 // 8. Registrar Visitante
 registrarVisitante: async (visitante) => {
   const response = await fetch(`${API_BASE_URL}/visitantes`, {
@@ -171,6 +169,24 @@ registrarVisitante: async (visitante) => {
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || 'No se encontró una reserva activa para esta placa.');
     return data; // Flask debería retornar: { propietario: "...", espacio: "...", hora: "..." }
-  }
+  },
+
+  consultarVehiculo: async (placa) => {
+
+    const response = await fetch(
+        `${API_BASE_URL}/vehiculo/${placa}`,
+        {
+            method: "GET",
+            headers: getAuthHeaders(),
+        }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok)
+        throw new Error(data.error);
+
+    return data;
+},
 }; // <-- Aquí cierra correctamente el objeto exportado
 

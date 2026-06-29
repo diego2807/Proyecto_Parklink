@@ -29,6 +29,8 @@ import ModalConfirmacion from './pages/vigilante/ModalConfirmacion'
 import RegistroNovedades from './pages/vigilante/RegistroNovedades'
 import RutaProtegida from './components/RutaProtegida'
 import Control from './pages/vigilante/Control'
+import Reservas from './pages/user/Reservas'
+import Perfil from "./pages/user/Perfil";
 
 
 function App() {
@@ -70,6 +72,9 @@ function App() {
         <Route path='/PanelControl' element={<RutaProtegida rolesPermitidos={['usuario']}><PanelControl /></RutaProtegida>} />
         <Route path='/Semaforo' element={<RutaProtegida rolesPermitidos={['usuario']}><Semaforo /></RutaProtegida>} />
         <Route path='/VehiculosU' element={<RutaProtegida rolesPermitidos={['usuario']}><VehiculosU /></RutaProtegida>} />
+        <Route path='/Reservas' element={<RutaProtegida rolesPermitidos={['usuario']}><Reservas /></RutaProtegida>}/>
+        <Route path="/Perfil" element={<RutaProtegida rolesPermitidos={['usuario']}><Perfil /></RutaProtegida> } />
+    
       </Routes>
     </BrowserRouter>
   );

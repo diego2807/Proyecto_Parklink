@@ -1,197 +1,344 @@
-import '../../css/UserCSS/Styles.css'
-import Nav from '../../components/UserNav/UserNav'
+import { useEffect, useState } from "react";
+import Nav from "../../components/UserNav/UserNav";
+import "../../css/UserCSS/Styles.css";
+import { usuarioService } from "../../services/usuarioService";
 
-function Historial (){
+function Historial() {
+
+    const [historial, setHistorial] = useState([]);
+    const [busqueda, setBusqueda] = useState("");
+
+    useEffect(() => {
+        cargarHistorial();
+    }, []);
+
+    async function cargarHistorial() {
+        try {
+
+            const datos = await usuarioService.obtenerHistorial();
+
+            setHistorial(datos);
+
+        } catch (error) {
+
+            console.error(error);
+
+        }
+    }
+
+    const historialFiltrado = historial.filter((registro) => {
+
+        const texto = busqueda.toLowerCase();
+
+        return (
+            registro.placa.toLowerCase().includes(texto) ||
+            registro.fecha.includes(texto)
+        );
+
+    });
+
     return (
         <>
-        <Nav/>
-        <div className="page">
+            <Nav />
 
+            <div className="page">
 
-    <div className="topbar">
+                <div className="topbar">
 
-        <div>
+                    <div>
 
-            <h1>Historial Personal</h1>
+                        <h1>Historial Personal</h1>
 
-            <p>
-                Consulte todas las entradas y salidas registradas.
-            </p>
+                        <p>
+                            Consulte todas las entradas y salidas registradas.
+                        </p>
 
-        </div>
+                    </div>
 
-    </div>
+                </div>
 
+                <section className="cards">
 
-    <section className="cards">
+                    <div className="card">
 
-        <div className="card">
+                        <div className="card-icon blue">
+                            <i className="fas fa-arrow-right-to-bracket"></i>
+                        </div>
 
-            <div className="card-icon blue">
+                        <div>
+                            <h3>Total movimientos</h3>
+                            <span>{historial.length}</span>
+                        </div>
+
+                    </div>
+
+                    <div className="card">
+
+                        <div className="card-icon green">
+                            <i className="fas fa-car"></i>
+                        </div>
+
+                        <div>
+
+                            <h3>Vehículos utilizados</h3>
+
+                            <span>
+                                {
+                                    [...new Set(historial.map(h=>h.placa))].length
+                                }
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div className="card">
+
+                        <div className="card-icon orange">
+                            <i className="fas fa-clock"></i>
+                        </div>
+
+                        <div>
+
+                            <h3>Último movimiento</h3>
+
+                            <span>
+
+                                {
+                                    historial.length
+                                    ? historial[0].hora
+                                    : "--"
+                                }
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <div className="panel">
+
+                    <div className="panel-header">
+
+                        <h2>Buscar Registro</h2>
+
+                    </div>
+
+                    <div className="search-box">
+
+                    <i className="fas fa-magnifying-glass"></i>
+
+                    <input
+
+                    type="text"
+
+                    placeholder="Buscar por placa o fecha..."
+
+                    value={busqueda}
+
+                    onChange={(e)=>setBusqueda(e.target.value)}
+
+                    />
+
+                    </div>
+
+                </div>
+
+                <div className="panel">
+
+                    <div className="panel-header">
+
+                        <h2>Historial de Uso</h2>
+
+                    </div>
+
+                    <table>
+
+                       <thead>
+
+                        <tr>
+
+                        <th>Fecha</th>
+
+                        <th>Hora</th>
+
+                        <th>Vehículo</th>
+
+                        <th>Movimiento</th>
+
+                        <th>Estado</th>
+
+                        </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {
+                                historialFiltrado.length === 0 ?
+
+                                    (
+                                        <tr>
+
+                                            <td colSpan="4">
+
+                                                No hay registros.
+
+                                            </td>
+
+                                        </tr>
+
+                                    )
+
+                                    :
+
+                                    historialFiltrado.map((registro, index) => (
+
+                                        <tr key={index}>
+
+                                            <td>{registro.fecha}</td>
+
+                                            <td>{registro.hora}</td>
+
+                                            <td>{registro.placa}</td>
+
+                                            <td>
+
+                                            <span
+                                            className={
+                                            registro.movimiento === "Entrada"
+                                            ? "badge success"
+                                            : "badge danger"
+                                            }
+                                            >
+
+                                            {
+                                            registro.movimiento === "Entrada"
+                                            ?
+                                            "🟢 Entrada"
+                                            :
+                                            "🔴 Salida"
+                                            }
+
+                                            </span>
+
+                                            </td>
+
+                                            <td>
+
+                                            <span
+                                            className={
+                                            registro.movimiento==="Entrada"
+                                            ?
+                                            "badge warning"
+                                            :
+                                            "badge success"
+                                            }
+                                            >
+
+                                            {
+                                            registro.movimiento==="Entrada"
+                                            ?
+                                            "🅿️ En parqueadero"
+                                            :
+                                            "✅ Finalizado"
+                                            }
+
+                                            </span>
+
+                                            </td>
+
+                                        </tr>
+
+                                    ))
+
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <div className="panel">
+
+                <div className="panel-header">
+
+                <h2>
+
+                Resumen
+
+                </h2>
+
+                </div>
+
+                <div className="info-box">
+
+                <div className="info-card">
 
                 <i className="fas fa-clock"></i>
 
-            </div>
+                <h3>
 
-            <div>
+                Historial Automático
 
-                <h3>Registros Totales</h3>
+                </h3>
 
-                <span id="totalRegistros">
+                <p>
 
-                    0
+                Cada ingreso y salida queda registrado automáticamente.
 
-                </span>
+                </p>
 
-            </div>
+                </div>
 
-        </div>
+                <div className="info-card">
 
-        <div className="card">
+                <i className="fas fa-shield-halved"></i>
 
-            <div className="card-icon green">
+                <h3>
 
-                <i className="fas fa-car"></i>
+                Información Segura
 
-            </div>
+                </h3>
 
-            <div>
+                <p>
 
-                <h3>Vehículos Utilizados</h3>
+                Tus registros únicamente pueden ser consultados por personal autorizado.
 
-                <span id="vehiculosUtilizados">
+                </p>
 
-                    0
+                </div>
 
-                </span>
+                <div className="info-card">
 
-            </div>
+                <i className="fas fa-chart-column"></i>
 
-        </div>
+                <h3>
 
-        <div className="card">
+                Estadísticas
 
-            <div className="card-icon orange">
+                </h3>
 
-                <i className="fas fa-calendar-days"></i>
+                <p>
 
-            </div>
+                Consulta el comportamiento de uso de tu parqueadero.
 
-            <div>
+                </p>
 
-                <h3>Fecha Actual</h3>
+                </div>
 
-                <span id="fechaActual">
+                </div>
 
-                    --
-
-                </span>
+                </div>
 
             </div>
 
-        </div>
+        </>
+    );
 
-    </section>
-
-
-    <div className="panel">
-
-        <div className="panel-header">
-
-            <h2>
-
-                Buscar Registro
-
-            </h2>
-
-        </div>
-
-        <div className="search-box">
-
-            <input
-            type="text"
-            id="buscarHistorial"
-            placeholder="Buscar por placa o fecha..."
-            onkeyup="filtrarHistorial()"/>
-
-        </div>
-
-    </div>
-
-
-    <div className="panel">
-
-        <div className="panel-header">
-
-            <h2>
-
-                Historial de Uso
-
-            </h2>
-
-        </div>
-
-        <table>
-
-            <thead>
-
-                <tr>
-
-                    <th>Fecha</th>
-
-                    <th>Hora Entrada</th>
-
-                    <th>Hora Salida</th>
-
-                    <th>Vehículo</th>
-
-                </tr>
-
-            </thead>
-
-            <tbody id="tablaHistorial">
-
-              
-
-            </tbody>
-
-        </table>
-
-    </div>
-
-
-    <div className="panel">
-
-        <div className="panel-header">
-
-            <h2>
-
-                Información
-
-            </h2>
-
-        </div>
-
-        <p>
-
-            Este historial registra automáticamente
-            los vehículos almacenados en el sistema.
-
-        </p>
-
-
-        <p>
-
-            Puede consultar fechas, horas de ingreso,
-            salida y la placa asociada al registro.
-
-        </p>
-
-    </div>
-
-</div>
-</>
-    )
 }
 
-export default Historial
+export default Historial;

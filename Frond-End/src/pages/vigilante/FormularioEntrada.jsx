@@ -7,6 +7,8 @@ import "../../css/VigilanteCSS/entrada.css";
 function FormularioEntrada() {
 
     const [placa, setPlaca] = useState("");
+    const [vehiculo, setVehiculo] = useState(null);
+    const [mensaje, setMensaje] = useState("");
     const [loading, setLoading] = useState(false);
 
     const confirmarEntrada = async () => {
@@ -38,6 +40,36 @@ function FormularioEntrada() {
 
         }
     };
+
+    const buscarVehiculo = async () => {
+
+    if (!placa.trim()) {
+
+        alert("Ingrese una placa.");
+
+        return;
+
+    }
+
+    try {
+
+        const datos = await vigilanteService.consultarVehiculo(placa);
+
+        setVehiculo(datos);
+
+        setMensaje("");
+
+    }
+
+    catch(error){
+
+        setVehiculo(null);
+
+        setMensaje(error.message);
+
+    }
+
+}
 
     return (
         <>
@@ -73,9 +105,9 @@ function FormularioEntrada() {
                                 />
 
                                 {/* Este botón queda para cuando exista la consulta de reservas */}
-                                <button disabled>
-                                    Buscar
-                                </button>
+                            <button onClick={buscarVehiculo}>
+                                🔍 Buscar
+                            </button>
 
                             </div>
 
@@ -87,37 +119,104 @@ function FormularioEntrada() {
 
                             <div className="info-grid">
 
-                                <div className="info-card">
-                                    <h4>🚗 Placa</h4>
-                                    <p>{placa || "Sin registrar"}</p>
-                                </div>
+                            {
+
+                                vehiculo ?
+
+                                <>
+
+                                    <div className="info-card">
+
+                                        <h4>🚗 Placa</h4>
+
+                                        <p>{vehiculo.placa}</p>
+
+                                    </div>
+
+                                    <div className="info-card">
+
+                                        <h4>👤 Propietario</h4>
+
+                                        <p>{vehiculo.propietario}</p>
+
+                                    </div>
+
+                                    <div className="info-card">
+
+                                        <h4>🏢 Área</h4>
+
+                                        <p>{vehiculo.area}</p>
+
+                                    </div>
+
+                                    <div className="info-card">
+
+                                        <h4>🚙 Tipo</h4>
+
+                                        <p>{vehiculo.tipo}</p>
+
+                                    </div>
+
+                                    <div className="info-card">
+
+                                        <h4>🎨 Color</h4>
+
+                                        <p>{vehiculo.color}</p>
+
+                                    </div>
+
+                                    <div className="info-card">
+
+                                        <h4>🏭 Marca</h4>
+
+                                        <p>{vehiculo.marca}</p>
+
+                                    </div>
+
+                                </>
+
+                                :
 
                                 <div className="info-card">
-                                    <h4>📌 Estado</h4>
-                                    <p>Lista para registrar</p>
+
+                                    <h4>Estado</h4>
+
+                                    <p>
+
+                                        {
+
+                                            mensaje
+
+                                            ?
+
+                                            "❌ " + mensaje
+
+                                            :
+
+                                            "Busque una placa"
+
+                                        }
+
+                                    </p>
+
                                 </div>
 
-                            </div>
+                            }
+
+                        </div>
 
                             <div className="acciones">
 
                                 <button
                                     className="btn-confirmar"
                                     onClick={confirmarEntrada}
-                                    disabled={loading}
+                                    disabled={loading || !vehiculo}
                                 >
                                     {
                                         loading
                                             ? "Registrando..."
                                             : "✅ Confirmar Entrada"
                                     }
-                                </button>
-
-                                <button
-                                    className="btn-visitante"
-                                    disabled
-                                >
-                                    👥 Registrar Visitante
                                 </button>
 
                             </div>

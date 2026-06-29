@@ -14,7 +14,6 @@ function FormularioSalida() {
 
     const [searchParams] = useSearchParams();
 
-    // Cargar automáticamente la placa que viene desde ListaVehiculosActivo
     useEffect(() => {
 
         const placaURL = searchParams.get("placa");
@@ -44,6 +43,7 @@ function FormularioSalida() {
 
             setResultado({
                 placa: placaRegistrada,
+                hora: new Date().toLocaleString(),
                 ...data
             });
 
@@ -51,11 +51,15 @@ function FormularioSalida() {
 
             setPlaca("");
 
-        } catch (error) {
+        }
+
+        catch (error) {
 
             alert(error.message);
 
-        } finally {
+        }
+
+        finally {
 
             setCargando(false);
 
@@ -64,6 +68,7 @@ function FormularioSalida() {
     };
 
     return (
+
         <>
             <main className="main-content">
 
@@ -76,86 +81,151 @@ function FormularioSalida() {
                         <h2>🚙 Registro de Salida</h2>
 
                         <p>
-                            Digite la placa del vehículo para registrar su salida.
+                            Registre la salida de un vehículo del parqueadero.
                         </p>
 
                     </div>
 
                     <div className="busqueda">
 
-                        <label htmlFor="placaSalida">
-                            Placa del vehículo
-                        </label>
+                        <label>Placa del vehículo</label>
 
                         <div className="busqueda-placa">
 
                             <input
                                 type="text"
-                                id="placaSalida"
                                 value={placa}
-                                onChange={(e) =>
+                                placeholder="ABC123"
+                                onChange={(e)=>
                                     setPlaca(e.target.value.toUpperCase())
                                 }
-                                placeholder="Ej: ABC123"
                             />
 
                             <button
                                 onClick={registrarSalida}
                                 disabled={cargando}
                             >
+
                                 {
                                     cargando
-                                        ? "Registrando..."
-                                        : "Registrar Salida"
+                                    ? "Procesando..."
+                                    : "Registrar Salida"
                                 }
+
                             </button>
 
                         </div>
 
                     </div>
 
+                    <div className="panel-info">
+
+                        <div className="info-card">
+
+                            <h4>🚗 Placa</h4>
+
+                            <p>
+
+                                {placa || "Sin ingresar"}
+
+                            </p>
+
+                        </div>
+
+                        <div className="info-card">
+
+                            <h4>📌 Estado</h4>
+
+                            <p>
+
+                                {
+                                    resultado
+                                    ? "Salida registrada"
+                                    : "Esperando registro"
+                                }
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
                     {
+
                         resultado && (
 
-                            <div className="reserva">
+                            <div className="resultado">
 
-                                <h3>✅ Salida Registrada</h3>
+                                <h3>
 
-                                <div className="dato">
+                                    ✅ Salida Registrada
 
-                                    <strong>🚗 Placa</strong>
+                                </h3>
 
-                                    <span>{resultado.placa}</span>
+                                <div className="resultado-grid">
 
-                                </div>
+                                    <div className="dato">
 
-                                <div className="dato">
+                                        <strong>🚗 Placa</strong>
 
-                                    <strong>🅿️ Celda Liberada</strong>
+                                        <span>
 
-                                    <span>{resultado.celda_liberada}</span>
+                                            {resultado.placa}
 
-                                </div>
+                                        </span>
 
-                                <div className="dato">
+                                    </div>
 
-                                    <strong>📋 Estado</strong>
+                                    <div className="dato">
 
-                                    <span>
-                                        Salida registrada correctamente
-                                    </span>
+                                        <strong>🅿️ Celda liberada</strong>
+
+                                        <span>
+
+                                            {resultado.celda_liberada}
+
+                                        </span>
+
+                                    </div>
+
+                                    <div className="dato">
+
+                                        <strong>🕒 Hora</strong>
+
+                                        <span>
+
+                                            {resultado.hora}
+
+                                        </span>
+
+                                    </div>
+
+                                    <div className="dato">
+
+                                        <strong>Estado</strong>
+
+                                        <span className="estado-ok">
+
+                                            ✔ Operación exitosa
+
+                                        </span>
+
+                                    </div>
 
                                 </div>
 
                             </div>
 
                         )
+
                     }
 
                 </section>
 
             </main>
+
         </>
+
     );
 
 }

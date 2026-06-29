@@ -36,7 +36,7 @@ function Login() {
     /* Usamos un ID único global para delimitar el alcance del CSS antiguo */
     <div id="pl-auth-unique-root" className="auth-wrapper">
       <aside className="auth-aside">
-        <div className="brand">📂 <span>Parklink</span></div>
+        <div className="brand">🅿️ <span>Parklink</span></div>
         <div className="auth-hero-text">
           <h1>Monitoreo Inteligente de Parqueaderos</h1>
           <p>Optimiza la gestión vehicular de tu organización de forma automatizada.</p>
@@ -48,8 +48,8 @@ function Login() {
 
       <section className="auth-main">
         <div className="auth-box">
-          <h2>Iniciar Sesión</h2>
-          <p className="auth-subtitle">Ingresa tus credenciales corporativas para acceder al sistema.</p>
+          <h2>Bienvenido 👋</h2>
+          <p className="auth-subtitle">Accede a ParkLink para gestionar el parqueadero de manera rápida y segura.</p>
 
           {error && (
             <div className="auth-error-alert">
@@ -95,17 +95,46 @@ function Login() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
                 <button
-                  type="button"
-                  className="btn-eye"
-                  onClick={() => setMostrarPassword((v) => !v)}
+                    type="button"
+                    className="btn-eye"
+                    onClick={() => setMostrarPassword(!mostrarPassword)}
                 >
+
+                    <i
+                        className={
+                            mostrarPassword
+                                ? "fa-solid fa-eye-slash"
+                                : "fa-solid fa-eye"
+                        }
+                    ></i>
+
                 </button>
               </div>
             </div>
 
-            <button type="submit" className="btn-block" disabled={cargando}>
-              {cargando ? "Ingresando..." : "Iniciar Sesión"}
-            </button>
+            <button
+            type="submit"
+            className="btn-block"
+            disabled={cargando}
+
+            >
+
+              {
+              cargando
+              ?
+
+              <>
+              <i className="fa-solid fa-spinner fa-spin"></i>
+              Ingresando...
+              </>
+
+              :
+
+              "Entrar"
+
+              }
+
+      </button>
           </form>
 
           <div className="auth-bottom">

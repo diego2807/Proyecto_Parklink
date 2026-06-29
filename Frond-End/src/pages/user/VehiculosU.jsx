@@ -1,127 +1,325 @@
-import '../../css/UserCSS/Styles.css'
-import Nav from '../../components/UserNav/UserNav'
+import { useEffect, useState } from "react";
+import Nav from "../../components/UserNav/UserNav";
+import { usuarioService } from "../../services/usuarioService";
+import "../../css/UserCSS/Styles.css";
 
-function VehiculosU (){
-    return(
+function VehiculosU() {
+
+    const [vehiculos, setVehiculos] = useState([]);
+
+    const [formulario, setFormulario] = useState({
+        placa: "",
+        tipo_vehiculo: "Automóvil",
+        marca: "",
+        color: ""
+    });
+
+    const [cargando, setCargando] = useState(false);
+
+    useEffect(() => {
+
+        cargarVehiculos();
+
+    }, []);
+
+    const cargarVehiculos = async () => {
+
+        try {
+
+            const data = await usuarioService.obtenerVehiculos();
+
+            setVehiculos(data);
+
+        } catch (error) {
+
+            console.error(error);
+
+        }
+
+    };
+
+    const handleChange = (e) => {
+
+        setFormulario({
+
+            ...formulario,
+
+            [e.target.name]: e.target.value
+
+        });
+
+    };
+
+    const registrarVehiculo = async () => {
+
+        if (
+            !formulario.placa ||
+            !formulario.marca ||
+            !formulario.color
+        ) {
+
+            alert("Complete todos los campos.");
+
+            return;
+
+        }
+
+        try {
+
+            setCargando(true);
+
+            await usuarioService.registrarVehiculo(formulario);
+
+            alert("Vehículo registrado correctamente.");
+
+            setFormulario({
+
+                placa: "",
+
+                tipo_vehiculo: "Automóvil",
+
+                marca: "",
+
+                color: ""
+
+            });
+
+            cargarVehiculos();
+
+        } catch (error) {
+
+            alert(error.message);
+
+        } finally {
+
+            setCargando(false);
+
+        }
+
+    };
+
+    return (
+
         <>
-        <Nav/>
-        <div className="page">
 
-    <div className="topbar">
+            <Nav />
 
-        <div>
+            <div className="page">
 
-            <h1>Gestión de Vehículos</h1>
+                <div className="topbar">
 
-            <p>
-                Registre y administre sus vehículos autorizados
-            </p>
+                    <div>
 
-        </div>
+                        <h1>Gestión de Vehículos</h1>
 
-    </div>
+                        <p>
 
+                            Administre los vehículos asociados a su cuenta.
 
-    <div className="form">
+                        </p>
 
-        <h2 style={{marginBottom:'20px'}}>
+                    </div>
 
-            Registrar Vehículo
+                </div>
 
-        </h2>
+                <div className="form">
 
-        <input
-        id="placa"
-        type="text"
-        placeholder="Placa del vehículo"/>
+                    <h2>
 
-        <input
-        id="propietario"
-        type="text"
-        placeholder="Nombre del propietario"/>
+                        Registrar Vehículo
 
-        <select id="tipo">
+                    </h2>
 
-            <option value="Automóvil">
-                Automóvil
-            </option>
+                    <input
 
-            <option value="Moto">
-                Moto
-            </option>
+                        type="text"
 
-            <option value="Camioneta">
-                Camioneta
-            </option>
+                        name="placa"
 
-        </select>
+                        placeholder="Placa"
 
-        <input
-        id="marca"
-        type="text"
-        placeholder="Marca"/>
+                        value={formulario.placa}
 
-        <input
-        id="color"
-        type="text"
-        placeholder="Color"/>
+                        onChange={handleChange}
 
-        <button onClick="guardarVehiculo()">
+                    />
 
-            <i className="fas fa-plus"></i>
+                    <select
 
-            Registrar Vehículo
+                        name="tipo_vehiculo"
 
-        </button>
+                        value={formulario.tipo_vehiculo}
 
-    </div>
+                        onChange={handleChange}
 
+                    >
 
-    <div className="panel">
+                        <option>Automóvil</option>
 
-        <div className="panel-header">
+                        <option>Moto</option>
 
-            <h2>
+                        <option>Camioneta</option>
 
-                Vehículos Registrados
+                    </select>
 
-            </h2>
+                    <input
 
-        </div>
+                        type="text"
 
-        <table>
+                        name="marca"
 
-            <thead>
+                        placeholder="Marca"
 
-                <tr>
+                        value={formulario.marca}
 
-                    <th>Placa</th>
+                        onChange={handleChange}
 
-                    <th>Propietario</th>
+                    />
 
-                    <th>Tipo</th>
+                    <input
 
-                    <th>Marca</th>
+                        type="text"
 
-                    <th>Color</th>
+                        name="color"
 
-                    <th>Acciones</th>
+                        placeholder="Color"
 
-                </tr>
+                        value={formulario.color}
 
-            </thead>
+                        onChange={handleChange}
 
-            <tbody id="tablaVehiculos">
+                    />
 
-            </tbody>
+                    <button
 
-        </table>
+                        onClick={registrarVehiculo}
 
-    </div>
+                        disabled={cargando}
 
-</div>
-</>
-    )
+                    >
+
+                        {
+
+                            cargando
+
+                                ? "Registrando..."
+
+                                : "Registrar Vehículo"
+
+                        }
+
+                    </button>
+
+                </div>
+
+                <div className="panel">
+
+                    <div className="panel-header">
+
+                        <h2>
+
+                            Mis Vehículos
+
+                        </h2>
+
+                    </div>
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Placa</th>
+
+                                <th>Tipo</th>
+
+                                <th>Marca</th>
+
+                                <th>Color</th>
+
+                                <th>Área</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {
+                                vehiculos.length === 0
+                                ? (
+
+    <tr>
+
+        <td colSpan="5">
+
+            No tienes vehículos registrados.
+
+        </td>
+
+    </tr>
+
+) : (
+
+    vehiculos.map((vehiculo) => (
+
+        <tr key={vehiculo.id}>
+
+            <td>
+
+                <strong>
+
+                    {vehiculo.placa}
+
+                </strong>
+
+            </td>
+
+            <td>
+
+                {vehiculo.tipo_vehiculo}
+
+            </td>
+
+            <td>
+
+                {vehiculo.marca || "-"}
+
+            </td>
+
+            <td>
+
+                {vehiculo.color || "-"}
+
+            </td>
+
+            <td>
+
+                {vehiculo.area}
+
+            </td>
+
+        </tr>
+
+    ))
+
+)
+
 }
 
-export default VehiculosU
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </>
+
+    );
+
+}
+
+export default VehiculosU;

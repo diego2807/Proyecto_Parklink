@@ -1,354 +1,496 @@
-import '../../css/UserCSS/Styles.css'
-import Nav from '../../components/UserNav/UserNav'
+import { useEffect, useState } from "react";
+import "../../css/UserCSS/Styles.css";
+import Nav from "../../components/UserNav/UserNav";
+import { usuarioService } from "../../services/usuarioService";
 
-function PanelControl (){
-    return(
+function PanelControl() {
+
+    const [panel, setPanel] = useState(null);
+
+    useEffect(() => {
+
+        cargarPanel();
+
+    }, []);
+
+    const cargarPanel = async () => {
+
+        try {
+
+            const data = await usuarioService.obtenerPanel();
+
+            setPanel(data);
+
+        } catch (error) {
+
+            console.error(error);
+
+        }
+
+    };
+
+    if (!panel) {
+
+        return <h2 style={{ padding: "30px" }}>Cargando información...</h2>;
+
+    }
+
+    return (
 
         <>
-        <Nav/>
-        <main className="main">
+            <Nav />
 
+            <main className="main">
 
-    <header className="topbar">
+                <header className="topbar">
 
-        <div>
+                <div>
 
-            <h1>Panel de control</h1>
+                    <span className="saludo">
 
-            <p>
-                Sistema de Gestión de Parqueaderos
-            </p>
+                        👋 Bienvenido nuevamente
 
-        </div>
+                    </span>
 
-        <div className="user-profile">
+                    <h1>
 
-            <i className="fas fa-user-circle"></i>
+                        Panel de Control
 
-            <div>
+                    </h1>
 
-                <h4>Administrador</h4>
+                    <p>
 
-                <small id="fechaActual"></small>
+                        Consulta el estado del parqueadero en tiempo real.
 
-            </div>
-
-        </div>
-
-    </header>
-
-
-    <section className="cards">
-
-        <div className="card">
-
-            <div className="card-icon blue">
-
-                <i className="fas fa-car"></i>
-
-            </div>
-
-            <div>
-
-                <h3>Total Vehículos</h3>
-
-                <span id="totalVehiculos">0</span>
-
-            </div>
-
-        </div>
-
-        <div className="card">
-
-            <div className="card-icon green">
-
-                <i className="fas fa-square-parking"></i>
-
-            </div>
-
-            <div>
-
-                <h3>Cupos Disponibles</h3>
-
-                <span id="cuposDisponibles">50</span>
-
-            </div>
-
-        </div>
-
-        <div className="card">
-
-            <div className="card-icon orange">
-
-                <i className="fas fa-car-side"></i>
-
-            </div>
-
-            <div>
-
-                <h3>Cupos Ocupados</h3>
-
-                <span id="cuposOcupados">0</span>
-
-            </div>
-
-        </div>
-
-        <div className="card">
-
-            <div className="card-icon red">
-
-                <i className="fas fa-circle-exclamation"></i>
-
-            </div>
-
-            <div>
-
-                <h3>Estado</h3>
-
-                <span id="estadoParqueadero">
-
-                    Disponible
-
-                </span>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <section className="dashboard-grid">
-
-
-
-        <div className="panel">
-
-            <div className="panel-header">
-
-                <h2>
-                    Estado General del Parqueadero
-                </h2>
-
-            </div>
-
-            <div className="estado-container">
-
-                <div className="estado-item">
-
-                    <span className="status-dot green"></span>
-
-                    Sistema Operativo
+                    </p>
 
                 </div>
 
-                <div className="estado-item">
+                <div className="user-profile">
 
-                    <span className="status-dot blue"></span>
+                    <div className="avatar">
 
-                    Cámaras Activas
+                        <i className="fas fa-user"></i>
 
-                </div>
+                    </div>
 
-                <div className="estado-item">
+                    <div>
 
-                    <span className="status-dot orange"></span>
+                        <h4>
 
-                    Monitoreo en Tiempo Real
+                            Usuario ParkLink
 
-                </div>
+                        </h4>
 
-            </div>
+                        <small>
 
-        </div>
+                            Funcionario
 
+                        </small>
 
-        <div className="panel">
-
-            <div className="panel-header">
-
-                <h2>Ocupación</h2>
-
-            </div>
-
-            <div className="ocupacion">
-
-                <div className="circle">
-
-                    <h2>50%</h2>
+                    </div>
 
                 </div>
 
-                <p>
+            </header>
 
-                    Nivel actual de ocupación
+                <section className="cards">
 
-                </p>
+                    <div className="card">
 
-            </div>
+                        <div className="card-icon blue">
 
-        </div>
+                            <i className="fas fa-car"></i>
 
-    </section>
+                        </div>
 
+                        <div className="card-info">
 
-    <section className="panel">
+                            <h3>
 
-        <div className="panel-header">
+                                Vehículos Registrados
 
-            <h2>
+                            </h3>
 
-                Actividad Reciente
+                            <span>
 
-            </h2>
+                                {panel.totalVehiculos}
 
-        </div>
+                            </span>
 
-        <table>
+                            <small>
 
-            <thead>
+                                Autorizados en el sistema
 
-                <tr>
+                            </small>
 
-                    <th>Hora</th>
+                        </div>
 
-                    <th>Evento</th>
+                    </div>
 
-                    <th>Estado</th>
+                    <div className="card">
 
-                </tr>
+                        <div className="card-icon green">
 
-            </thead>
+                            <i className="fas fa-square-parking"></i>
 
-            <tbody>
+                        </div>
 
-                <tr>
+                        <div className="card-info">
 
-                    <td>07:15 AM</td>
+                            <h3>
 
-                    <td>
-                        Ingreso de vehículo
-                        ABC123
-                    </td>
+                                Cupos Disponibles
 
-                    <td>
+                            </h3>
 
-                        <span className="badge success">
+                            <span>
 
-                            Correcto
+                                {panel.cuposDisponibles}
 
-                        </span>
+                            </span>
 
-                    </td>
+                            <small>
 
-                </tr>
+                                Libres actualmente
 
-                <tr>
+                            </small>
 
-                    <td>08:30 AM</td>
+                        </div>
 
-                    <td>
+                    </div>
 
-                        Salida de vehículo
-                        XYZ987
+                    <div className="card">
 
-                    </td>
+                        <div className="card-icon orange">
 
-                    <td>
+                            <i className="fas fa-car-side"></i>
 
-                        <span className="badge info">
+                        </div>
 
-                            Procesado
+                        <div className="card-info">
 
-                        </span>
+                            <h3>
 
-                    </td>
+                                Cupos Ocupados
 
-                </tr>
+                            </h3>
 
-                <tr>
+                            <span>
 
-                    <td>09:40 AM</td>
+                                {panel.cuposOcupados}
 
-                    <td>
+                            </span>
 
-                        Capacidad cercana
-                        al límite
+                            <small>
 
-                    </td>
+                                En uso
 
-                    <td>
+                            </small>
 
-                        <span className="badge warning">
+                        </div>
 
-                            Atención
+                    </div>
 
-                        </span>
+                    <div className="card">
 
-                    </td>
+                        <div className="card-icon red">
 
-                </tr>
+                            <i className="fas fa-circle-check"></i>
 
-            </tbody>
+                        </div>
 
-        </table>
+                        <div className="card-info">
 
-    </section>
+                            <h3>
 
+                                Estado General
 
-    <section className="info-box">
+                            </h3>
 
-        <div className="info-card">
+                            <span>
 
-            <i className="fas fa-shield-halved"></i>
+                                {panel.estadoParqueadero}
 
-            <h3>Seguridad</h3>
+                            </span>
 
-            <p>
+                            <small>
 
-                Control de acceso y monitoreo
-                permanente de vehículos.
+                                Sistema funcionando
 
-            </p>
+                            </small>
 
-        </div>
+                        </div>
 
-        <div className="info-card">
+                    </div>
 
-            <i className="fas fa-clock"></i>
+                </section>
 
-            <h3>Disponibilidad</h3>
+                <section className="dashboard-grid">
 
-            <p>
+                    <div className="panel">
 
-                Consulta en tiempo real
-                los cupos disponibles.
+                        <div className="panel-header">
 
-            </p>
+                            <h2>
 
-        </div>
+                                Estado General
 
-        <div className="info-card">
+                            </h2>
 
-            <i className="fas fa-chart-column"></i>
+                        </div>
 
-            <h3>Estadísticas</h3>
+                        <div className="estado-container">
 
-            <p>
+                            <div className="estado-item">
 
-                Reportes y métricas
-                actualizadas automáticamente.
+                                <span className="status-dot green"></span>
 
-            </p>
+                                Sistema Operativo
 
-        </div>
+                            </div>
 
-    </section>
+                            <div className="estado-item">
 
-</main>
-</>
-    )
+                                <span className="status-dot blue"></span>
+
+                                Cámaras Activas
+
+                            </div>
+
+                            <div className="estado-item">
+
+                                <span className="status-dot orange"></span>
+
+                                Monitoreo en Tiempo Real
+
+                            </div>
+
+                        </div>
+
+                        <div className="barra-container">
+
+                            <div className="barra">
+
+                                <div
+                                    className="barra-fill"
+                                    style={{ width: `${panel.ocupacion}%` }}
+                                ></div>
+
+                            </div>
+
+                            <span>
+
+                                Ocupación actual {panel.ocupacion}%
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div className="panel">
+
+                        <div className="panel-header">
+
+                            <h2>
+
+                                Nivel de Ocupación
+
+                            </h2>
+
+                        </div>
+
+                        <div className="ocupacion">
+
+                            <div className="circle" style={{ "--valor": panel.ocupacion}}>
+                                <h2>
+
+                                    {panel.ocupacion}%
+
+                                </h2>
+
+                                <small>
+
+                                    Capacidad
+
+                                </small>
+
+                            </div>
+
+                            <p>
+
+                                El sistema actualiza esta información en tiempo real.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <section className="panel">
+
+                    <div className="panel-header">
+
+                        <h2>
+
+                            Actividad Reciente
+
+                        </h2>
+
+                    </div>
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Hora</th>
+
+                                <th>Evento</th>
+
+                                <th>Estado</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                        {
+                            panel.actividad.map((item, index) => (
+
+                                <tr key={index}>
+
+                                    <td>
+
+                                        <strong>{item.hora}</strong>
+
+                                    </td>
+
+                                    <td>
+
+                                        <div className="evento-info">
+
+                                            <div className="evento-icono">
+
+                                                <i className="fas fa-car"></i>
+
+                                            </div>
+
+                                            <div>
+
+                                                <strong>{item.evento}</strong>
+
+                                                <small>
+
+                                                    Movimiento registrado correctamente
+
+                                                </small>
+
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span
+
+                                            className={`badge ${
+                                                item.estado === "Entrada"
+                                                    ? "success"
+                                                    : item.estado === "Salida"
+                                                    ? "danger"
+                                                    : "warning"
+                                            }`}
+
+                                        >
+
+                                            {item.estado}
+
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+                            ))
+                        }
+
+                        </tbody>
+
+                    </table>
+
+                </section>
+
+                <section className="info-box">
+
+        
+
+                    <section className="panel">
+
+                        <div className="panel-header">
+
+                            <h2>
+                                Accesos rápidos
+                            </h2>
+
+                        </div>
+
+                        <div className="info-box">
+
+                            <div className="info-card">
+
+                                <i className="fas fa-car"></i>
+
+                                <h3>Mis Vehículos</h3>
+
+                                <p>
+                                    Administra los vehículos registrados en tu cuenta.
+                                </p>
+
+                            </div>
+
+                            <div className="info-card">
+
+                                <i className="fas fa-calendar-check"></i>
+
+                                <h3>Reservas</h3>
+
+                                <p>
+                                    Programa una reserva antes de llegar al parqueadero.
+                                </p>
+
+                            </div>
+
+                            <div className="info-card">
+
+                                <i className="fas fa-clock-rotate-left"></i>
+
+                                <h3>Historial</h3>
+
+                                <p>
+                                    Consulta todos tus ingresos y salidas registrados.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+                </section>
+
+            </main>
+
+        </>
+
+    );
+
 }
 
-export default PanelControl
+export default PanelControl;

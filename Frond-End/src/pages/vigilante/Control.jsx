@@ -20,11 +20,28 @@ function Control() {
 
     const [cargando, setCargando] = useState(true);
 
+    const [horaActual, setHoraActual] = useState("");
+
     useEffect(() => {
 
         cargarDashboard();
 
-    }, []);
+        const reloj = setInterval(() => {
+
+            const ahora = new Date();
+
+            setHoraActual(
+                ahora.toLocaleString("es-CO",{
+                    dateStyle:"long",
+                    timeStyle:"medium"
+                })
+            );
+
+        },1000);
+
+        return ()=>clearInterval(reloj);
+
+    },[]);
 
     const cargarDashboard = async () => {
 
@@ -63,17 +80,38 @@ function Control() {
                 <section className="dash-content">
 
                     <div className="dash-page">
-
                         <div className="dash-header">
 
-                            <h2>📊 Panel de Control del Turno</h2>
+                            <div>
 
-                            <button
-                                className="btn-action-in"
-                                onClick={cargarDashboard}
-                            >
-                                🔄 Actualizar
-                            </button>
+                                <h2>📊 Panel Operativo</h2>
+
+                                <p className="dash-subtitle">
+
+                                    Resumen en tiempo real del turno activo
+
+                                </p>
+
+                            </div>
+
+                            <div className="dash-actions">
+
+                                <span className="dash-time">
+
+                                    🕒 {horaActual}
+
+                                </span>
+
+                                <button
+                                    className="btn-action-in"
+                                    onClick={cargarDashboard}
+                                >
+
+                                    🔄 Actualizar
+
+                                </button>
+
+                            </div>
 
                         </div>
 
@@ -85,6 +123,38 @@ function Control() {
 
                                     <section className="metrics-grid">
 
+                                        <div className="panel-card resumen-turno">
+
+                                            <div className="panel-card-header">
+                                                <h3>📈 Estado General del Turno</h3>
+                                            </div>
+
+                                            <div className="estado-grid">
+
+                                                <div>
+                                                    <span>Vehículos activos</span>
+                                                    <strong>{resumen.vehiculos_activos}</strong>
+                                                </div>
+
+                                                <div>
+                                                    <span>Entradas</span>
+                                                    <strong>{resumen.entradas}</strong>
+                                                </div>
+
+                                                <div>
+                                                    <span>Salidas</span>
+                                                    <strong>{resumen.salidas}</strong>
+                                                </div>
+
+                                                <div>
+                                                    <span>Disponibilidad</span>
+                                                    <strong>{resumen.celdas_libres}</strong>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
                                         <div className="metric-card">
 
                                             <div className="metric-icon blue">
@@ -92,15 +162,8 @@ function Control() {
                                             </div>
 
                                             <div className="metric-data">
-
-                                                <div className="num">
-                                                    {resumen.entradas}
-                                                </div>
-
-                                                <div className="lbl">
-                                                    Entradas
-                                                </div>
-
+                                                <div className="num">{resumen.entradas}</div>
+                                                <div className="lbl">Entradas</div>
                                             </div>
 
                                         </div>
@@ -112,15 +175,8 @@ function Control() {
                                             </div>
 
                                             <div className="metric-data">
-
-                                                <div className="num">
-                                                    {resumen.salidas}
-                                                </div>
-
-                                                <div className="lbl">
-                                                    Salidas
-                                                </div>
-
+                                                <div className="num">{resumen.salidas}</div>
+                                                <div className="lbl">Salidas</div>
                                             </div>
 
                                         </div>
@@ -132,15 +188,8 @@ function Control() {
                                             </div>
 
                                             <div className="metric-data">
-
-                                                <div className="num">
-                                                    {resumen.vehiculos_activos}
-                                                </div>
-
-                                                <div className="lbl">
-                                                    Vehículos Activos
-                                                </div>
-
+                                                <div className="num">{resumen.vehiculos_activos}</div>
+                                                <div className="lbl">Vehículos Activos</div>
                                             </div>
 
                                         </div>
@@ -152,15 +201,8 @@ function Control() {
                                             </div>
 
                                             <div className="metric-data">
-
-                                                <div className="num">
-                                                    {resumen.celdas_ocupadas}
-                                                </div>
-
-                                                <div className="lbl">
-                                                    Celdas Ocupadas
-                                                </div>
-
+                                                <div className="num">{resumen.celdas_ocupadas}</div>
+                                                <div className="lbl">Celdas Ocupadas</div>
                                             </div>
 
                                         </div>
@@ -172,15 +214,8 @@ function Control() {
                                             </div>
 
                                             <div className="metric-data">
-
-                                                <div className="num">
-                                                    {resumen.celdas_libres}
-                                                </div>
-
-                                                <div className="lbl">
-                                                    Celdas Libres
-                                                </div>
-
+                                                <div className="num">{resumen.celdas_libres}</div>
+                                                <div className="lbl">Celdas Libres</div>
                                             </div>
 
                                         </div>
@@ -192,21 +227,39 @@ function Control() {
                                             </div>
 
                                             <div className="metric-data">
+                                                <div className="num">{resumen.total_celdas}</div>
+                                                <div className="lbl">Total Celdas</div>
+                                            </div>
 
-                                                <div className="num">
-                                                    {resumen.total_celdas}
-                                                </div>
+                                        </div>
 
-                                                <div className="lbl">
-                                                    Total Celdas
-                                                </div>
+                                        <div className="metric-card">
 
+                                            <div className="metric-icon purple">
+                                                👤
+                                            </div>
+
+                                            <div className="metric-data">
+                                                <div className="num">{resumen.visitantes}</div>
+                                                <div className="lbl">Visitantes</div>
+                                            </div>
+
+                                        </div>
+
+                                        <div className="metric-card">
+
+                                            <div className="metric-icon yellow">
+                                                ⚠️
+                                            </div>
+
+                                            <div className="metric-data">
+                                                <div className="num">{resumen.novedades}</div>
+                                                <div className="lbl">Novedades</div>
                                             </div>
 
                                         </div>
 
                                     </section>
-
                                     <div className="dash-grid-two">
 
                         <article className="panel-card">
