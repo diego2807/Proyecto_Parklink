@@ -7,6 +7,10 @@ from flask_migrate import Migrate
 from app.config.settings import Config
 from app.database.database import db, bcrypt, jwt
 from app.models.novedad import Novedad
+from app.models.reserva import Reserva
+
+
+
 
 # ── Inicialización de la instancia global de Migrate ────────────────────────
 migrate = Migrate()
@@ -71,6 +75,7 @@ def create_app():
     from app.routes.configuraciones import config_bp
     from app.routes.tendencias import tendencias_bp
     from app.routes.vigilante import vigilante_bp
+    from app.routes.usuario import usuario_bp
 
     # Registro limpio y obligatorio de los controladores de ParkLink
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
@@ -83,6 +88,7 @@ def create_app():
     app.register_blueprint(config_bp, url_prefix="/api/admin")
     app.register_blueprint(tendencias_bp)
     app.register_blueprint(vigilante_bp,url_prefix="/api/vigilante")
+    app.register_blueprint(usuario_bp)
 
     # ── 6. Ruta de salud ──────────────────────────────────────────────────────
     @app.route("/health", methods=["GET"])

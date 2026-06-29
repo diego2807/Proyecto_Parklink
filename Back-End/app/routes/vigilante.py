@@ -13,7 +13,8 @@ from app.services.vigilante_service import (
     registrar_visitante,
     listar_visitantes,
     crear_novedad,
-    listar_novedades
+    listar_novedades,
+    consultar_vehiculo
 )
 
 vigilante_bp = Blueprint(
@@ -181,3 +182,14 @@ def obtener_novedades():
     return jsonify(
         listar_novedades()
     ), 200
+
+@vigilante_bp.route("/vehiculo/<placa>", methods=["GET"])
+@jwt_required()
+def obtener_vehiculo(placa):
+
+    resultado = consultar_vehiculo(placa)
+
+    if "error" in resultado:
+        return jsonify(resultado), 404
+
+    return jsonify(resultado), 200

@@ -341,15 +341,68 @@ def resumen_turno(usuario_id):
 
     novedades = NovedadVigilante.query.count()
 
+    ultimos = Acceso.query.order_by(
+    Acceso.fecha_hora.desc()
+    ).limit(5).all()
+
+    actividad = []
+
+    for acceso in ultimos:
+
+        actividad.append({
+
+            "placa": acceso.placa,
+
+            "movimiento": acceso.tipo_movimiento,
+
+            "hora": acceso.fecha_hora.strftime("%H:%M")
+
+        })
+
+    # ==========================
+    # ACTIVIDAD RECIENTE
+    # ==========================
+
+    ultimos_movimientos = Acceso.query.order_by(
+        Acceso.fecha_hora.desc()
+    ).limit(5).all()
+
+    actividad = []
+
+    for movimiento in ultimos_movimientos:
+
+        actividad.append({
+
+            "placa": movimiento.placa,
+
+            "movimiento": movimiento.tipo_movimiento,
+
+            "hora": movimiento.fecha_hora.strftime("%H:%M"),
+
+            "celda": movimiento.celda_asignada
+
+        })
+
     return {
+
         "entradas": entradas,
+
         "salidas": salidas,
+
         "vehiculos_activos": len(activos),
+
         "celdas_ocupadas": celdas_ocupadas,
+
         "celdas_libres": celdas_libres,
+
         "total_celdas": total_celdas,
+
         "visitantes": visitantes,
-        "novedades": novedades
+
+        "novedades": novedades,
+
+        "actividad": actividad
+
     }
 
 def registrar_visitante(data):
@@ -425,3 +478,25 @@ def listar_novedades():
         }
         for novedad in novedades
     ]
+
+def consultar_vehiculo(placa):
+
+    vehiculo = Vehiculo.query.filter_by(
+        placa=placa.upper()
+    ).first()
+
+    if not vehiculo:
+        return {
+            "error": "Vehículo no registrado."
+        }
+
+    return {
+
+        "placa": vehiculo.placa,
+        "tipo": vehiculo.tipo_vehiculo,
+        "marca": vehiculo.marca,
+        "color": vehiculo.color,
+        "area": vehiculo.area,
+        "propietario": vehiculo.usuario.nombre_completo
+
+    }

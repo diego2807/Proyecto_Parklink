@@ -11,7 +11,16 @@ class Vehiculo(db.Model):
     placa = db.Column(db.String(10), unique=True, nullable=False, index=True)
     
     # Conexión directa con el usuario dueño del carro/moto
-    usuario_id = db.Column(db.Integer, db.ForeignKey('usuarios.id', ondelete='CASCADE'), nullable=False)
+    usuario_id = db.Column(
+        db.Integer, db.ForeignKey
+        ('usuarios.id', 
+         ondelete='CASCADE'), 
+         nullable=False)
+
+    usuario = db.relationship(
+    "Usuario",
+    backref="vehiculos"
+)
     
     # "Automóvil" o "Motocicleta" (Consistente con los select de tu Vehiculos.jsx)
     tipo_vehiculo = db.Column(db.String(20), nullable=False) 
