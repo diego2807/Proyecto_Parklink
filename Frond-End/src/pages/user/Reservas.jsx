@@ -216,7 +216,29 @@ function Reservas() {
 
                                         <td>{reserva.hora}</td>
 
-                                        <td>{reserva.estado}</td>
+                                        <td>
+
+                                        <span
+                                        className={
+                                            reserva.estado === "Pendiente"
+                                                ? "badge warning"
+                                                : reserva.estado === "Activa"
+                                                ? "badge primary"
+                                                : "badge success"
+                                        }
+                                        >
+
+                                        {
+                                            reserva.estado === "Pendiente"
+                                                ? "🟡 Pendiente"
+                                                : reserva.estado === "Activa"
+                                                ? "🔵 Activa"
+                                                : "🟢 Finalizada"
+                                        }
+
+                                        </span>
+
+                                        </td>
 
                                     </tr>
 
