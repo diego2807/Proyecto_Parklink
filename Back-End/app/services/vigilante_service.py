@@ -9,6 +9,7 @@ from app.models.acceso import Acceso
 from app.models.visitante import Visitante
 from app.models.novedad_vigilante import NovedadVigilante
 from app.models.log_auditoria import LogAuditoria
+from app.models.reserva import Reserva
 
 
 def registrar_log(nivel, modulo, descripcion, usuario_id=None, placa=None):
@@ -151,6 +152,22 @@ def registrar_entrada(usuario_id, placa):
     turno.total_entradas += 1
 
     db.session.add(nuevo_acceso)
+
+    # ==========================
+    # ACTIVAR RESERVA
+    # ==========================
+
+    reserva = Reserva.query.filter_by(
+        vehiculo_id=vehiculo.id,
+        estado="Pendiente"
+    ).order_by(
+        Reserva.fecha.desc(),
+        Reserva.hora.desc()
+    ).first()
+
+    if reserva:
+        reserva.estado = "Activa"
+
     db.session.commit()
 
     registrar_log(
@@ -225,6 +242,22 @@ def registrar_salida(usuario_id, placa):
     turno.total_salidas += 1
 
     db.session.add(nueva_salida)
+
+    # ==========================
+    # FINALIZAR RESERVA
+    # ==========================
+
+    reserva = Reserva.query.filter_by(
+        vehiculo_id=vehiculo.id,
+        estado="Activa"
+    ).order_by(
+        Reserva.fecha.desc(),
+        Reserva.hora.desc()
+    ).first()
+
+    if reserva:
+        reserva.estado = "Finalizada"
+
     db.session.commit()
 
     registrar_log(
