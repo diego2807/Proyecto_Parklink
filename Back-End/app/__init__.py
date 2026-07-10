@@ -8,9 +8,10 @@ from app.config.settings import Config
 from app.database.database import db, bcrypt, jwt
 from app.models.novedad import Novedad
 from app.models.reserva import Reserva
+from flask_mailman import Mail
 
-
-
+# Instanciamos el objeto Mail de forma global
+mail = Mail()
 
 # ── Inicialización de la instancia global de Migrate ────────────────────────
 migrate = Migrate()
@@ -37,6 +38,9 @@ def create_app():
     db.init_app(app)
     bcrypt.init_app(app)
     jwt.init_app(app)
+    
+    # 💥 EXTENSIÓN AGREGADA: Inicializa y vincula Flask-Mailman con el ciclo de vida de la App
+    mail.init_app(app)
     
     # 🛠️ Inicializa y vincula Flask-Migrate con la App y SQLAlchemy
     migrate.init_app(app, db)
@@ -87,7 +91,7 @@ def create_app():
     app.register_blueprint(logs_bp)
     app.register_blueprint(config_bp, url_prefix="/api/admin")
     app.register_blueprint(tendencias_bp)
-    app.register_blueprint(vigilante_bp,url_prefix="/api/vigilante")
+    app.register_blueprint(vigilante_bp, url_prefix="/api/vigilante")
     app.register_blueprint(usuario_bp)
 
     # ── 6. Ruta de salud ──────────────────────────────────────────────────────

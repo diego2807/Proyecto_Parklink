@@ -5,6 +5,8 @@ Blueprint: admin_bp
 Prefijo registrado: /api/admin
 """
 
+# app/routes/admin.py
+
 import secrets
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
@@ -12,6 +14,9 @@ from app.database.database import db
 from app.models.usuario import Usuario, RolEnum  
 from app.models.vehiculo import Vehiculo
 from app.models.configuracion import Configuracion  
+
+# 💥 NUEVA IMPORTACIÓN: Traemos el servicio de correo recién creado
+from app.services.email_service import EmailService
 
 admin_bp = Blueprint("admin", __name__)
 
@@ -51,12 +56,13 @@ def registrar_usuario_por_admin():
                 rol_enum = RolEnum[rol_solicitado.strip().upper()]
         else:
             rol_enum = RolEnum(rol_solicitado)
-    except (keyError, ValueError):
+    except (KeyError, ValueError): # Corregido keyError a KeyError
         return jsonify({"error": f"El rol '{rol_solicitado}' no es válido en ParkLink."}), 400
 
     if Usuario.query.filter_by(correo=correo.strip()).first():
         return jsonify({"error": "Este correo electrónico ya está registrado."}), 400
 
+    # 🔑 Tu generador seguro que ya tenías implementado
     password_temporal = secrets.token_urlsafe(8)
 
     try:
@@ -69,15 +75,21 @@ def registrar_usuario_por_admin():
         nuevo_usuario.password = password_temporal 
 
         db.session.add(nuevo_usuario)
-        db.session.commit()
+        db.session.commit() # Confirmamos en la Base de Datos
+
+        # 📧 ACCIÓN INCORPORADA: Despachamos el correo usando la info guardada
+        EmailService.enviar_correo_bienvenida(
+            correo_destino=nuevo_usuario.correo,
+            nombre_usuario=nuevo_usuario.nombre_completo,
+            contrasena_plana=password_temporal
+        )
 
         usuario_dict = nuevo_usuario.to_dict()
         if 'rol' in usuario_dict and hasattr(nuevo_usuario.rol, 'value'):
             usuario_dict['rol'] = nuevo_usuario.rol.value
 
         return jsonify({
-            "message": "Usuario creado con éxito.",
-            "password_temporal_creada": password_temporal,
+            "message": "Usuario creado con éxito y credenciales enviadas por correo electrónico.",
             "usuario": usuario_dict
         }), 201
 
